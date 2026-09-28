@@ -8,15 +8,15 @@ Plataforma inteligente para locação e gestão de máquinas e equipamentos para
 
 ## 👥 Integrantes da Equipe (Time 31)
 
-| Nome | Papel | GitHub |
-| :--- | :--- | :--- |
-| **Lucas Rodrigues Xavier** | Líder do Grupo | [@lucaxaviers](https://github.com/lucaxaviers) |
-| **Kauan Aurélio Lasmar Dias** | Integrante | [@kauan](https://github.com/) |
-| **Leonardo Gambaroni Alves** | Integrante | [@leonardo](https://github.com/) |
-| **Mateus Oliveira Rafael** | Integrante | [@mateus](https://github.com/) |
-| **Tiago Medeiros** | Integrante | [@tiago](https://github.com/) |
+| Integrante | RA | Papel | GitHub |
+| :--- | :---: | :--- | :--- |
+| **Lucas Rodrigues Xavier** | 25000508 | Líder do Grupo | [@lucaxaviers](https://github.com/lucaxaviers) |
+| **Leonardo Gambaroni Alves** | 25003494 | Integrante | [@LeonardoGambaroni](https://github.com/LeonardoGambaroni) |
+| **Mateus Oliveira Rafael** | 25001369 | Integrante | [@mateusor](https://github.com/mateusor) |
+| **Kauan Aurélio Lasmar Dias** | - | Integrante | *[Aguardando @]* |
+| **Tiago Medeiros** | 25000845 | Integrante | *[Aguardando @]* |
 
-**Docente / Orientação:** Prof.ª Renata Arantes
+**Docente / Orientação:** [Prof.ª Renata Arantes](https://github.com/RenataArantes) ([@RenataArantes](https://github.com/RenataArantes))
 
 ---
 
@@ -44,13 +44,17 @@ Todos os artefatos de ideação e escopo encontram-se organizados na pasta [`doc
 - **Matriz SWOT e SWOT Cruzada**: Análise de forças, fraquezas, oportunidades e ameaças.
 - **Protótipo & MVP**: Lista inicial de funcionalidades e cronograma estimado.
 
+## 📋 Gestão do Projeto (GitHub Projects)
+
+O acompanhamento das tarefas, sprints e entregas da equipe está centralizado no quadro oficial do projeto:  
+🔗 **[Quadro de Tarefas: PI_IV TIME 31 - AlugaMáquina](https://github.com/users/lucaxaviers/projects/8)**
+
 ---
 
-## 🎯 Próximos Passos (GitHub Projects & Reunião de Escopo)
+## 🎯 Próximos Passos (Reunião de Escopo)
 
 - [x] Criação e organização da pasta de documentação (`docs/`)
-- [ ] Criação do repositório remoto no GitHub (`PI_IV-TIME-31`)
-- [ ] Configuração do **GitHub Projects** vinculado para gestão de tarefas
-- [ ] Convite para todos os membros da equipe aceitarem o acesso
-- [ ] Convite de acesso para a professora Renata Arantes
-- [ ] Reunião de alinhamento e definição formal de escopo
+- [x] Criação do repositório remoto no GitHub (`PI_IV-TIME-31`)
+- [x] Envio de convites de acesso aos colaboradores e docente
+- [x] Configuração do [GitHub Projects](https://github.com/users/lucaxaviers/projects/8) vinculado ao repositório
+- [ ] Reunião de alinhamento e definição formal de escopo com a orientação
