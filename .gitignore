@@ -1,0 +1,22 @@
+# Office / Temporary lock files
+~$*.docx
+~$*.pptx
+~$*.xlsx
+
+# OS Generated
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# IDE / Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node / Web dependencies (para quando o desenvolvimento iniciar)
+node_modules/
+dist/
+.env
+.env.local
