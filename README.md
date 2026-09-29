@@ -13,8 +13,8 @@ Plataforma inteligente para locação e gestão de máquinas e equipamentos para
 | **Lucas Rodrigues Xavier** | 25000508 | Líder do Grupo | [@lucaxaviers](https://github.com/lucaxaviers) |
 | **Leonardo Gambaroni Alves** | 25003494 | Integrante | [@LeonardoGambaroni](https://github.com/LeonardoGambaroni) |
 | **Mateus Oliveira Rafael** | 25001369 | Integrante | [@mateusor](https://github.com/mateusor) |
-| **Kauan Aurélio Lasmar Dias** | - | Integrante | *[Aguardando @]* |
-| **Tiago Medeiros** | 25000845 | Integrante | *[Aguardando @]* |
+| **Kauan Aurélio Lasmar Dias** | 25001590 | Integrante | [@KauanDias-Dev](https://github.com/KauanDias-Dev) |
+| **Tiago Medeiros** | 25000845 | Integrante | [@tiago148](https://github.com/tiago148) |
 
 **Docente / Orientação:** [Prof.ª Renata Arantes](https://github.com/RenataArantes) ([@RenataArantes](https://github.com/RenataArantes))
 
@@ -26,6 +26,7 @@ Plataforma inteligente para locação e gestão de máquinas e equipamentos para
 ├── docs/
 │   ├── AlugaMaquina_Apresentacao_V3_corrigida.pptx
 │   ├── Relatorio_Ideacao_AlugaMaquina.docx
+│   ├── Relatorio_Ideacao_AlugaMaquina.pdf
 │   ├── atividade_mapa_mental_bmc_mapa_da_empatia.pdf
 │   ├── atividade_matriz_swot_e_swot_cruzada.pdf
 │   └── atividade_prototipo_completo_lista_funcionalidades_cronograma_mvp.pdf
@@ -39,7 +40,7 @@ Plataforma inteligente para locação e gestão de máquinas e equipamentos para
 
 Todos os artefatos de ideação e escopo encontram-se organizados na pasta [`docs/`](./docs/):
 - **Apresentação da Solução**: Slides com a proposta de valor, pitch e modelo do AlugaMáquina.
-- **Relatório de Ideação**: Contexto do problema, personas e proposta de valor.
+- **Relatório de Ideação (DOCX & PDF)**: Contexto do problema, personas, fundamentação quantitativa de custos e ociosidade (IBGE/Embrapa/Cepea), 5W2H completo e sumário oficial.
 - **Mapa Mental, BMC & Mapa de Empatia**: Modelo de negócios e análise de clientes.
 - **Matriz SWOT e SWOT Cruzada**: Análise de forças, fraquezas, oportunidades e ameaças.
 - **Protótipo & MVP**: Lista inicial de funcionalidades e cronograma estimado.
