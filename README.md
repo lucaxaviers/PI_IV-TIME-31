@@ -15,7 +15,7 @@
 
 | Integrante | RA | Papel | GitHub |
 | :--- | :---: | :--- | :--- |
-| **Lucas Rodrigues Xavier** | 25000508 | Líder do Grupo | [@lucaxaviers](https://github.com/lucaxaviers) |
+| **Lucas Rodrigues Xavier** | 25000508 | Integrante | [@lucaxaviers](https://github.com/lucaxaviers) |
 | **Leonardo Gambaroni Alves** | 25003494 | Integrante | [@LeonardoGambaroni](https://github.com/LeonardoGambaroni) |
 | **Mateus Oliveira Rafael** | 25001369 | Integrante | [@mateusor](https://github.com/mateusor) |
 | **Kauan Aurélio Lasmar Dias** | 25001590 | Integrante | [@KauanDias-Dev](https://github.com/KauanDias-Dev) |
