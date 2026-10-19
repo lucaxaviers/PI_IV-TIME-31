@@ -1,0 +1,213 @@
+<!--
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: Tela de cadastro de maquinas e formulario de anuncio para locacao
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro de Máquina - AlugaMáquina</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/cadastro-maquina.css" />
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="cadastro-maquina.html" class="brand">
+        <img src="../../assets/logo-header.png" alt="AlugaMáquina" class="brand-logo" />
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#" class="nav-link">Catálogo</a></li>
+          <li><a href="cadastro-maquina.html" class="nav-link active">Cadastrar Máquina</a></li>
+          <li><a href="#" class="nav-link">Mensagens</a></li>
+          <li><a href="#" class="nav-link">Minhas Locações</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="container">
+    <section class="page-intro">
+      <h1 class="page-title">Cadastrar Máquina para Locação</h1>
+      <p class="page-description">Preencha as informações do equipamento para disponibilizá-lo para produtores da região.</p>
+    </section>
+
+    <div class="form-card">
+      <form action="#" method="post">
+
+        <!-- 1. Identificação do Equipamento -->
+        <div class="form-section">
+          <h2 class="section-title">Identificação do Equipamento</h2>
+          <p class="section-subtitle">Dados principais para identificação da máquina no catálogo.</p>
+
+          <div class="form-group">
+            <label for="tipoEquipamento" class="form-label">Tipo de Equipamento <span class="required">*</span></label>
+            <select id="tipoEquipamento" name="tipoEquipamento" class="form-select" required>
+              <option value="">Selecione o tipo...</option>
+              <option value="trator">Trator Agrícola</option>
+              <option value="colheitadeira">Colheitadeira</option>
+              <option value="pulverizador">Pulverizador</option>
+              <option value="plantadeira">Plantadeira</option>
+              <option value="implemento">Implemento Agrícola</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="tituloAnuncio" class="form-label">Título do Anúncio <span class="required">*</span></label>
+            <input type="text" id="tituloAnuncio" name="tituloAnuncio" class="form-input" placeholder="Ex: Trator John Deere 6115J Cabinado" required />
+            <span class="form-help">Informe o modelo e a característica principal do equipamento.</span>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="marca" class="form-label">Marca / Fabricante <span class="required">*</span></label>
+              <input type="text" id="marca" name="marca" class="form-input" placeholder="Ex: John Deere, Case, Massey Ferguson" required />
+            </div>
+
+            <div class="form-group">
+              <label for="modelo" class="form-label">Modelo <span class="required">*</span></label>
+              <input type="text" id="modelo" name="modelo" class="form-input" placeholder="Ex: 6115J" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Especificações Técnicas -->
+        <div class="form-section">
+          <h2 class="section-title">Especificações Técnicas</h2>
+          <p class="section-subtitle">Detalhes sobre o estado e capacidade operacional.</p>
+
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label for="anoFabricacao" class="form-label">Ano de Fabricação</label>
+              <input type="number" id="anoFabricacao" name="anoFabricacao" class="form-input" placeholder="Ex: 2021" min="1990" max="2026" />
+            </div>
+
+            <div class="form-group">
+              <label for="potencia" class="form-label">Potência (cv)</label>
+              <input type="number" id="potencia" name="potencia" class="form-input" placeholder="Ex: 115" />
+            </div>
+
+            <div class="form-group">
+              <label for="horimetro" class="form-label">Horas de Uso (Horímetro)</label>
+              <input type="number" id="horimetro" name="horimetro" class="form-input" placeholder="Ex: 1200" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="operador" class="form-label">Operador Incluso?</label>
+            <select id="operador" name="operador" class="form-select">
+              <option value="nao">Não incluso (apenas o maquinário)</option>
+              <option value="sim">Sim (com operador capacitado)</option>
+              <option value="combinar">A combinar com o locatário</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 3. Fotos do Equipamento -->
+        <div class="form-section">
+          <h2 class="section-title">Fotos do Equipamento</h2>
+          <p class="section-subtitle">Adicione fotos nítidas da máquina para avaliação dos interessados.</p>
+
+          <div class="upload-box">
+            <div class="upload-box-title">Selecione as fotos do equipamento</div>
+            <div class="upload-box-help">Formatos aceitos: JPG e PNG (vista geral, cabine e pneus)</div>
+            <input type="file" id="fotos" name="fotos" class="upload-input-file" multiple accept="image/png, image/jpeg" />
+          </div>
+        </div>
+
+        <!-- 4. Localização -->
+        <div class="form-section">
+          <h2 class="section-title">Localização do Equipamento</h2>
+          <p class="section-subtitle">Local onde a máquina se encontra para cálculo de distância e logística.</p>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="municipio" class="form-label">Município (Microrregião) <span class="required">*</span></label>
+              <select id="municipio" name="municipio" class="form-select" required>
+                <option value="">Selecione a cidade...</option>
+                <option value="paulinia">Paulínia / SP</option>
+                <option value="campinas">Campinas / SP</option>
+                <option value="cosmopolis">Cosmópolis / SP</option>
+                <option value="sumare">Sumaré / SP</option>
+                <option value="holambra">Holambra / SP</option>
+                <option value="jaguariuna">Jaguariúna / SP</option>
+                <option value="artur-nogueira">Artur Nogueira / SP</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="propriedade" class="form-label">Nome da Fazenda ou Sítio</label>
+              <input type="text" id="propriedade" name="propriedade" class="form-input" placeholder="Ex: Fazenda Santa Maria" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="logistica" class="form-label">Logística de Transporte</label>
+            <select id="logistica" name="logistica" class="form-select">
+              <option value="plataforma">Calcular frete pela plataforma</option>
+              <option value="locador">Transporte por conta do locador</option>
+              <option value="retirada">Retirada na propriedade pelo locatário</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 5. Valores e Período de Locação -->
+        <div class="form-section">
+          <h2 class="section-title">Valores e Disponibilidade</h2>
+          <p class="section-subtitle">Período de ociosidade e valor cobrado por diária.</p>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="dataInicio" class="form-label">Data de Início da Disponibilidade <span class="required">*</span></label>
+              <input type="date" id="dataInicio" name="dataInicio" class="form-input" required />
+            </div>
+
+            <div class="form-group">
+              <label for="dataFim" class="form-label">Data de Término da Disponibilidade <span class="required">*</span></label>
+              <input type="date" id="dataFim" name="dataFim" class="form-input" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="valorDiaria" class="form-label">Valor da Diária (R$) <span class="required">*</span></label>
+            <input type="text" id="valorDiaria" name="valorDiaria" class="form-input" placeholder="Ex: 850,00" required />
+            <span class="form-help">Valor base da locação diária para o cálculo final do contrato.</span>
+          </div>
+        </div>
+
+        <!-- 6. Observações Adicionais -->
+        <div class="form-section">
+          <h2 class="section-title">Observações Adicionais</h2>
+          <p class="section-subtitle">Condições específicas, manutenções recentes ou restrições de uso.</p>
+
+          <div class="form-group">
+            <textarea id="observacoes" name="observacoes" class="form-textarea" rows="4" placeholder="Descreva revisões recentes, implementos inclusos ou condições de trabalho adequadas para o equipamento..."></textarea>
+          </div>
+        </div>
+
+        <!-- Ações do Formulário -->
+        <div class="form-actions">
+          <button type="reset" class="btn btn-secondary">Limpar</button>
+          <button type="submit" class="btn btn-primary">Cadastrar Máquina</button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>AlugaMáquina - Plataforma de Locação de Máquinas e Equipamentos</span>
+      <span>PUC-Campinas - PI4 - Time 31</span>
+    </div>
+  </footer>
+
+</body>
+</html>

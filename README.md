@@ -30,11 +30,18 @@
 ```text
 ├── assets/
 │   ├── ico-AlugaMaquina.jpg
-│   └── logo-AlugaMaquina.jpg
+│   ├── logo-AlugaMaquina.jpg
+│   └── logo-header.png
 ├── docs/
 │   ├── AlugaMaquina_Apresentacao.pptx
 │   ├── Relatorio_Ideacao_AlugaMaquina.docx
 │   └── Relatorio_Ideacao_AlugaMaquina.pdf
+├── src/
+│   ├── css/
+│   │   ├── global.css
+│   │   └── cadastro-maquina.css
+│   └── pages/
+│       └── cadastro-maquina.html
 ├── .gitignore
 └── README.md
 ```
