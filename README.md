@@ -1,8 +1,13 @@
-# AlugaMáquina 🚜🏗️
-> **Projeto Integrador IV (PI4) - PUC-Campinas**  
-> **Time:** PI_IV TIME 31
+<div align="center">
+  <img src="assets/logo-AlugaMaquina.jpg" alt="Logo AlugaMáquina" width="220" />
 
-Plataforma inteligente para locação e gestão de máquinas e equipamentos para construção civil, agronegócio e indústria.
+  # AlugaMáquina 🚜🏗️
+  
+  > **Projeto Integrador IV (PI4) — PUC-Campinas**  
+  > **Time:** PI_IV TIME 31
+
+  *Plataforma inteligente para locação e gestão de máquinas e equipamentos para o agronegócio, construção civil e indústria.*
+</div>
 
 ---
 
@@ -23,13 +28,13 @@ Plataforma inteligente para locação e gestão de máquinas e equipamentos para
 ## 📁 Estrutura do Repositório
 
 ```text
+├── assets/
+│   ├── ico-AlugaMaquina.jpg
+│   └── logo-AlugaMaquina.jpg
 ├── docs/
-│   ├── AlugaMaquina_Apresentacao_V3_corrigida.pptx
+│   ├── AlugaMaquina_Apresentacao.pptx
 │   ├── Relatorio_Ideacao_AlugaMaquina.docx
-│   ├── Relatorio_Ideacao_AlugaMaquina.pdf
-│   ├── atividade_mapa_mental_bmc_mapa_da_empatia.pdf
-│   ├── atividade_matriz_swot_e_swot_cruzada.pdf
-│   └── atividade_prototipo_completo_lista_funcionalidades_cronograma_mvp.pdf
+│   └── Relatorio_Ideacao_AlugaMaquina.pdf
 ├── .gitignore
 └── README.md
 ```
@@ -38,12 +43,28 @@ Plataforma inteligente para locação e gestão de máquinas e equipamentos para
 
 ## 📌 Documentação e Entregas (Etapa de Ideação & Planejamento)
 
-Todos os artefatos de ideação e escopo encontram-se organizados na pasta [`docs/`](./docs/):
-- **Apresentação da Solução**: Slides com a proposta de valor, pitch e modelo do AlugaMáquina.
-- **Relatório de Ideação (DOCX & PDF)**: Contexto do problema, personas, fundamentação quantitativa de custos e ociosidade (IBGE/Embrapa/Cepea), 5W2H completo e sumário oficial.
-- **Mapa Mental, BMC & Mapa de Empatia**: Modelo de negócios e análise de clientes.
-- **Matriz SWOT e SWOT Cruzada**: Análise de forças, fraquezas, oportunidades e ameaças.
-- **Protótipo & MVP**: Lista inicial de funcionalidades e cronograma estimado.
+Todos os artefatos oficiais de ideação e escopo encontram-se organizados na pasta [`docs/`](./docs/):
+- **Apresentação da Solução (`AlugaMaquina_Apresentacao.pptx`)**: Slides executivos com problema, proposta de valor, modelo de negócio, persona e roadmap do MVP.
+- **Relatório Consolidado de Ideação (`Relatorio_Ideacao_AlugaMaquina.pdf` / `.docx`)**: Documento oficial completo reunindo contexto, personas, fundamentação quantitativa (IBGE/Embrapa/Cepea), Mapa de Empatia, Matriz SWOT e SWOT Cruzada, Business Model Canvas (BMC), Mapa Mental, 5W2H e wireframes do MVP.
+- **Identidade Visual (`assets/`)**:
+  - 🎨 **Logotipo:** [`assets/logo-AlugaMaquina.jpg`](./assets/logo-AlugaMaquina.jpg) — Marca visual oficial completa do AlugaMáquina.
+  - 🚜 **Ícone / Favicon:** [`assets/ico-AlugaMaquina.jpg`](./assets/ico-AlugaMaquina.jpg) — Versão compacta para favicon, atalhos e avatar mobile.
+
+---
+
+## 🛠️ Tecnologias e Ferramentas (Stack Documentada)
+
+Conforme formalizado na Seção 3.2.3 do **Relatório de Ideação** e no Slide 8 da **Apresentação Oficial**, a arquitetura do AlugaMáquina é estruturada nas seguintes tecnologias:
+
+| Camada / Função | Tecnologia | Descrição no Projeto |
+| :--- | :--- | :--- |
+| **Frontend** | **TypeScript / JavaScript** | Tipagem estática e lógica da aplicação web/mobile, reduzindo erros em tempo de desenvolvimento. |
+| **Interface / Estilo** | **HTML e CSS** | Construção da estrutura semântica e estilização responsiva adaptada ao homem do campo. |
+| **Backend** | **Java** | Backend estruturado para implementação das regras de negócio, contratos e API REST consumida pelo frontend. |
+| **Banco de Dados** | **MongoDB Atlas** | Banco de dados NoSQL gerenciado em nuvem com suporte geoespacial nativo (`2dsphere`) para busca por raio de distância (km). |
+| **Suporte & Comunicação** | **WhatsApp Business API** | Reforço de atendimento e validação rápida da comunicação direta entre locador e locatário. |
+| **Pesquisa & Validação** | **Google Forms** | Instrumento de aplicação de questionários com produtores rurais na fase de validação piloto. |
+| **Deploy & Nuvem (MVP)** | **Ambiente em Nuvem (Vercel / Supabase)** | Hospedagem ágil e provisionamento da versão piloto do MVP. |
 
 ## 📋 Gestão do Projeto (GitHub Projects)
 
