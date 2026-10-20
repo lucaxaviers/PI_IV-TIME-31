@@ -1,0 +1,326 @@
+<!--
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: Tela de avaliacao pos-locacao de equipamentos e experiencia de locacao
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Avaliação Pós-Locação - AlugaMáquina</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/avaliacao-pos-locacao.css" />
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="cadastro-maquina.html" class="brand">
+        <img src="../../assets/logo-header.png" alt="AlugaMáquina" class="brand-logo" />
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#" class="nav-link">Catálogo</a></li>
+          <li><a href="cadastro-maquina.html" class="nav-link">Cadastrar Máquina</a></li>
+          <li><a href="#" class="nav-link">Mensagens</a></li>
+          <li><a href="avaliacao-pos-locacao.html" class="nav-link active">Minhas Locações</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="container">
+    <section class="page-intro">
+      <h1 class="page-title">Avaliação Pós-Locação</h1>
+      <p class="page-description">Sua avaliação ajuda outros produtores e garante a qualidade e transparência dos equipamentos na plataforma.</p>
+    </section>
+
+    <!-- Resumo do Contrato Finalizado -->
+    <section class="rental-summary-card">
+      <div class="summary-header">
+        <div>
+          <h2 class="summary-machine-title">Trator Agrícola John Deere 6115J Cabinado</h2>
+          <span class="summary-contract-id">Contrato: LOC-2026-0842 &bull; Status: Locação Finalizada</span>
+        </div>
+      </div>
+
+      <div class="summary-details-grid">
+        <div class="summary-detail-item">
+          <span class="detail-label">Locador / Proprietário</span>
+          <span class="detail-value">Agrícola &amp; Terraplanagem São José</span>
+        </div>
+
+        <div class="summary-detail-item">
+          <span class="detail-label">Período Contratado</span>
+          <span class="detail-value">10/10/2026 a 18/10/2026 (8 diárias)</span>
+        </div>
+
+        <div class="summary-detail-item">
+          <span class="detail-label">Data de Devolução</span>
+          <span class="detail-value">18/10/2026 - 17:30</span>
+        </div>
+
+        <div class="summary-detail-item">
+          <span class="detail-label">Horímetro Registrado</span>
+          <span class="detail-value">1.248 horas (48h operadas)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Formulário de Avaliação -->
+    <div class="form-card">
+      <form action="#" method="post">
+
+        <!-- 1. Avaliação do Equipamento -->
+        <div class="form-section">
+          <h2 class="section-title">Avaliação do Equipamento</h2>
+          <p class="section-subtitle">Classifique as condições técnicas e operacionais da máquina durante o período contratado.</p>
+
+          <div class="rating-criteria-list">
+            
+            <!-- Critério 1 -->
+            <div class="rating-criterion">
+              <div class="criterion-info">
+                <span class="criterion-title">Desempenho e Potência Mecânica <span class="required">*</span></span>
+                <span class="criterion-description">Funcionamento do motor, transmissão, sistema hidráulico e tração.</span>
+              </div>
+              <div class="star-rating">
+                <input type="radio" id="star-desempenho-5" name="rating-desempenho" value="5" />
+                <label for="star-desempenho-5" title="5 estrelas - Excelente">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-desempenho-4" name="rating-desempenho" value="4" />
+                <label for="star-desempenho-4" title="4 estrelas - Muito bom">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-desempenho-3" name="rating-desempenho" value="3" checked />
+                <label for="star-desempenho-3" title="3 estrelas - Regular">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-desempenho-2" name="rating-desempenho" value="2" />
+                <label for="star-desempenho-2" title="2 estrelas - Ruim">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-desempenho-1" name="rating-desempenho" value="1" />
+                <label for="star-desempenho-1" title="1 estrela - Péssimo">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+              </div>
+            </div>
+
+            <!-- Critério 2 -->
+            <div class="rating-criterion">
+              <div class="criterion-info">
+                <span class="criterion-title">Conservação e Limpeza na Entrega <span class="required">*</span></span>
+                <span class="criterion-description">Estado físico, pneus/esteiras, cabine e lubrificação geral.</span>
+              </div>
+              <div class="star-rating">
+                <input type="radio" id="star-conservacao-5" name="rating-conservacao" value="5" />
+                <label for="star-conservacao-5" title="5 estrelas - Excelente">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-conservacao-4" name="rating-conservacao" value="4" checked />
+                <label for="star-conservacao-4" title="4 estrelas - Muito bom">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-conservacao-3" name="rating-conservacao" value="3" />
+                <label for="star-conservacao-3" title="3 estrelas - Regular">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-conservacao-2" name="rating-conservacao" value="2" />
+                <label for="star-conservacao-2" title="2 estrelas - Ruim">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-conservacao-1" name="rating-conservacao" value="1" />
+                <label for="star-conservacao-1" title="1 estrela - Péssimo">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+              </div>
+            </div>
+
+            <!-- Critério 3 -->
+            <div class="rating-criterion">
+              <div class="criterion-info">
+                <span class="criterion-title">Fidelidade ao Anúncio e Horímetro <span class="required">*</span></span>
+                <span class="criterion-description">Conformidade do modelo, acessórios e especificações anunciadas.</span>
+              </div>
+              <div class="star-rating">
+                <input type="radio" id="star-fidelidade-5" name="rating-fidelidade" value="5" checked />
+                <label for="star-fidelidade-5" title="5 estrelas - Excelente">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-fidelidade-4" name="rating-fidelidade" value="4" />
+                <label for="star-fidelidade-4" title="4 estrelas - Muito bom">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-fidelidade-3" name="rating-fidelidade" value="3" />
+                <label for="star-fidelidade-3" title="3 estrelas - Regular">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-fidelidade-2" name="rating-fidelidade" value="2" />
+                <label for="star-fidelidade-2" title="2 estrelas - Ruim">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-fidelidade-1" name="rating-fidelidade" value="1" />
+                <label for="star-fidelidade-1" title="1 estrela - Péssimo">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 2. Avaliação do Locador e Atendimento -->
+        <div class="form-section">
+          <h2 class="section-title">Avaliação do Atendimento</h2>
+          <p class="section-subtitle">Classifique a pontualidade, comunicação e suporte prestado pelo locador.</p>
+
+          <div class="rating-criteria-list">
+
+            <!-- Critério 4 -->
+            <div class="rating-criterion">
+              <div class="criterion-info">
+                <span class="criterion-title">Pontualidade no Transporte e Entrega <span class="required">*</span></span>
+                <span class="criterion-description">Cumprimento dos horários combinados de entrega e retirada no local da operação.</span>
+              </div>
+              <div class="star-rating">
+                <input type="radio" id="star-pontualidade-5" name="rating-pontualidade" value="5" />
+                <label for="star-pontualidade-5" title="5 estrelas - Excelente">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-pontualidade-4" name="rating-pontualidade" value="4" checked />
+                <label for="star-pontualidade-4" title="4 estrelas - Muito bom">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-pontualidade-3" name="rating-pontualidade" value="3" />
+                <label for="star-pontualidade-3" title="3 estrelas - Regular">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-pontualidade-2" name="rating-pontualidade" value="2" />
+                <label for="star-pontualidade-2" title="2 estrelas - Ruim">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-pontualidade-1" name="rating-pontualidade" value="1" />
+                <label for="star-pontualidade-1" title="1 estrela - Péssimo">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+              </div>
+            </div>
+
+            <!-- Critério 5 -->
+            <div class="rating-criterion">
+              <div class="criterion-info">
+                <span class="criterion-title">Comunicação e Suporte Técnico <span class="required">*</span></span>
+                <span class="criterion-description">Clareza no esclarecimento de dúvidas e agilidade em orientações operacionais.</span>
+              </div>
+              <div class="star-rating">
+                <input type="radio" id="star-suporte-5" name="rating-suporte" value="5" checked />
+                <label for="star-suporte-5" title="5 estrelas - Excelente">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-suporte-4" name="rating-suporte" value="4" />
+                <label for="star-suporte-4" title="4 estrelas - Muito bom">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-suporte-3" name="rating-suporte" value="3" />
+                <label for="star-suporte-3" title="3 estrelas - Regular">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-suporte-2" name="rating-suporte" value="2" />
+                <label for="star-suporte-2" title="2 estrelas - Ruim">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+                <input type="radio" id="star-suporte-1" name="rating-suporte" value="1" />
+                <label for="star-suporte-1" title="1 estrela - Péssimo">
+                  <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 3. Comentários e Detalhes da Experiência -->
+        <div class="form-section">
+          <h2 class="section-title">Comentários e Experiência</h2>
+          <p class="section-subtitle">Compartilhe informações adicionais sobre o uso do equipamento no campo.</p>
+
+          <div class="form-group">
+            <label for="tituloFeedback" class="form-label">Título da Avaliação <span class="required">*</span></label>
+            <input type="text" id="tituloFeedback" name="tituloFeedback" class="form-input" placeholder="Ex: Equipamento em ótimo estado, atendeu perfeitamente o plantio" required />
+          </div>
+
+          <div class="form-group">
+            <label for="comentario" class="form-label">Relato Detalhado <span class="required">*</span></label>
+            <textarea id="comentario" name="comentario" class="form-textarea" rows="4" placeholder="Descreva os pontos fortes do equipamento, o suporte prestado e recomendações para outros produtores rurais..." required></textarea>
+            <span class="form-help">Mínimo de 30 caracteres. Evite divulgar dados pessoais de contato.</span>
+          </div>
+        </div>
+
+        <!-- 4. Registro Fotográfico da Devolução (Opcional) -->
+        <div class="form-section">
+          <h2 class="section-title">Registro Fotográfico da Devolução</h2>
+          <p class="section-subtitle">Fotos do equipamento no momento da devolução (ajuda na comprovação do estado da máquina).</p>
+
+          <div class="upload-box">
+            <p class="upload-box-title">Anexe fotos da entrega ou devolução</p>
+            <p class="upload-box-help">Formatos aceitos: JPG, PNG até 10MB por arquivo (máx. 5 fotos).</p>
+            <input type="file" id="fotosDevolucao" name="fotosDevolucao" class="upload-input-file" accept="image/*" multiple />
+          </div>
+        </div>
+
+        <!-- 5. Recomendação Geral -->
+        <div class="form-section">
+          <h2 class="section-title">Recomendação Geral</h2>
+          <p class="section-subtitle">Você recomendaria este equipamento e este locador para outros produtores rurais?</p>
+
+          <div class="recommendation-options">
+            <label class="recommendation-card">
+              <input type="radio" name="recomendacao" value="sim" checked />
+              <div class="recommendation-content">
+                <strong class="recommendation-title">Sim, recomendo</strong>
+                <span class="recommendation-text">O equipamento e o locador atenderam com total qualidade.</span>
+              </div>
+            </label>
+
+            <label class="recommendation-card">
+              <input type="radio" name="recomendacao" value="neutro" />
+              <div class="recommendation-content">
+                <strong class="recommendation-title">Recomendo com ressalvas</strong>
+                <span class="recommendation-text">Atendeu em parte, mas com pontos de melhoria a considerar.</span>
+              </div>
+            </label>
+
+            <label class="recommendation-card">
+              <input type="radio" name="recomendacao" value="nao" />
+              <div class="recommendation-content">
+                <strong class="recommendation-title">Não recomendo</strong>
+                <span class="recommendation-text">Ocorreram problemas relevantes que comprometeram o uso.</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Enviar Avaliação</button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-copy">&copy; 2026 AlugaMáquina - Projeto Integrador IV (Time 31 - PUC-Campinas). Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
