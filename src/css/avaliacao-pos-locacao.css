@@ -1,0 +1,324 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: Estilos da tela de avaliacao pos-locacao de equipamentos
+*/
+
+.page-intro {
+  padding: 2rem 0 1.5rem 0;
+}
+
+.page-title {
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.25rem;
+}
+
+.page-description {
+  font-size: 0.925rem;
+  color: var(--color-text-muted);
+}
+
+/* Card de Resumo da Locação Concluída */
+.rental-summary-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.75rem;
+  box-shadow: var(--shadow);
+}
+
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.summary-machine-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.2rem;
+}
+
+.summary-contract-id {
+  font-size: 0.825rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.summary-details-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.summary-detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 0.25rem;
+}
+
+.detail-value {
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Card Principal do Formulário */
+.form-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-bottom: 3rem;
+  box-shadow: var(--shadow);
+}
+
+/* Seções Internas */
+.form-section {
+  padding-bottom: 1.75rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.form-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+}
+
+.section-subtitle {
+  font-size: 0.825rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1.25rem;
+}
+
+/* Lista de Critérios de Avaliação com Estrelas */
+.rating-criteria-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.rating-criterion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background-color: #FAFCFA;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.rating-criterion:hover {
+  background-color: #FFFFFF;
+  border-color: #CBD5E1;
+}
+
+.criterion-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-width: 65%;
+}
+
+.criterion-title {
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.criterion-description {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* Componente Interativo de Estrelas em CSS Puro */
+.star-rating {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 6px;
+}
+
+.star-rating input[type="radio"] {
+  display: none;
+}
+
+.star-rating label {
+  cursor: pointer;
+  color: #CBD5E1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.star-rating .star-icon {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+}
+
+/* Estrelas Selecionadas (Dourado Oficial da Marca) */
+.star-rating input[type="radio"]:checked ~ label {
+  color: var(--color-secondary);
+}
+
+/* Efeito Hover Dinâmico */
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: var(--color-secondary-hover);
+  transform: scale(1.15);
+}
+
+/* Área de Upload de Fotos da Devolução */
+.upload-box {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  background-color: #FAFAFA;
+}
+
+.upload-box-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.upload-box-help {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+.upload-input-file {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+/* Opções de Recomendação Geral */
+.recommendation-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.recommendation-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: #FFFFFF;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.recommendation-card:hover {
+  border-color: #94A3B8;
+  box-shadow: var(--shadow);
+}
+
+.recommendation-card input[type="radio"] {
+  margin-top: 3px;
+  accent-color: var(--color-primary);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.recommendation-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.recommendation-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.recommendation-text {
+  font-size: 0.825rem;
+  color: var(--color-text-muted);
+  line-height: 1.35;
+}
+
+/* Barra de Ações */
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+  margin-top: 2rem;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+  .summary-details-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .recommendation-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .form-card {
+    padding: 1.25rem;
+  }
+
+  .summary-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rating-criterion {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .criterion-info {
+    max-width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
