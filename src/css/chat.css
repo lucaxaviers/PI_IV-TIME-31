@@ -1,0 +1,223 @@
+/*
+  Autor: Leonardo Gambaroni Alves | 25003494
+  Descrição: Estilos para a tela de chat/mensagens entre as partes
+*/
+
+/* Introdução da página */
+.page-intro {
+  padding: 2rem 0 1.5rem 0;
+}
+
+.page-title {
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.25rem;
+}
+
+.page-description {
+  font-size: 0.925rem;
+  color: var(--color-text-muted);
+}
+
+/* Container Principal do Chat (Lado a Lado usando Flexbox) */
+.chat-container {
+  display: flex;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  height: 550px;
+  margin-bottom: 3rem;
+  overflow: hidden;
+}
+
+/* Lado Esquerdo: Lista de Conversas */
+.chat-sidebar {
+  width: 320px;
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  background-color: #FAFAFA;
+}
+
+.sidebar-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+
+.sidebar-header h2 {
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.conversations-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Item individual da conversa */
+.conversation-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #F0F0F0;
+  cursor: pointer;
+}
+
+.conversation-item:hover {
+  background-color: #F3F4F6;
+}
+
+.conversation-item.active {
+  background-color: var(--color-primary-light);
+  border-left: 4px solid var(--color-primary);
+}
+
+.user-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.conversation-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.user-name {
+  font-size: 0.875rem;
+  color: var(--color-text);
+}
+
+.machine-name {
+  font-size: 0.775rem;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.last-message {
+  font-size: 0.775rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+/* Lado Direito: Janela de Mensagens */
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+}
+
+/* Topo do Chat */
+.chat-header {
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-surface);
+}
+
+.chat-user-details h2 {
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.chat-user-details span {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* Área de Mensagens */
+.chat-messages {
+  flex: 1;
+  padding: 1.25rem;
+  overflow-y: auto;
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Estrutura de Balão de Mensagem */
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+}
+
+.message-bubble {
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.message-time {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  margin-top: 3px;
+}
+
+/* Mensagem Recebida (Esq) */
+.message.received {
+  align-self: flex-start;
+}
+
+.message.received .message-bubble {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+/* Mensagem Enviada (Dir) */
+.message.sent {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.message.sent .message-bubble {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+}
+
+/* Input / Formulário para Enviar */
+.chat-input-area {
+  display: flex;
+  gap: 10px;
+  padding: 0.85rem 1.25rem;
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+
+.chat-input-area .form-input {
+  flex: 1;
+}
+
+/* Responsividade Básica (Celulares) */
+@media (max-width: 768px) {
+  .chat-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .chat-sidebar {
+    width: 100%;
+    height: 180px;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .chat-main {
+    height: 400px;
+  }
+}

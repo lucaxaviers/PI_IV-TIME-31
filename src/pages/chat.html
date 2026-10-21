@@ -1,0 +1,146 @@
+<!--
+  Autor: Leonardo Gambaroni Alves | 25003494
+  Descrição: Tela de chat/mensagens entre locador e locatário 
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mensagens - AlugaMáquina</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/chat.css" />
+</head>
+<body>
+
+  <!-- Cabeçalho Principal -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="cadastro-maquina.html" class="brand">
+        <img src="../../assets/logo-header.png" alt="AlugaMáquina" class="brand-logo" />
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#" class="nav-link">Catálogo</a></li>
+          <li><a href="cadastro-maquina.html" class="nav-link">Cadastrar Máquina</a></li>
+          <li><a href="chat.html" class="nav-link active">Mensagens</a></li>
+          <li><a href="avaliacao-pos-locacao.html" class="nav-link">Minhas Locações</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal do Chat -->
+  <main class="container">
+    
+    <!-- Título da Página -->
+    <section class="page-intro">
+      <h1 class="page-title">Mensagens e Negociações</h1>
+      <p class="page-description">Converse diretamente com proprietários e interessados para alinhar detalhes da locação.</p>
+    </section>
+
+    <!-- Caixão Principal do Chat (Dividido em Lado Esquerdo e Direito) -->
+    <div class="chat-container">
+
+      <!-- LADO ESQUERDO: Lista de Conversas -->
+      <aside class="chat-sidebar">
+        <div class="sidebar-header">
+          <h2>Suas Conversas</h2>
+        </div>
+
+        <div class="conversations-list">
+          <!-- Item da Conversa Ativa -->
+          <div class="conversation-item active">
+            <div class="user-avatar">
+              <img src="https://via.placeholder.com/40" alt="Avatar do Locador" />
+            </div>
+            <div class="conversation-info">
+              <strong class="user-name">José Carlos (Locador)</strong>
+              <span class="machine-name">Trator John Deere 6115J</span>
+              <p class="last-message">Com certeza, a entrega pode ser feita...</p>
+            </div>
+          </div>
+
+          <!-- Outra Conversa de Exemplo -->
+          <div class="conversation-item">
+            <div class="user-avatar">
+              <img src="https://via.placeholder.com/40" alt="Avatar do Locador" />
+            </div>
+            <div class="conversation-info">
+              <strong class="user-name">Fazenda Santa Maria</strong>
+              <span class="machine-name">Colheitadeira Case 2799</span>
+              <p class="last-message">Qual o valor do frete para Paulínia?</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- LADO DIREITO: Janela de Mensagens Ativa -->
+      <section class="chat-main">
+
+        <!-- Topo da Conversa com Dados do Locador e Máquina -->
+        <div class="chat-header">
+          <div class="chat-user-details">
+            <h2>José Carlos — Agrícola São José</h2>
+            <span>Paulínia/SP &bull; Equipamento: <strong>Trator John Deere 6115J</strong></span>
+          </div>
+          <button class="btn btn-secondary">Ver Máquina</button>
+        </div>
+
+        <!-- Área Central de Mensagens -->
+        <div class="chat-messages">
+          
+          <!-- Mensagem Recebida (Locador) -->
+          <div class="message received">
+            <div class="message-bubble">
+              Olá! Vi que você tem interesse no Trator John Deere para a próxima semana. A máquina está disponível sim!
+            </div>
+            <span class="message-time">10:14</span>
+          </div>
+
+          <!-- Mensagem Enviada (Locatário) -->
+          <div class="message sent">
+            <div class="message-bubble">
+              Olá José, bom dia! Preciso para 8 diárias. Consegue entregar em Paulínia?
+            </div>
+            <span class="message-time">10:16</span>
+          </div>
+
+          <!-- Mensagem Recebida (Locador) -->
+          <div class="message received">
+            <div class="message-bubble">
+              Com certeza! O frete estimado fica em R$ 145,00. Podemos fechar o contrato digital pela plataforma?
+            </div>
+            <span class="message-time">10:20</span>
+          </div>
+
+        </div>
+
+        <!-- Rodapé do Chat com Formulário para Enviar Mensagem -->
+        <form class="chat-input-area" action="#" method="post">
+          <input 
+            type="text" 
+            class="form-input" 
+            placeholder="Digite sua mensagem para o proprietário..." 
+            required 
+          />
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>AlugaMáquina - Plataforma de Locação de Máquinas e Equipamentos</span>
+      <span>PUC-Campinas - PI4 - Time 31</span>
+    </div>
+  </footer>
+
+</body>
+</html>
