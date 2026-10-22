@@ -8,6 +8,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mensagens - AlugaMáquina</title>
+  <link rel="icon" type="image/jpeg" href="../../assets/ico-AlugaMaquina.jpg" />
   <link rel="stylesheet" href="../css/global.css" />
   <link rel="stylesheet" href="../css/chat.css" />
 </head>
@@ -16,13 +17,13 @@
   <!-- Cabeçalho Principal -->
   <header class="header">
     <div class="container header-inner">
-      <a href="cadastro-maquina.html" class="brand">
+      <a href="busca-catalogo.html" class="brand">
         <img src="../../assets/logo-header.png" alt="AlugaMáquina" class="brand-logo" />
       </a>
 
       <nav>
         <ul class="nav-menu">
-          <li><a href="#" class="nav-link">Catálogo</a></li>
+          <li><a href="busca-catalogo.html" class="nav-link">Catálogo</a></li>
           <li><a href="cadastro-maquina.html" class="nav-link">Cadastrar Máquina</a></li>
           <li><a href="chat.html" class="nav-link active">Mensagens</a></li>
           <li><a href="avaliacao-pos-locacao.html" class="nav-link">Minhas Locações</a></li>
@@ -85,7 +86,10 @@
             <h2>José Carlos — Agrícola São José</h2>
             <span>Paulínia/SP &bull; Equipamento: <strong>Trator John Deere 6115J</strong></span>
           </div>
-          <button class="btn btn-secondary">Ver Máquina</button>
+          <div style="display: flex; gap: 8px;">
+            <a href="detalhe-maquina.html" class="btn btn-secondary">Ver Máquina</a>
+            <a href="contrato-digital.html" class="btn btn-primary">Gerar Contrato</a>
+          </div>
         </div>
 
         <!-- Área Central de Mensagens -->
@@ -138,7 +142,6 @@
   <footer class="footer">
     <div class="container footer-inner">
       <span>AlugaMáquina - Plataforma de Locação de Máquinas e Equipamentos</span>
-      <span>PUC-Campinas - PI4 - Time 31</span>
     </div>
   </footer>
 

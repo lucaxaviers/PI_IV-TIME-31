@@ -8,6 +8,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Avaliação Pós-Locação - AlugaMáquina</title>
+  <link rel="icon" type="image/jpeg" href="../../assets/ico-AlugaMaquina.jpg" />
   <link rel="stylesheet" href="../css/global.css" />
   <link rel="stylesheet" href="../css/avaliacao-pos-locacao.css" />
 </head>
@@ -16,15 +17,15 @@
   <!-- Cabeçalho -->
   <header class="header">
     <div class="container header-inner">
-      <a href="cadastro-maquina.html" class="brand">
+      <a href="busca-catalogo.html" class="brand">
         <img src="../../assets/logo-header.png" alt="AlugaMáquina" class="brand-logo" />
       </a>
 
       <nav>
         <ul class="nav-menu">
-          <li><a href="#" class="nav-link">Catálogo</a></li>
+          <li><a href="busca-catalogo.html" class="nav-link">Catálogo</a></li>
           <li><a href="cadastro-maquina.html" class="nav-link">Cadastrar Máquina</a></li>
-          <li><a href="#" class="nav-link">Mensagens</a></li>
+          <li><a href="chat.html" class="nav-link">Mensagens</a></li>
           <li><a href="avaliacao-pos-locacao.html" class="nav-link active">Minhas Locações</a></li>
         </ul>
       </nav>
@@ -42,8 +43,8 @@
     <section class="rental-summary-card">
       <div class="summary-header">
         <div>
-          <h2 class="summary-machine-title">Trator Agrícola John Deere 6115J Cabinado</h2>
-          <span class="summary-contract-id">Contrato: LOC-2026-0842 &bull; Status: Locação Finalizada</span>
+          <h2 class="summary-machine-title"><a href="detalhe-maquina.html" style="color: inherit; text-decoration: underline;">Trator Agrícola John Deere 6115J Cabinado</a></h2>
+          <span class="summary-contract-id">Contrato: <a href="contrato-digital.html" style="color: inherit; text-decoration: underline;">LOC-2026-0842</a> &bull; Status: Locação Finalizada</span>
         </div>
       </div>
 
@@ -307,7 +308,7 @@
 
         <!-- Botões de Ação -->
         <div class="form-actions">
-          <button type="button" class="btn btn-secondary">Cancelar</button>
+          <a href="busca-catalogo.html" class="btn btn-secondary">Cancelar</a>
           <button type="submit" class="btn btn-primary">Enviar Avaliação</button>
         </div>
 
@@ -318,7 +319,7 @@
   <!-- Rodapé -->
   <footer class="footer">
     <div class="container footer-inner">
-      <p class="footer-copy">&copy; 2026 AlugaMáquina - Projeto Integrador IV (Time 31 - PUC-Campinas). Todos os direitos reservados.</p>
+      <span>AlugaMáquina - Plataforma de Locação de Máquinas e Equipamentos</span>
     </div>
   </footer>
 

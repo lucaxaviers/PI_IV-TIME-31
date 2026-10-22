@@ -1,6 +1,5 @@
 /* ==========================================================================
    AlugaMáquina - Estilos Globais & Design System
-   Projeto Integrador IV - Time 31
    ========================================================================== */
 
 :root {
@@ -230,7 +229,8 @@ a:hover {
 .footer-inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
 }
 
 @media (max-width: 640px) {

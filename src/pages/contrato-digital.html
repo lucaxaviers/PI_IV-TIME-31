@@ -8,6 +8,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contrato Digital - AlugaMáquina</title>
+  <link rel="icon" type="image/jpeg" href="../../assets/ico-AlugaMaquina.jpg" />
   <link rel="stylesheet" href="../css/global.css" />
   <link rel="stylesheet" href="../css/contrato-digital.css" />
 </head>
@@ -25,7 +26,7 @@
           <li><a href="busca-catalogo.html" class="nav-link">Catálogo</a></li>
           <li><a href="cadastro-maquina.html" class="nav-link">Cadastrar Máquina</a></li>
           <li><a href="chat.html" class="nav-link">Mensagens</a></li>
-          <li><a href="#" class="nav-link active">Minhas Locações</a></li>
+          <li><a href="avaliacao-pos-locacao.html" class="nav-link">Minhas Locações</a></li>
         </ul>
       </nav>
     </div>
@@ -115,7 +116,7 @@
               <h2 class="section-title">Prévia da minuta</h2>
               <p class="section-subtitle">Layout do PDF que será gerado após a assinatura.</p>
             </div>
-            <a href="#" class="btn btn-secondary">Baixar Minuta em PDF</a>
+            <a href="#" onclick="window.print(); return false;" class="btn btn-secondary">Baixar Minuta em PDF</a>
           </div>
 
           <article class="paper" aria-label="Minuta do contrato">
@@ -189,8 +190,8 @@
             <span>Li e concordo com os termos do contrato e com as regras da plataforma.</span>
           </label>
 
-          <button type="button" class="btn btn-primary btn-block">Aceitar e Assinar Contrato Digital</button>
-          <a href="#" class="btn btn-secondary btn-block">Baixar Minuta em PDF</a>
+          <a href="avaliacao-pos-locacao.html" class="btn btn-primary btn-block">Aceitar e Assinar Contrato Digital</a>
+          <a href="#" onclick="window.print(); return false;" class="btn btn-secondary btn-block">Baixar Minuta em PDF</a>
           <a href="chat.html" class="back-link">Voltar para o chat</a>
 
           <p class="legal-note">
@@ -206,7 +207,6 @@
   <footer class="footer">
     <div class="container footer-inner">
       <span>AlugaMáquina - Plataforma de Locação de Máquinas e Equipamentos</span>
-      <span>PUC-Campinas - PI4 - Time 31</span>
     </div>
   </footer>
 
