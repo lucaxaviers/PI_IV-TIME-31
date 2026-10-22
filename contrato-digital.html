@@ -1,0 +1,214 @@
+<!--
+  Autor: Kauan Aurélio Lasmar Dias | 25001590
+  Descricao: Tela de contrato digital simplificado e confirmacao de reserva
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contrato Digital - AlugaMáquina</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/contrato-digital.css" />
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="busca-catalogo.html" class="brand">
+        <img src="../../assets/logo-header.png" alt="AlugaMáquina" class="brand-logo" />
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="busca-catalogo.html" class="nav-link">Catálogo</a></li>
+          <li><a href="cadastro-maquina.html" class="nav-link">Cadastrar Máquina</a></li>
+          <li><a href="chat.html" class="nav-link">Mensagens</a></li>
+          <li><a href="#" class="nav-link active">Minhas Locações</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="container">
+
+    <nav class="breadcrumb" aria-label="Você está em">
+      <a href="busca-catalogo.html">Catálogo</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="detalhe-maquina.html">Trator John Deere 6115J Cabinado</a>
+      <span class="breadcrumb-sep">/</span>
+      <span>Contrato digital</span>
+    </nav>
+
+    <section class="page-intro">
+      <h1 class="page-title">Contrato Digital e Confirmação de Reserva</h1>
+      <p class="page-description">Confira os dados, revise o contrato e assine. Tudo fica registrado na plataforma.</p>
+    </section>
+
+    <!-- Etapas -->
+    <ol class="steps" aria-label="Etapas da locação">
+      <li class="step done">1. Busca</li>
+      <li class="step done">2. Negociação</li>
+      <li class="step current">3. Contrato</li>
+      <li class="step">4. Retirada</li>
+    </ol>
+
+    <div class="contract-layout">
+
+      <!-- Coluna principal -->
+      <div class="contract-main">
+
+        <!-- Resumo da contratação -->
+        <section class="card">
+          <h2 class="section-title">Resumo da contratação</h2>
+          <p class="section-subtitle">Dados ilustrativos para o protótipo.</p>
+
+          <div class="parties">
+            <div class="party">
+              <span class="party-role">Locador</span>
+              <strong>Carlos Eduardo Pereira</strong>
+              <span>Fazenda Santa Maria &middot; Paulínia / SP</span>
+              <span>CPF ***.***.***-01</span>
+            </div>
+            <div class="party">
+              <span class="party-role">Locatário</span>
+              <strong>Antônio Ferreira da Silva</strong>
+              <span>Sítio Boa Vista &middot; Cosmópolis / SP</span>
+              <span>CPF ***.***.***-02</span>
+            </div>
+          </div>
+
+          <dl class="summary-list">
+            <div class="summary-row">
+              <dt>Equipamento</dt>
+              <dd>Trator John Deere 6115J Cabinado (2021)</dd>
+            </div>
+            <div class="summary-row">
+              <dt>Período de uso</dt>
+              <dd>10/11/2026 a 14/11/2026 (5 diárias)</dd>
+            </div>
+            <div class="summary-row">
+              <dt>Diárias</dt>
+              <dd>5 x R$ 850,00 = R$ 4.250,00</dd>
+            </div>
+            <div class="summary-row">
+              <dt>Frete estimado (ida e volta)</dt>
+              <dd>28 km x R$ 6,50/km x 2 = R$ 364,00</dd>
+            </div>
+            <div class="summary-row summary-total">
+              <dt>Total da locação</dt>
+              <dd>R$ 4.614,00</dd>
+            </div>
+            <div class="summary-row">
+              <dt>Caução (devolvida na entrega sem avarias)</dt>
+              <dd>R$ 1.000,00</dd>
+            </div>
+          </dl>
+        </section>
+
+        <!-- Prévia da minuta -->
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="section-title">Prévia da minuta</h2>
+              <p class="section-subtitle">Layout do PDF que será gerado após a assinatura.</p>
+            </div>
+            <a href="#" class="btn btn-secondary">Baixar Minuta em PDF</a>
+          </div>
+
+          <article class="paper" aria-label="Minuta do contrato">
+            <h3 class="paper-title">CONTRATO DE LOCAÇÃO DE EQUIPAMENTO AGRÍCOLA</h3>
+            <p class="paper-code">Nº AM-2026-00123 &middot; Emitido via AlugaMáquina</p>
+
+            <h4>Cláusula 1ª - Do objeto</h4>
+            <p>O LOCADOR cede ao LOCATÁRIO, em caráter temporário, o equipamento Trator John Deere 6115J Cabinado, ano 2021, horímetro 1.200 h, em perfeito estado de funcionamento.</p>
+
+            <h4>Cláusula 2ª - Do prazo</h4>
+            <p>A locação vigora de 10/11/2026 a 14/11/2026, devendo o equipamento ser devolvido no último dia, no mesmo local da retirada.</p>
+
+            <h4>Cláusula 3ª - Do valor e do frete</h4>
+            <p>O valor total é de R$ 4.614,00, sendo R$ 4.250,00 de diárias e R$ 364,00 de frete estimado, pago conforme combinado na plataforma.</p>
+
+            <h4>Cláusula 4ª - Dos termos de uso</h4>
+            <p>O LOCATÁRIO compromete-se a utilizar o equipamento apenas para fins agrícolas, por operador habilitado, seguindo as orientações do fabricante e as regras de uso da plataforma.</p>
+
+            <h4>Cláusula 5ª - Dos danos e da caução</h4>
+            <p>Foi retida caução de R$ 1.000,00. Em caso de danos não decorrentes do desgaste normal, apurados no checklist de devolução, o valor do reparo será abatido da caução, cabendo ao LOCATÁRIO complementar eventual diferença.</p>
+
+            <h4>Cláusula 6ª - Do foro</h4>
+            <p>As partes elegem o foro da comarca de Paulínia / SP para dirimir quaisquer dúvidas deste contrato.</p>
+
+            <div class="paper-sign">
+              <div><span class="sign-line"></span><small>Locador</small></div>
+              <div><span class="sign-line"></span><small>Locatário</small></div>
+            </div>
+          </article>
+        </section>
+
+        <!-- Checklist de segurança -->
+        <section class="card">
+          <h2 class="section-title">Checklist digital de segurança</h2>
+          <p class="section-subtitle">Estado de conservação na entrega. Marque o que foi conferido junto com o locador.</p>
+
+          <ul class="checklist">
+            <li><label><input type="checkbox" checked /> Pneus e rodas sem avarias aparentes</label></li>
+            <li><label><input type="checkbox" checked /> Cabine, vidros e bancos em bom estado</label></li>
+            <li><label><input type="checkbox" checked /> Horímetro conferido: 1.200 h</label></li>
+            <li><label><input type="checkbox" /> Nível de combustível registrado</label></li>
+            <li><label><input type="checkbox" /> Implemento (grade) conferido</label></li>
+            <li><label><input type="checkbox" /> Fotos da máquina tiradas na entrega</label></li>
+          </ul>
+
+          <div class="form-group">
+            <label for="obs" class="form-label">Observações do estado da máquina</label>
+            <textarea id="obs" class="form-textarea" rows="3" placeholder="Ex.: pequeno risco na lateral esquerda do capô."></textarea>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Coluna lateral: assinatura -->
+      <aside class="contract-side">
+        <div class="card sign-card">
+          <h2 class="section-title">Assinatura digital</h2>
+
+          <div class="total-box">
+            <span>Total da locação</span>
+            <strong>R$ 4.614,00</strong>
+          </div>
+
+          <div class="form-group">
+            <label for="nomeAssinatura" class="form-label">Nome completo do locatário <span class="required">*</span></label>
+            <input type="text" id="nomeAssinatura" class="form-input" placeholder="Digite seu nome para assinar" />
+          </div>
+
+          <label class="accept">
+            <input type="checkbox" />
+            <span>Li e concordo com os termos do contrato e com as regras da plataforma.</span>
+          </label>
+
+          <button type="button" class="btn btn-primary btn-block">Aceitar e Assinar Contrato Digital</button>
+          <a href="#" class="btn btn-secondary btn-block">Baixar Minuta em PDF</a>
+          <a href="chat.html" class="back-link">Voltar para o chat</a>
+
+          <p class="legal-note">
+            Protótipo ilustrativo, sem validade jurídica. Ao assinar, o contrato fica registrado na plataforma com data e hora.
+          </p>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>AlugaMáquina - Plataforma de Locação de Máquinas e Equipamentos</span>
+      <span>PUC-Campinas - PI4 - Time 31</span>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,301 @@
+/*
+  Autor: Kauan Aurélio Lasmar Dias | 25001590
+  Descricao: Estilos da tela de contrato digital e confirmacao de reserva
+*/
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding-top: 1.5rem;
+  font-size: 0.825rem;
+  color: var(--color-text-muted);
+}
+
+.breadcrumb-sep {
+  color: var(--color-border);
+}
+
+.page-intro {
+  padding: 1rem 0 1rem 0;
+}
+
+.page-title {
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.25rem;
+}
+
+.page-description {
+  font-size: 0.925rem;
+  color: var(--color-text-muted);
+}
+
+/* Etapas */
+.steps {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.step {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+}
+
+.step.done {
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary-light);
+}
+
+.step.current {
+  color: #FFFFFF;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Layout em duas colunas */
+.contract-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1.5rem;
+  align-items: start;
+  margin-bottom: 3rem;
+}
+
+.contract-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.contract-side {
+  position: sticky;
+  top: 1rem;
+}
+
+/* Cards */
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+}
+
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.section-subtitle {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+/* Partes */
+.parties {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.party {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.85rem;
+  padding: 0.75rem;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.party-role {
+  font-size: 0.725rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-primary);
+}
+
+/* Resumo */
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 8px 0;
+  border-bottom: 1px solid #E5E7EB;
+  font-size: 0.9rem;
+}
+
+.summary-row dt {
+  color: var(--color-text-muted);
+}
+
+.summary-row dd {
+  font-weight: 600;
+  text-align: right;
+}
+
+.summary-total {
+  border-bottom: none;
+  font-size: 1.05rem;
+}
+
+.summary-total dt,
+.summary-total dd {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* Minuta (folha de papel) */
+.paper {
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-border);
+  box-shadow: inset 0 0 0 4px var(--color-bg);
+  padding: 1.75rem 2rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.paper-title {
+  text-align: center;
+  font-size: 1rem;
+}
+
+.paper-code {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+.paper h4 {
+  margin-top: 0.9rem;
+  font-size: 0.875rem;
+}
+
+.paper-sign {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+.sign-line {
+  display: block;
+  border-bottom: 1px solid var(--color-text);
+  height: 28px;
+}
+
+/* Checklist */
+.checklist {
+  list-style: none;
+  margin-bottom: 1.25rem;
+}
+
+.checklist li {
+  padding: 8px 0;
+  border-bottom: 1px solid #E5E7EB;
+  font-size: 0.9rem;
+}
+
+.checklist label,
+.accept {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.checklist input,
+.accept input {
+  margin-top: 3px;
+  accent-color: var(--color-primary);
+}
+
+/* Assinatura */
+.total-box {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem;
+  margin: 0.75rem 0 1.25rem 0;
+  background-color: var(--color-primary-light);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+}
+
+.total-box strong {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+}
+
+.accept {
+  font-size: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.btn-block {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.back-link {
+  display: block;
+  text-align: center;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.legal-note {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  border-top: 1px solid #E5E7EB;
+  padding-top: 0.75rem;
+}
+
+@media (max-width: 900px) {
+  .contract-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .contract-side {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .parties {
+    grid-template-columns: 1fr;
+  }
+
+  .card-head {
+    flex-direction: column;
+  }
+}
