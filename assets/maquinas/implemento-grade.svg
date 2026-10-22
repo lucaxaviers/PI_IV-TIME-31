@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" role="img" aria-label="Ilustração de grade aradora">
+<defs><linearGradient id="c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CFE8F5"/><stop offset="1" stop-color="#EEF6EE"/></linearGradient></defs>
+<rect width="400" height="240" fill="url(#c)"/>
+<circle cx="340" cy="45" r="20" fill="#F6D365"/>
+<path d="M0 175 Q100 150 200 170 T400 160 V240 H0Z" fill="#9CC48A"/>
+<rect y="195" width="400" height="45" fill="#7FA66B"/>
+<path d="M0 205H400M0 218H400M0 231H400" stroke="#6C9459" stroke-width="3"/>
+<rect x="60" y="108" width="270" height="12" rx="3" fill="#374151"/><ellipse cx="85" cy="165" rx="17" ry="30" fill="#9CA3AF" stroke="#1F2421" stroke-width="3"/><line x1="85" y1="115" x2="85" y2="140" stroke="#1F2421" stroke-width="4"/><ellipse cx="123" cy="165" rx="17" ry="30" fill="#9CA3AF" stroke="#1F2421" stroke-width="3"/><line x1="123" y1="115" x2="123" y2="140" stroke="#1F2421" stroke-width="4"/><ellipse cx="161" cy="165" rx="17" ry="30" fill="#9CA3AF" stroke="#1F2421" stroke-width="3"/><line x1="161" y1="115" x2="161" y2="140" stroke="#1F2421" stroke-width="4"/><ellipse cx="199" cy="165" rx="17" ry="30" fill="#9CA3AF" stroke="#1F2421" stroke-width="3"/><line x1="199" y1="115" x2="199" y2="140" stroke="#1F2421" stroke-width="4"/><ellipse cx="237" cy="165" rx="17" ry="30" fill="#9CA3AF" stroke="#1F2421" stroke-width="3"/><line x1="237" y1="115" x2="237" y2="140" stroke="#1F2421" stroke-width="4"/><ellipse cx="275" cy="165" rx="17" ry="30" fill="#9CA3AF" stroke="#1F2421" stroke-width="3"/><line x1="275" y1="115" x2="275" y2="140" stroke="#1F2421" stroke-width="4"/><ellipse cx="313" cy="165" rx="17" ry="30" fill="#9CA3AF" stroke="#1F2421" stroke-width="3"/><line x1="313" y1="115" x2="313" y2="140" stroke="#1F2421" stroke-width="4"/><polygon points="330,112 392,92 392,128" fill="#E5A910"/><rect x="326" y="104" width="10" height="28" fill="#1F2421"/>
+</svg>
