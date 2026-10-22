@@ -1,0 +1,149 @@
+/*
+  Autor: Mateus Oliveira Rafael | 25001369
+  Descricao: Estilos da tela de busca e filtro regional (catalogo)
+*/
+
+.page-intro {
+  padding: 1.5rem 0 1rem 0;
+}
+
+.page-title {
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.25rem;
+}
+
+.page-description {
+  font-size: 0.925rem;
+  color: var(--color-text-muted);
+}
+
+/* Painel de busca */
+.search-panel {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem 1.25rem 0.25rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 1rem;
+  align-items: end;
+}
+
+.result-count {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+/* Grade de cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+.machine-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.machine-photo {
+  height: 160px;
+  background-color: #E5E7EB;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.machine-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.machine-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.verified-badge {
+  align-self: flex-start;
+  font-size: 0.725rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.machine-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.machine-meta {
+  font-size: 0.825rem;
+  color: var(--color-text-muted);
+}
+
+.machine-distance {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.machine-price {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 6px 0 10px 0;
+}
+
+.machine-price span {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.btn-card {
+  margin-top: auto;
+  width: 100%;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: 2rem 0 3rem 0;
+}
+
+@media (max-width: 900px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .card-grid,
+  .filters {
+    grid-template-columns: 1fr;
+  }
+}

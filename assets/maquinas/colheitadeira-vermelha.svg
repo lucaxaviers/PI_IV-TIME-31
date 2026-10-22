@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" role="img" aria-label="Ilustração de colheitadeira vermelha">
+<defs><linearGradient id="c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CFE8F5"/><stop offset="1" stop-color="#EEF6EE"/></linearGradient></defs>
+<rect width="400" height="240" fill="url(#c)"/>
+<circle cx="340" cy="45" r="20" fill="#F6D365"/>
+<path d="M0 175 Q100 150 200 170 T400 160 V240 H0Z" fill="#9CC48A"/>
+<rect y="195" width="400" height="45" fill="#7FA66B"/>
+<path d="M0 205H400M0 218H400M0 231H400" stroke="#6C9459" stroke-width="3"/>
+<rect x="22" y="150" width="96" height="36" rx="4" fill="#E5A910"/><line x1="30" y1="152" x2="30" y2="182" stroke="#B88608" stroke-width="3"/><line x1="43" y1="152" x2="43" y2="182" stroke="#B88608" stroke-width="3"/><line x1="56" y1="152" x2="56" y2="182" stroke="#B88608" stroke-width="3"/><line x1="69" y1="152" x2="69" y2="182" stroke="#B88608" stroke-width="3"/><line x1="82" y1="152" x2="82" y2="182" stroke="#B88608" stroke-width="3"/><line x1="95" y1="152" x2="95" y2="182" stroke="#B88608" stroke-width="3"/><line x1="108" y1="152" x2="108" y2="182" stroke="#B88608" stroke-width="3"/><rect x="110" y="108" width="222" height="70" rx="9" fill="#C62828"/><rect x="172" y="80" width="152" height="32" rx="7" fill="#8E1B1B"/><rect x="112" y="72" width="58" height="46" rx="5" fill="#8E1B1B"/><rect x="120" y="80" width="42" height="30" rx="3" fill="#BFE3F2"/><line x1="318" y1="88" x2="378" y2="58" stroke="#E5A910" stroke-width="7" stroke-linecap="round"/><circle cx="165" cy="190" r="32" fill="#222"/><circle cx="165" cy="190" r="17" fill="#E5A910"/><circle cx="165" cy="190" r="5" fill="#1F2421"/><circle cx="300" cy="196" r="22" fill="#222"/><circle cx="300" cy="196" r="12" fill="#E5A910"/><circle cx="300" cy="196" r="4" fill="#1F2421"/>
+</svg>

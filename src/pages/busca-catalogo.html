@@ -1,0 +1,167 @@
+<!--
+  Autor: Mateus Oliveira Rafael | 25001369
+  Descricao: Tela de busca e filtro regional (vitrine / catalogo de maquinas) - prototipo visual
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo - AlugaMáquina</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/busca-catalogo.css" />
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="busca-catalogo.html" class="brand">
+        <img src="../../assets/logo-header.png" alt="AlugaMáquina" class="brand-logo" />
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="busca-catalogo.html" class="nav-link active">Catálogo</a></li>
+          <li><a href="cadastro-maquina.html" class="nav-link">Cadastrar Máquina</a></li>
+          <li><a href="chat.html" class="nav-link">Mensagens</a></li>
+          <li><a href="#" class="nav-link">Minhas Locações</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="container">
+
+    <section class="page-intro">
+      <h1 class="page-title">Encontre máquinas perto de você</h1>
+      <p class="page-description">Filtre por distância e economize no frete. Base de referência: Paulínia / SP.</p>
+    </section>
+
+    <!-- Busca e filtros -->
+    <section class="search-panel">
+      <div class="form-group search-bar">
+        <label for="busca" class="form-label">Buscar equipamento</label>
+        <input type="search" id="busca" class="form-input" autocomplete="off" placeholder="Ex.: colheitadeira, John Deere, trator 4x4..." />
+      </div>
+
+      <div class="filters">
+        <div class="form-group">
+          <label for="raio" class="form-label">Distância máxima</label>
+          <select id="raio" class="form-select" autocomplete="off">
+            <option value="25">Até 25 km</option>
+            <option value="50">Até 50 km</option>
+            <option value="100" selected>Até 100 km</option>
+            <option value="9999">Qualquer distância</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="categoria" class="form-label">Categoria</label>
+          <select id="categoria" class="form-select" autocomplete="off">
+            <option value="">Todas</option>
+            <option value="tratores">Tratores</option>
+            <option value="colheitadeiras">Colheitadeiras</option>
+            <option value="implementos">Implementos</option>
+            <option value="pulverizadores">Pulverizadores</option>
+          </select>
+        </div>
+
+        <div class="form-group filters-action">
+          <button type="button" id="limpar" class="btn btn-secondary">Limpar filtros</button>
+        </div>
+      </div>
+    </section>
+
+    <p class="result-count">6 máquinas encontradas</p>
+
+    <!-- Grade de cards -->
+    <section id="grade" class="card-grid">
+
+      <article class="machine-card" data-categoria="colheitadeiras" data-distancia="18">
+        <div class="machine-photo"><img src="../../assets/maquinas/colheitadeira-vermelha.svg" alt="Imagem ilustrativa do equipamento" /></div>
+        <div class="machine-body">
+          <span class="verified-badge">Verificada</span>
+          <h2 class="machine-title">Colheitadeira Case IH 7130</h2>
+          <p class="machine-meta">Modelo 7130 &middot; 2020</p>
+          <p class="machine-distance">a 18 km de você</p>
+          <p class="machine-price">R$ 2.400,00 <span>/ dia</span></p>
+          <a href="detalhe-maquina.html" class="btn btn-primary btn-card">Ver detalhes</a>
+        </div>
+      </article>
+
+      <article class="machine-card" data-categoria="tratores" data-distancia="9">
+        <div class="machine-photo"><img src="../../assets/maquinas/trator-verde.svg" alt="Imagem ilustrativa do equipamento" /></div>
+        <div class="machine-body">
+          <span class="verified-badge">Verificada</span>
+          <h2 class="machine-title">Trator John Deere 6115J Cabinado</h2>
+          <p class="machine-meta">Modelo 6115J &middot; 2021</p>
+          <p class="machine-distance">a 9 km de você</p>
+          <p class="machine-price">R$ 850,00 <span>/ dia</span></p>
+          <a href="detalhe-maquina.html" class="btn btn-primary btn-card">Ver detalhes</a>
+        </div>
+      </article>
+
+      <article class="machine-card" data-categoria="tratores" data-distancia="32">
+        <div class="machine-photo"><img src="../../assets/maquinas/trator-azul.svg" alt="Imagem ilustrativa do equipamento" /></div>
+        <div class="machine-body">
+          <span class="verified-badge">Verificada</span>
+          <h2 class="machine-title">Trator New Holland TL75E 4x4</h2>
+          <p class="machine-meta">Modelo TL75E &middot; 2018</p>
+          <p class="machine-distance">a 32 km de você</p>
+          <p class="machine-price">R$ 600,00 <span>/ dia</span></p>
+          <a href="detalhe-maquina.html" class="btn btn-primary btn-card">Ver detalhes</a>
+        </div>
+      </article>
+
+      <article class="machine-card" data-categoria="pulverizadores" data-distancia="22">
+        <div class="machine-photo"><img src="../../assets/maquinas/pulverizador.svg" alt="Imagem ilustrativa do equipamento" /></div>
+        <div class="machine-body">
+          <span class="verified-badge">Verificada</span>
+          <h2 class="machine-title">Pulverizador Jacto Uniport 3030</h2>
+          <p class="machine-meta">Modelo Uniport 3030 &middot; 2019</p>
+          <p class="machine-distance">a 22 km de você</p>
+          <p class="machine-price">R$ 1.300,00 <span>/ dia</span></p>
+          <a href="detalhe-maquina.html" class="btn btn-primary btn-card">Ver detalhes</a>
+        </div>
+      </article>
+
+      <article class="machine-card" data-categoria="implementos" data-distancia="45">
+        <div class="machine-photo"><img src="../../assets/maquinas/implemento-grade.svg" alt="Imagem ilustrativa do equipamento" /></div>
+        <div class="machine-body">
+          <span class="verified-badge">Verificada</span>
+          <h2 class="machine-title">Grade Aradora Baldan 14 discos</h2>
+          <p class="machine-meta">Modelo GAC14 &middot; 2017</p>
+          <p class="machine-distance">a 45 km de você</p>
+          <p class="machine-price">R$ 280,00 <span>/ dia</span></p>
+          <a href="detalhe-maquina.html" class="btn btn-primary btn-card">Ver detalhes</a>
+        </div>
+      </article>
+
+      <article class="machine-card" data-categoria="colheitadeiras" data-distancia="78">
+        <div class="machine-photo"><img src="../../assets/maquinas/colheitadeira-azul.svg" alt="Imagem ilustrativa do equipamento" /></div>
+        <div class="machine-body">
+          <span class="verified-badge">Verificada</span>
+          <h2 class="machine-title">Colheitadeira New Holland TC5090</h2>
+          <p class="machine-meta">Modelo TC5090 &middot; 2016</p>
+          <p class="machine-distance">a 78 km de você</p>
+          <p class="machine-price">R$ 1.900,00 <span>/ dia</span></p>
+          <a href="detalhe-maquina.html" class="btn btn-primary btn-card">Ver detalhes</a>
+        </div>
+      </article>
+
+    </section>
+
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>AlugaMáquina - Plataforma de Locação de Máquinas e Equipamentos</span>
+      <span>PUC-Campinas - PI4 - Time 31</span>
+    </div>
+  </footer>
+
+</body>
+</html>

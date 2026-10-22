@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" role="img" aria-label="Ilustração de trator azul 4x4">
+<defs><linearGradient id="c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CFE8F5"/><stop offset="1" stop-color="#EEF6EE"/></linearGradient></defs>
+<rect width="400" height="240" fill="url(#c)"/>
+<circle cx="340" cy="45" r="20" fill="#F6D365"/>
+<path d="M0 175 Q100 150 200 170 T400 160 V240 H0Z" fill="#9CC48A"/>
+<rect y="195" width="400" height="45" fill="#7FA66B"/>
+<path d="M0 205H400M0 218H400M0 231H400" stroke="#6C9459" stroke-width="3"/>
+<rect x="100" y="140" width="215" height="30" rx="6" fill="#4B5563"/><rect x="190" y="122" width="135" height="48" rx="9" fill="#1F5FA8"/><rect x="305" y="132" width="14" height="30" rx="3" fill="#1F2421"/><rect x="292" y="92" width="6" height="36" fill="#1F2421"/><rect x="95" y="68" width="105" height="78" rx="6" fill="#17457A"/><rect x="105" y="80" width="85" height="46" rx="3" fill="#BFE3F2"/><rect x="86" y="60" width="122" height="11" rx="5" fill="#1F2421"/><circle cx="135" cy="165" r="48" fill="#222"/><circle cx="135" cy="165" r="26" fill="#E5A910"/><circle cx="135" cy="165" r="8" fill="#1F2421"/><circle cx="305" cy="185" r="28" fill="#222"/><circle cx="305" cy="185" r="15" fill="#E5A910"/><circle cx="305" cy="185" r="5" fill="#1F2421"/>
+</svg>
