@@ -31,17 +31,29 @@
 ├── assets/
 │   ├── ico-AlugaMaquina.jpg
 │   ├── logo-AlugaMaquina.jpg
-│   └── logo-header.png
+│   ├── logo-header.png
+│   └── maquinas/ (ilustrações SVG dos equipamentos)
 ├── docs/
 │   ├── AlugaMaquina_Apresentacao.pptx
 │   ├── Relatorio_Ideacao_AlugaMaquina.docx
-│   └── Relatorio_Ideacao_AlugaMaquina.pdf
+│   ├── Relatorio_Ideacao_AlugaMaquina.pdf
+│   └── TASKS_PI4_TIME_31.md (Backlog oficial e mapeamento de tarefas)
 ├── src/
 │   ├── css/
 │   │   ├── global.css
-│   │   └── cadastro-maquina.css
+│   │   ├── avaliacao-pos-locacao.css
+│   │   ├── busca-catalogo.css
+│   │   ├── cadastro-maquina.css
+│   │   ├── chat.css
+│   │   ├── contrato-digital.css
+│   │   └── detalhe-maquina.css
 │   └── pages/
-│       └── cadastro-maquina.html
+│       ├── avaliacao-pos-locacao.html
+│       ├── busca-catalogo.html
+│       ├── cadastro-maquina.html
+│       ├── chat.html
+│       ├── contrato-digital.html
+│       └── detalhe-maquina.html
 ├── .gitignore
 └── README.md
 ```
@@ -51,6 +63,7 @@
 ## 📌 Documentação e Entregas (Etapa de Ideação & Planejamento)
 
 Todos os artefatos oficiais de ideação e escopo encontram-se organizados na pasta [`docs/`](./docs/):
+- **Backlog & Matriz de Tarefas do PI4 (`TASKS_PI4_TIME_31.md`)**: Planejamento oficial detalhado com as 9 funcionalidades obrigatórias, tecnologias exigidas e alocação por integrante.
 - **Apresentação da Solução (`AlugaMaquina_Apresentacao.pptx`)**: Slides executivos com problema, proposta de valor, modelo de negócio, persona e roadmap do MVP.
 - **Relatório Consolidado de Ideação (`Relatorio_Ideacao_AlugaMaquina.pdf` / `.docx`)**: Documento oficial completo reunindo contexto, personas, fundamentação quantitativa (IBGE/Embrapa/Cepea), Mapa de Empatia, Matriz SWOT e SWOT Cruzada, Business Model Canvas (BMC), Mapa Mental, 5W2H e wireframes do MVP.
 - **Identidade Visual (`assets/`)**:
@@ -61,16 +74,16 @@ Todos os artefatos oficiais de ideação e escopo encontram-se organizados na pa
 
 ## 🛠️ Tecnologias e Ferramentas (Stack Documentada)
 
-Conforme formalizado na Seção 3.2.3 do **Relatório de Ideação** e no Slide 8 da **Apresentação Oficial**, a arquitetura do AlugaMáquina é estruturada nas seguintes tecnologias:
+Conforme formalizado no **Relatório de Ideação** e na **Ficha Oficial de Escopo do PI4**, a arquitetura do AlugaMáquina é estruturada nas seguintes tecnologias:
 
 | Camada / Função | Tecnologia | Descrição no Projeto |
 | :--- | :--- | :--- |
 | **Frontend** | **TypeScript / JavaScript** | Tipagem estática e lógica da aplicação web/mobile, reduzindo erros em tempo de desenvolvimento. |
-| **Interface / Estilo** | **HTML e CSS** | Construção da estrutura semântica e estilização responsiva adaptada ao homem do campo. |
+| **Interface / Estilo** | **HTML e CSS** | Construção da estrutura semântica responsiva adaptada ao homem do campo, com design system unificado. |
 | **Backend** | **Java** | Backend estruturado para implementação das regras de negócio, contratos e API REST consumida pelo frontend. |
 | **Banco de Dados** | **MongoDB Atlas** | Banco de dados NoSQL gerenciado em nuvem com suporte geoespacial nativo (`2dsphere`) para busca por raio de distância (km). |
+| **Testes de Software** | **JUnit 5** | Cobertura obrigatória de testes unitários validando as regras de negócio e cálculos críticos. |
 | **Suporte & Comunicação** | **WhatsApp Business API** | Reforço de atendimento e validação rápida da comunicação direta entre locador e locatário. |
-| **Pesquisa & Validação** | **Google Forms** | Instrumento de aplicação de questionários com produtores rurais na fase de validação piloto. |
 | **Deploy & Nuvem (MVP)** | **Ambiente em Nuvem (Vercel / Supabase)** | Hospedagem ágil e provisionamento da versão piloto do MVP. |
 
 ## 📋 Gestão do Projeto (GitHub Projects)
@@ -80,10 +93,14 @@ O acompanhamento das tarefas, sprints e entregas da equipe está centralizado no
 
 ---
 
-## 🎯 Próximos Passos (Reunião de Escopo)
+## 🎯 Próximos Passos (Ciclo de Desenvolvimento)
 
 - [x] Criação e organização da pasta de documentação (`docs/`)
 - [x] Criação do repositório remoto no GitHub (`PI_IV-TIME-31`)
-- [x] Envio de convites de acesso aos colaboradores e docente
+- [x] Envio e aceite de convites de todos os colaboradores e docente
 - [x] Configuração do [GitHub Projects](https://github.com/users/lucaxaviers/projects/8) vinculado ao repositório
-- [ ] Reunião de alinhamento e definição formal de escopo com a orientação
+- [x] Mapeamento oficial de tarefas do PI4 com base na devolutiva de escopo da orientação ([docs/TASKS_PI4_TIME_31.md](./docs/TASKS_PI4_TIME_31.md))
+- [x] Implementação, estilização e interligação de todos os protótipos de interface HTML5/CSS3 do MVP
+- [ ] Desenvolvimento da camada Backend em Java (API REST com Spring Boot)
+- [ ] Configuração do banco de dados MongoDB Atlas (collections e índices geoespaciais `2dsphere`)
+- [ ] Implementação da suíte de testes unitários com JUnit 5
