@@ -48,6 +48,8 @@
 │   │   ├── contrato-digital.css
 │   │   ├── detalhe-maquina.css
 │   │   └── login-usuario.css
+│   ├── js/
+│   │   └── cadastro-maquina.js
 │   └── pages/
 │       ├── avaliacao-pos-locacao.html
 │       ├── busca-catalogo.html

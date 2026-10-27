@@ -35,7 +35,7 @@
 | **#35** | Autenticação e controle de acesso - Backend Java | `@lucaxaviers` | Back | 🟢 OPEN |
 | **#16** | Cadastro de máquina - HTML | `@lucaxaviers` | Front | 🟣 CLOSED |
 | **#17** | Cadastro de máquina - CSS | `@lucaxaviers` | Front | 🟣 CLOSED |
-| **#18** | Validações dos campos do cadastro de máquina (JavaScript) | `@lucaxaviers` | Front | 🟢 OPEN |
+| **#18** | Validações dos campos do cadastro de máquina (JavaScript) | `@lucaxaviers` | Front | 🟣 CLOSED |
 | **#14** | Busca e catálogo de máquinas - HTML | `@mateusor` | Front | 🟣 CLOSED |
 | **#22** | Busca e catálogo de máquinas - CSS | `@mateusor` | Front | 🟣 CLOSED |
 | **#37** | Filtros dinâmicos no catálogo de máquinas (JavaScript) | `@mateusor` | Front | 🟢 OPEN |
