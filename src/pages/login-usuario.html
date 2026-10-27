@@ -1,0 +1,250 @@
+<!--
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: Tela de cadastro e login de usuarios (locador e locatario)
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acesso e Cadastro de Produtor - AlugaMáquina</title>
+  <link rel="icon" type="image/jpeg" href="../../assets/ico-AlugaMaquina.jpg" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/login-usuario.css" />
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="busca-catalogo.html" class="brand">
+        <img src="../../assets/logo-header.png" alt="AlugaMáquina" class="brand-logo" />
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="busca-catalogo.html" class="nav-link">Catálogo</a></li>
+          <li><a href="cadastro-maquina.html" class="nav-link">Cadastrar Máquina</a></li>
+          <li><a href="chat.html" class="nav-link">Mensagens</a></li>
+          <li><a href="avaliacao-pos-locacao.html" class="nav-link">Minhas Locações</a></li>
+          <li><a href="login-usuario.html" class="nav-link active">Entrar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="container">
+    <section class="page-intro">
+      <h1 class="page-title">Acesso à Plataforma</h1>
+      <p class="page-description">Entre com sua conta ou cadastre-se para alugar ou disponibilizar máquinas agrícolas na região.</p>
+    </section>
+
+    <div class="auth-card">
+
+      <!-- Alternador entre Login e Cadastro (Abas) -->
+      <div class="auth-tabs" role="tablist">
+        <button type="button" class="tab-button active" id="tabBtnLogin" onclick="mostrarAba('login')">
+          Já sou cadastrado (Entrar)
+        </button>
+        <button type="button" class="tab-button" id="tabBtnCadastro" onclick="mostrarAba('cadastro')">
+          Criar nova conta (Cadastrar)
+        </button>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- ABA 1: FORMULÁRIO DE LOGIN                               -->
+      <!-- ======================================================== -->
+      <div id="abaLogin" class="tab-content active">
+        <div class="auth-header">
+          <h2 class="auth-title">Acesse sua conta</h2>
+          <p class="auth-subtitle">Informe seu e-mail ou CPF e sua senha para continuar.</p>
+        </div>
+
+        <form action="#" method="post" class="auth-form">
+          <div class="form-group">
+            <label for="loginIdentificador" class="form-label">E-mail ou CPF <span class="required">*</span></label>
+            <input type="text" id="loginIdentificador" name="loginIdentificador" class="form-input" placeholder="seuemail@exemplo.com ou 000.000.000-00" required />
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="loginSenha" class="form-label">Senha <span class="required">*</span></label>
+              <a href="#" class="form-link">Esqueceu a senha?</a>
+            </div>
+            <input type="password" id="loginSenha" name="loginSenha" class="form-input" placeholder="Digite sua senha" required />
+          </div>
+
+          <div class="form-checkbox-group">
+            <input type="checkbox" id="lembrarAcesso" name="lembrarAcesso" />
+            <label for="lembrarAcesso">Lembrar meu acesso neste dispositivo</label>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-block">Entrar na Plataforma</button>
+          </div>
+
+          <div class="auth-switch">
+            <span>Ainda não tem cadastro no AlugaMáquina? </span>
+            <a href="javascript:void(0)" onclick="mostrarAba('cadastro')">Criar conta de produtor</a>
+          </div>
+        </form>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- ABA 2: FORMULÁRIO DE CADASTRO                            -->
+      <!-- ======================================================== -->
+      <div id="abaCadastro" class="tab-content">
+        <div class="auth-header">
+          <h2 class="auth-title">Cadastro de Produtor Rural</h2>
+          <p class="auth-subtitle">Preencha seus dados para começar a negociar maquinário na região de Paulínia e entorno.</p>
+        </div>
+
+        <form action="#" method="post" class="auth-form">
+
+          <!-- 1. Perfil de Atuação -->
+          <div class="form-section">
+            <h3 class="section-title">Qual é o seu objetivo principal?</h3>
+            <div class="profile-options">
+              <label class="profile-card">
+                <input type="radio" name="perfilUsuario" value="locatario" checked />
+                <div class="profile-info">
+                  <strong>Quero Alugar (Locatário)</strong>
+                  <span>Busco tratores e implementos para utilizar na minha lavoura.</span>
+                </div>
+              </label>
+
+              <label class="profile-card">
+                <input type="radio" name="perfilUsuario" value="locador" />
+                <div class="profile-info">
+                  <strong>Tenho Máquinas (Locador)</strong>
+                  <span>Quero rentabilizar minhas máquinas quando estiverem ociosas.</span>
+                </div>
+              </label>
+
+              <label class="profile-card">
+                <input type="radio" name="perfilUsuario" value="ambos" />
+                <div class="profile-info">
+                  <strong>Ambos os papéis</strong>
+                  <span>Quero alugar equipamentos e também disponibilizar os meus.</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- 2. Dados Pessoais / Produtor -->
+          <div class="form-section">
+            <h3 class="section-title">Dados do Produtor</h3>
+
+            <div class="form-group">
+              <label for="cadNome" class="form-label">Nome Completo / Razão Social <span class="required">*</span></label>
+              <input type="text" id="cadNome" name="cadNome" class="form-input" placeholder="Ex: Antônio Carlos Pereira" required />
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="cadDocumento" class="form-label">CPF ou CNPJ <span class="required">*</span></label>
+                <input type="text" id="cadDocumento" name="cadDocumento" class="form-input" placeholder="000.000.000-00" required />
+              </div>
+
+              <div class="form-group">
+                <label for="cadTelefone" class="form-label">Telefone / WhatsApp <span class="required">*</span></label>
+                <input type="tel" id="cadTelefone" name="cadTelefone" class="form-input" placeholder="(19) 90000-0000" required />
+                <span class="form-help">Usado para contato direto sobre reservas e fretes.</span>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="cadEmail" class="form-label">E-mail <span class="required">*</span></label>
+                <input type="email" id="cadEmail" name="cadEmail" class="form-input" placeholder="seuemail@exemplo.com" required />
+              </div>
+
+              <div class="form-group">
+                <label for="cadMunicipio" class="form-label">Município Base <span class="required">*</span></label>
+                <select id="cadMunicipio" name="cadMunicipio" class="form-select" required>
+                  <option value="">Selecione o município...</option>
+                  <option value="paulinia">Paulínia / SP</option>
+                  <option value="campinas">Campinas / SP</option>
+                  <option value="cosmopolis">Cosmópolis / SP</option>
+                  <option value="sumare">Sumaré / SP</option>
+                  <option value="holambra">Holambra / SP</option>
+                  <option value="jaguariuna">Jaguariúna / SP</option>
+                  <option value="artur-nogueira">Artur Nogueira / SP</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Segurança da Conta -->
+          <div class="form-section">
+            <h3 class="section-title">Defina sua Senha</h3>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="cadSenha" class="form-label">Senha <span class="required">*</span></label>
+                <input type="password" id="cadSenha" name="cadSenha" class="form-input" placeholder="Mínimo de 6 caracteres" minlength="6" required />
+              </div>
+
+              <div class="form-group">
+                <label for="cadConfirmaSenha" class="form-label">Confirmar Senha <span class="required">*</span></label>
+                <input type="password" id="cadConfirmaSenha" name="cadConfirmaSenha" class="form-input" placeholder="Repita a senha digitada" minlength="6" required />
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Termos e Condições -->
+          <div class="form-checkbox-group">
+            <input type="checkbox" id="aceiteTermos" name="aceiteTermos" required />
+            <label for="aceiteTermos">
+              Li e concordo com os <a href="contrato-digital.html" target="_blank">Termos de Uso</a> e as políticas de locação entre produtores do AlugaMáquina.
+            </label>
+          </div>
+
+          <!-- Ações -->
+          <div class="form-actions">
+            <button type="reset" class="btn btn-secondary">Limpar</button>
+            <button type="submit" class="btn btn-primary">Criar Minha Conta</button>
+          </div>
+
+          <div class="auth-switch">
+            <span>Já possui uma conta? </span>
+            <a href="javascript:void(0)" onclick="mostrarAba('login')">Entrar na conta existente</a>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>AlugaMáquina - Plataforma de Locação de Máquinas e Equipamentos</span>
+    </div>
+  </footer>
+
+  <!-- Script simples de alternância de abas (conforme padrão de aula) -->
+  <script>
+    function mostrarAba(aba) {
+      const abaLogin = document.getElementById('abaLogin');
+      const abaCadastro = document.getElementById('abaCadastro');
+      const tabBtnLogin = document.getElementById('tabBtnLogin');
+      const tabBtnCadastro = document.getElementById('tabBtnCadastro');
+
+      if (aba === 'cadastro') {
+        abaLogin.classList.remove('active');
+        abaCadastro.classList.add('active');
+        tabBtnLogin.classList.remove('active');
+        tabBtnCadastro.classList.add('active');
+      } else {
+        abaCadastro.classList.remove('active');
+        abaLogin.classList.add('active');
+        tabBtnCadastro.classList.remove('active');
+        tabBtnLogin.classList.add('active');
+      }
+    }
+  </script>
+
+</body>
+</html>

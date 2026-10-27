@@ -46,14 +46,16 @@
 │   │   ├── cadastro-maquina.css
 │   │   ├── chat.css
 │   │   ├── contrato-digital.css
-│   │   └── detalhe-maquina.css
+│   │   ├── detalhe-maquina.css
+│   │   └── login-usuario.css
 │   └── pages/
 │       ├── avaliacao-pos-locacao.html
 │       ├── busca-catalogo.html
 │       ├── cadastro-maquina.html
 │       ├── chat.html
 │       ├── contrato-digital.html
-│       └── detalhe-maquina.html
+│       ├── detalhe-maquina.html
+│       └── login-usuario.html
 ├── .gitignore
 └── README.md
 ```

@@ -31,7 +31,7 @@
 
 | # | Título da Issue / Tarefa | Responsável(is) | Camada | Status |
 |:---:|:---|:---|:---:|:---:|
-| **#34** | Cadastro e login de usuários - Interface (HTML e CSS) | `@lucaxaviers` | Front | 🟢 OPEN |
+| **#34** | Cadastro e login de usuários - Interface (HTML e CSS) | `@lucaxaviers` | Front | 🟣 CLOSED |
 | **#35** | Autenticação e controle de acesso - Backend Java | `@lucaxaviers` | Back | 🟢 OPEN |
 | **#16** | Cadastro de máquina - HTML | `@lucaxaviers` | Front | 🟣 CLOSED |
 | **#17** | Cadastro de máquina - CSS | `@lucaxaviers` | Front | 🟣 CLOSED |
