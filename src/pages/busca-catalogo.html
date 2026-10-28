@@ -69,18 +69,29 @@
           </select>
         </div>
 
+        <div class="form-group">
+          <label for="valor" class="form-label">Valor da diária</label>
+          <select id="valor" class="form-select" autocomplete="off">
+            <option value="9999999">Qualquer valor</option>
+            <option value="300">Até R$ 300</option>
+            <option value="800">Até R$ 800</option>
+            <option value="1500">Até R$ 1.500</option>
+            <option value="2500">Até R$ 2.500</option>
+          </select>
+        </div>
+
         <div class="form-group filters-action">
           <button type="button" id="limpar" class="btn btn-secondary">Limpar filtros</button>
         </div>
       </div>
     </section>
 
-    <p class="result-count">6 máquinas encontradas</p>
+    <p id="contagem" class="result-count">6 máquinas encontradas</p>
 
     <!-- Grade de cards -->
     <section id="grade" class="card-grid">
 
-      <article class="machine-card" data-categoria="colheitadeiras" data-distancia="18">
+      <article class="machine-card" data-categoria="colheitadeiras" data-distancia="18" data-preco="2400">
         <div class="machine-photo"><img src="../../assets/maquinas/colheitadeira-vermelha.svg" alt="Imagem ilustrativa do equipamento" /></div>
         <div class="machine-body">
           <span class="verified-badge">Verificada</span>
@@ -92,7 +103,7 @@
         </div>
       </article>
 
-      <article class="machine-card" data-categoria="tratores" data-distancia="9">
+      <article class="machine-card" data-categoria="tratores" data-distancia="9" data-preco="850">
         <div class="machine-photo"><img src="../../assets/maquinas/trator-verde.svg" alt="Imagem ilustrativa do equipamento" /></div>
         <div class="machine-body">
           <span class="verified-badge">Verificada</span>
@@ -104,7 +115,7 @@
         </div>
       </article>
 
-      <article class="machine-card" data-categoria="tratores" data-distancia="32">
+      <article class="machine-card" data-categoria="tratores" data-distancia="32" data-preco="600">
         <div class="machine-photo"><img src="../../assets/maquinas/trator-azul.svg" alt="Imagem ilustrativa do equipamento" /></div>
         <div class="machine-body">
           <span class="verified-badge">Verificada</span>
@@ -116,7 +127,7 @@
         </div>
       </article>
 
-      <article class="machine-card" data-categoria="pulverizadores" data-distancia="22">
+      <article class="machine-card" data-categoria="pulverizadores" data-distancia="22" data-preco="1300">
         <div class="machine-photo"><img src="../../assets/maquinas/pulverizador.svg" alt="Imagem ilustrativa do equipamento" /></div>
         <div class="machine-body">
           <span class="verified-badge">Verificada</span>
@@ -128,7 +139,7 @@
         </div>
       </article>
 
-      <article class="machine-card" data-categoria="implementos" data-distancia="45">
+      <article class="machine-card" data-categoria="implementos" data-distancia="45" data-preco="280">
         <div class="machine-photo"><img src="../../assets/maquinas/implemento-grade.svg" alt="Imagem ilustrativa do equipamento" /></div>
         <div class="machine-body">
           <span class="verified-badge">Verificada</span>
@@ -140,7 +151,7 @@
         </div>
       </article>
 
-      <article class="machine-card" data-categoria="colheitadeiras" data-distancia="78">
+      <article class="machine-card" data-categoria="colheitadeiras" data-distancia="78" data-preco="1900">
         <div class="machine-photo"><img src="../../assets/maquinas/colheitadeira-azul.svg" alt="Imagem ilustrativa do equipamento" /></div>
         <div class="machine-body">
           <span class="verified-badge">Verificada</span>
@@ -163,5 +174,6 @@
     </div>
   </footer>
 
+  <script src="../js/busca-catalogo.js"></script>
 </body>
 </html>

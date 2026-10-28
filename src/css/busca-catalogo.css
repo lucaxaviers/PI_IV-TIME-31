@@ -31,7 +31,7 @@
 
 .filters {
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: 1fr 1fr 1fr auto;
   gap: 1rem;
   align-items: end;
 }
@@ -138,6 +138,10 @@
 @media (max-width: 900px) {
   .card-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .filters {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
