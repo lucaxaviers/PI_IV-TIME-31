@@ -64,6 +64,23 @@
 
 ---
 
+## ⏱️ Calibração de Horas Individual — Mateus Oliveira Rafael (@mateusor)
+> Horas registradas apenas para as tarefas já concluídas. Issues ainda não iniciadas não entram na contagem.
+
+### Etapa de Front-end, Catálogo e Filtros (Já Executado): **16,0 horas**
+| Issue / Atividade | Descrição Real e Justificativa Técnica | Horas | Status |
+| :--- | :--- | :---: | :---: |
+| **#14 - Busca e Catálogo de Máquinas (HTML)** | Estruturação da listagem de máquinas, cards de resultado, layout em grid responsivo para a busca regional. | **3,0h** | Concluído |
+| **#22 - Busca e Catálogo de Máquinas (CSS)** | Estilização responsiva dos cards, estados de hover/vazio e adaptação mobile da tela de catálogo. | **3,0h** | Concluído |
+| **#37 - Filtros Dinâmicos no Catálogo (JS)** | Filtragem em tempo real por busca textual, distância, categoria e valor da diária, 100% client-side. | **4,0h** | Concluído |
+| **#19 - Global - CSS & Design System (contribuição)** | Padronização de cores, tipografia e componentes reaproveitados nas telas de catálogo e filtros. | **2,0h** | Concluído |
+| **Setup de Ambiente, Git e Revisão de PRs** | Organização de branches, resolução de conflitos e revisão das PRs do módulo de catálogo. | **4,0h** | Concluído |
+| **Subtotal Front-end & Catálogo:** | | **16,0h** | |
+
+> **#36, #21, #20 e #46** ainda não foram iniciadas e por isso não entram nessa contagem de horas.
+
+---
+
 ## 🎯 Escopo Excluído do PI4 (Evoluções Futuras)
 
 Conforme acordado na ficha de avaliação e escopo do projeto, os seguintes itens **NÃO** serão implementados no PI4:
