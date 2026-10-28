@@ -38,7 +38,7 @@
 | **#18** | Validações dos campos do cadastro de máquina (JavaScript) | `@lucaxaviers` | Front | 🟣 CLOSED |
 | **#14** | Busca e catálogo de máquinas - HTML | `@mateusor` | Front | 🟣 CLOSED |
 | **#22** | Busca e catálogo de máquinas - CSS | `@mateusor` | Front | 🟣 CLOSED |
-| **#37** | Filtros dinâmicos no catálogo de máquinas (JavaScript) | `@mateusor` | Front | 🟢 OPEN |
+| **#37** | Filtros dinâmicos no catálogo de máquinas (JavaScript) | `@mateusor` | Front | 🟣 CLOSED |
 | **#36** | API REST de Busca Geoespacial de Máquinas - Backend Java | `@mateusor` | Back/DB | 🟢 OPEN |
 | **#13** | Detalhe da máquina e frete - HTML | `@tiago148` | Front | 🟣 CLOSED |
 | **#23** | Detalhe da máquina e frete - CSS | `@tiago148` | Front | 🟣 CLOSED |
