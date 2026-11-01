@@ -20,3 +20,8 @@ node_modules/
 dist/
 .env
 .env.local
+
+# Java / Maven (backend)
+backend/target/
+*.class
+*.jar
