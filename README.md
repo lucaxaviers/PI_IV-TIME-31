@@ -33,6 +33,22 @@
 │   ├── logo-AlugaMaquina.jpg
 │   ├── logo-header.png
 │   └── maquinas/ (ilustrações SVG dos equipamentos)
+├── backend/
+│   ├── pom.xml
+│   └── src/
+│       ├── main/
+│       │   ├── java/com/alugamaquina/backend/
+│       │   │   ├── BackendApplication.java
+│       │   │   ├── controller/ (AuthController, MaquinaBuscaController)
+│       │   │   ├── dto/ (AuthResponse, CadastroRequest, LoginRequest, MaquinaBuscaResponse)
+│       │   │   ├── exception/ (AutenticacaoException, UsuarioJaCadastradoException, etc.)
+│       │   │   ├── model/ (Maquina, Usuario)
+│       │   │   ├── repository/ (UsuarioRepository)
+│       │   │   └── service/ (AuthService, MaquinaBuscaService)
+│       │   └── resources/
+│       │       └── application.properties
+│       └── test/
+│           └── java/com/alugamaquina/backend/service/ (AuthServiceTest, MaquinaBuscaServiceTest)
 ├── docs/
 │   ├── AlugaMaquina_Apresentacao.pptx
 │   ├── Relatorio_Ideacao_AlugaMaquina.docx
@@ -49,7 +65,9 @@
 │   │   ├── detalhe-maquina.css
 │   │   └── login-usuario.css
 │   ├── js/
-│   │   └── cadastro-maquina.js
+│   │   ├── busca-catalogo.js
+│   │   ├── cadastro-maquina.js
+│   │   └── chat.js
 │   └── pages/
 │       ├── avaliacao-pos-locacao.html
 │       ├── busca-catalogo.html
@@ -82,13 +100,14 @@ Conforme formalizado no **Relatório de Ideação** e na **Ficha Oficial de Esco
 
 | Camada / Função | Tecnologia | Descrição no Projeto |
 | :--- | :--- | :--- |
-| **Frontend** | **TypeScript / JavaScript** | Tipagem estática e lógica da aplicação web/mobile, reduzindo erros em tempo de desenvolvimento. |
-| **Interface / Estilo** | **HTML e CSS** | Construção da estrutura semântica responsiva adaptada ao homem do campo, com design system unificado. |
-| **Backend** | **Java** | Backend estruturado para implementação das regras de negócio, contratos e API REST consumida pelo frontend. |
-| **Banco de Dados** | **MongoDB Atlas** | Banco de dados NoSQL gerenciado em nuvem com suporte geoespacial nativo (`2dsphere`) para busca por raio de distância (km). |
-| **Testes de Software** | **JUnit 5** | Cobertura obrigatória de testes unitários validando as regras de negócio e cálculos críticos. |
-| **Suporte & Comunicação** | **WhatsApp Business API** | Reforço de atendimento e validação rápida da comunicação direta entre locador e locatário. |
-| **Deploy & Nuvem (MVP)** | **Ambiente em Nuvem (Vercel / Supabase)** | Hospedagem ágil e provisionamento da versão piloto do MVP. |
+| **Frontend** | **HTML5, CSS3 & JavaScript (ES6+)** | Construção da estrutura semântica responsiva adaptada ao homem do campo, com design system unificado (`global.css`) e scripts client-side modulares. |
+| **Backend** | **Java (Spring Boot 3.3)** | API REST estruturada com injeção de dependências, arquitetura em camadas (Controller, Service, Repository, DTO) e regras de negócio. |
+| **Banco de Dados** | **MongoDB Atlas** | Banco de dados NoSQL gerenciado em nuvem com suporte geoespacial nativo (`2dsphere` / `geoNear`) para busca por raio de distância (km). |
+| **Testes de Software** | **JUnit 5 & Mockito** | Cobertura obrigatória de testes unitários automatizados validando regras críticas de negócio e segurança. |
+| **Gerenciador de Dependências** | **Apache Maven** | Automação de compilação, gestão de ciclo de vida e dependências do backend Java (`pom.xml`). |
+| **Deploy & Nuvem (MVP)** | **Ambiente em Nuvem (Vercel / MongoDB Cloud)** | Hospedagem ágil e provisionamento da versão piloto do MVP. |
+
+---
 
 ## 📋 Gestão do Projeto (GitHub Projects)
 
@@ -105,6 +124,8 @@ O acompanhamento das tarefas, sprints e entregas da equipe está centralizado no
 - [x] Configuração do [GitHub Projects](https://github.com/users/lucaxaviers/projects/8) vinculado ao repositório
 - [x] Mapeamento oficial de tarefas do PI4 com base na devolutiva de escopo da orientação ([docs/TASKS_PI4_TIME_31.md](./docs/TASKS_PI4_TIME_31.md))
 - [x] Implementação, estilização e interligação de todos os protótipos de interface HTML5/CSS3 do MVP
-- [ ] Desenvolvimento da camada Backend em Java (API REST com Spring Boot)
-- [ ] Configuração do banco de dados MongoDB Atlas (collections e índices geoespaciais `2dsphere`)
-- [ ] Implementação da suíte de testes unitários com JUnit 5
+- [x] Inicialização da arquitetura Backend em Java (Spring Boot REST API)
+- [x] Implementação dos módulos de Autenticação (`#35`) e Busca Geoespacial de Máquinas (`#36`)
+- [x] Início da suíte de testes unitários com JUnit 5 e Mockito
+- [ ] Integração completa dos endpoints REST com as páginas do front-end
+- [ ] Módulos de Contrato Digital em PDF (`#44`) e Avaliação Pós-Locação (`#45`) no backend
