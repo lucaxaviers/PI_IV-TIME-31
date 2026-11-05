@@ -1,0 +1,421 @@
+/*
+  Autor: Tiago Medeiros | 25000845
+  Descricao: Estilos das telas de solicitacao de locacao e painel do locador
+*/
+
+.page-intro {
+  padding: 2rem 0 1.5rem 0;
+}
+
+.page-title {
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.25rem;
+}
+
+.page-description {
+  font-size: 0.925rem;
+  color: var(--color-text-muted);
+}
+
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+}
+
+.section-subtitle {
+  font-size: 0.825rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1.25rem;
+}
+
+/* ---------- Tela de solicitação ---------- */
+.request-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.5rem;
+  align-items: start;
+  margin-bottom: 3rem;
+}
+
+.form-card,
+.side-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+}
+
+.side-card {
+  padding: 1.5rem;
+}
+
+.request-side {
+  position: sticky;
+  top: 1rem;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.form-card {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.form-section {
+  padding-bottom: 1.75rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.form-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+  margin-top: 2rem;
+}
+
+.form-error {
+  margin-top: 1.5rem;
+  padding: 10px 12px;
+  border: 1px solid #FCA5A5;
+  border-radius: var(--radius);
+  background-color: #FEF2F2;
+  color: #B91C1C;
+  font-size: 0.825rem;
+}
+
+.form-error[hidden],
+.form-card[hidden],
+.empty-state[hidden],
+.refuse-box[hidden] {
+  display: none;
+}
+
+/* Resumo da máquina */
+.machine-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  margin-bottom: 1rem;
+  background-color: var(--color-primary-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.machine-name {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.machine-meta {
+  margin-bottom: 1rem;
+  font-size: 0.825rem;
+  color: var(--color-text-muted);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 8px 0;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.875rem;
+}
+
+.summary-note {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+/* Confirmação */
+.confirmation {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.confirmation-title {
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1.35rem;
+  color: var(--color-primary);
+}
+
+.confirmation-text {
+  max-width: 460px;
+  margin: 0 auto;
+  font-size: 0.925rem;
+  color: var(--color-text-muted);
+}
+
+.confirmation-actions {
+  justify-content: center;
+}
+
+/* ---------- Badges de status ---------- */
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.775rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-pendente {
+  background-color: #FEF3C7;
+  color: #92400E;
+}
+
+.badge-aceito {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.badge-recusado {
+  background-color: #FEE2E2;
+  color: #B91C1C;
+}
+
+/* ---------- Painel do locador ---------- */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.tab:hover {
+  background-color: #F3F4F6;
+}
+
+.tab.active {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.tab-count {
+  min-width: 22px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background-color: #F3F4F6;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.tab.active .tab-count {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.order-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.order-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.order-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.order-protocol {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.order-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.order-field-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.order-field-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.order-message {
+  margin-top: 1rem;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background-color: #FAFAFA;
+  font-size: 0.875rem;
+  color: var(--color-text);
+}
+
+.order-reason {
+  margin-top: 0.75rem;
+  font-size: 0.825rem;
+  color: #B91C1C;
+}
+
+.order-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 1.25rem;
+}
+
+.btn-danger {
+  background-color: #FFFFFF;
+  border-color: #FCA5A5;
+  color: #B91C1C;
+}
+
+.btn-danger:hover {
+  background-color: #FEF2F2;
+  text-decoration: none;
+}
+
+.btn-danger-solid {
+  background-color: #B91C1C;
+  color: #FFFFFF;
+}
+
+.btn-danger-solid:hover {
+  background-color: #991B1B;
+  text-decoration: none;
+}
+
+.refuse-box {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border: 1px solid #FCA5A5;
+  border-radius: var(--radius);
+  background-color: #FEF2F2;
+}
+
+.refuse-box .form-textarea {
+  margin: 8px 0 12px 0;
+}
+
+/* Estado vazio */
+.empty-state {
+  padding: 3rem 1.5rem;
+  margin-bottom: 3rem;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius);
+  background-color: #FAFAFA;
+  text-align: center;
+}
+
+.empty-title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.empty-text {
+  margin-bottom: 1.25rem;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.empty-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 860px) {
+  .request-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .request-side,
+  .form-card {
+    grid-column: 1;
+    grid-row: auto;
+    position: static;
+  }
+
+  .request-side {
+    order: -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .form-card {
+    padding: 1.25rem;
+  }
+
+  .order-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .order-head {
+    flex-direction: column;
+  }
+
+  .form-actions,
+  .order-actions,
+  .empty-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions .btn,
+  .order-actions .btn,
+  .empty-actions .btn {
+    width: 100%;
+  }
+}

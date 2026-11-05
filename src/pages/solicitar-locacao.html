@@ -1,0 +1,185 @@
+<!--
+  Autor: Tiago Medeiros | 25000845
+  Descricao: Tela de solicitacao de locacao (locatario envia o pedido de reserva)
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solicitar Locação - AlugaMáquina</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/pedidos-locacao.css" />
+</head>
+<body data-page="solicitar">
+
+  <!-- Cabeçalho -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="cadastro-maquina.html" class="brand">
+        <img src="../../assets/logo-header.png" alt="AlugaMáquina" class="brand-logo" />
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#" class="nav-link">Catálogo</a></li>
+          <li><a href="cadastro-maquina.html" class="nav-link">Cadastrar Máquina</a></li>
+          <li><a href="solicitar-locacao.html" class="nav-link active">Solicitar Locação</a></li>
+          <li><a href="painel-pedidos.html" class="nav-link">Painel do Locador</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="container">
+    <section class="page-intro">
+      <h1 class="page-title">Solicitar Locação</h1>
+      <p class="page-description">Envie seu pedido de reserva. O proprietário da máquina vai aceitar ou recusar a solicitação.</p>
+    </section>
+
+    <div class="request-layout">
+
+      <!-- Formulário -->
+      <div class="form-card" id="cartaoFormulario">
+        <form id="formSolicitacao"
+              action="#"
+              method="post"
+              novalidate
+              data-maquina="Trator John Deere 6115J Cabinado"
+              data-origem="Paulínia / SP"
+              data-diaria="850"
+              data-inicio-min="2026-11-01"
+              data-fim-max="2026-12-15">
+
+          <div class="form-section">
+            <h2 class="section-title">Seus dados</h2>
+            <p class="section-subtitle">Informações para o proprietário entrar em contato.</p>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="nome" class="form-label">Nome completo <span class="required">*</span></label>
+                <input type="text" id="nome" name="nome" class="form-input" placeholder="Ex: João da Silva" required />
+              </div>
+
+              <div class="form-group">
+                <label for="telefone" class="form-label">Telefone / WhatsApp <span class="required">*</span></label>
+                <input type="tel" id="telefone" name="telefone" class="form-input" placeholder="Ex: (19) 99999-9999" required />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2 class="section-title">Período e entrega</h2>
+            <p class="section-subtitle">Escolha as datas dentro da disponibilidade da máquina.</p>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="dataInicio" class="form-label">Início da locação <span class="required">*</span></label>
+                <input type="date" id="dataInicio" name="dataInicio" class="form-input" required />
+              </div>
+
+              <div class="form-group">
+                <label for="dataFim" class="form-label">Término da locação <span class="required">*</span></label>
+                <input type="date" id="dataFim" name="dataFim" class="form-input" required />
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="logistica" class="form-label">Logística</label>
+                <select id="logistica" name="logistica" class="form-select">
+                  <option value="plataforma">Entrega pela plataforma</option>
+                  <option value="retirada">Retirada na propriedade</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="cidade" class="form-label">Cidade de entrega <span class="required">*</span></label>
+                <select id="cidade" name="cidade" class="form-select" required>
+                  <option value="">Selecione a cidade...</option>
+                  <option value="paulinia">Paulínia / SP</option>
+                  <option value="campinas">Campinas / SP</option>
+                  <option value="cosmopolis">Cosmópolis / SP</option>
+                  <option value="sumare">Sumaré / SP</option>
+                  <option value="holambra">Holambra / SP</option>
+                  <option value="jaguariuna">Jaguariúna / SP</option>
+                  <option value="artur-nogueira">Artur Nogueira / SP</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2 class="section-title">Mensagem ao proprietário</h2>
+            <p class="section-subtitle">Conte para que serviço a máquina será usada.</p>
+
+            <div class="form-group">
+              <textarea id="mensagem" name="mensagem" class="form-textarea" rows="4" placeholder="Ex: Preciso do trator para preparo de solo em 20 hectares de milho..."></textarea>
+            </div>
+          </div>
+
+          <div id="mensagemErro" class="form-error" role="alert" hidden></div>
+
+          <div class="form-actions">
+            <button type="reset" class="btn btn-secondary">Limpar</button>
+            <button type="submit" class="btn btn-primary">Enviar solicitação</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Confirmação (aparece depois do envio) -->
+      <div class="form-card confirmation" id="confirmacao" hidden>
+        <span class="badge badge-pendente">Aguardando resposta</span>
+        <h2 class="confirmation-title">Solicitação enviada!</h2>
+        <p class="confirmation-text">
+          Seu pedido <strong id="protocolo">#000000</strong> foi enviado ao proprietário.
+          Você será avisado quando ele aceitar ou recusar a reserva.
+        </p>
+        <div class="form-actions confirmation-actions">
+          <a href="painel-pedidos.html" class="btn btn-secondary">Ver painel do locador</a>
+          <a href="solicitar-locacao.html" class="btn btn-primary">Nova solicitação</a>
+        </div>
+      </div>
+
+      <!-- Resumo da máquina -->
+      <aside class="request-side">
+        <div class="side-card">
+          <h2 class="section-title">Máquina solicitada</h2>
+          <div class="machine-thumb">Foto da máquina</div>
+          <p class="machine-name">Trator John Deere 6115J Cabinado</p>
+          <p class="machine-meta">Paulínia / SP &middot; Fazenda Santa Maria</p>
+
+          <div class="summary-row">
+            <span>Valor da diária</span>
+            <span>R$ 850,00</span>
+          </div>
+          <div class="summary-row">
+            <span>Disponível</span>
+            <span>01/11 a 15/12/2026</span>
+          </div>
+          <div class="summary-row">
+            <span>Diárias (<span id="resDias">0</span>)</span>
+            <span id="resSubtotal">R$ 0,00</span>
+          </div>
+
+          <p class="summary-note">
+            Valor estimado das diárias. O frete é calculado à parte e confirmado entre as partes.
+          </p>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>AlugaMáquina - Plataforma de Locação de Máquinas e Equipamentos</span>
+      <span>PUC-Campinas - PI4 - Time 31</span>
+    </div>
+  </footer>
+
+  <script src="../js/pedidos.js"></script>
+</body>
+</html>

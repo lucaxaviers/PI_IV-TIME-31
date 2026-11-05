@@ -1,0 +1,81 @@
+<!--
+  Autor: Tiago Medeiros | 25000845
+  Descricao: Painel do locador para aprovar ou recusar pedidos de reserva
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel do Locador - AlugaMáquina</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/pedidos-locacao.css" />
+</head>
+<body data-page="painel">
+
+  <!-- Cabeçalho -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="cadastro-maquina.html" class="brand">
+        <img src="../../assets/logo-header.png" alt="AlugaMáquina" class="brand-logo" />
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#" class="nav-link">Catálogo</a></li>
+          <li><a href="cadastro-maquina.html" class="nav-link">Cadastrar Máquina</a></li>
+          <li><a href="solicitar-locacao.html" class="nav-link">Solicitar Locação</a></li>
+          <li><a href="painel-pedidos.html" class="nav-link active">Painel do Locador</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="container">
+    <section class="page-intro">
+      <h1 class="page-title">Pedidos de Reserva</h1>
+      <p class="page-description">Analise as solicitações recebidas e aceite ou recuse cada pedido.</p>
+    </section>
+
+    <!-- Filtros por status -->
+    <div class="tabs" role="tablist">
+      <button type="button" class="tab active" data-filtro="pendente">
+        Pendentes <span class="tab-count" data-contador="pendente">0</span>
+      </button>
+      <button type="button" class="tab" data-filtro="aceito">
+        Aceitos <span class="tab-count" data-contador="aceito">0</span>
+      </button>
+      <button type="button" class="tab" data-filtro="recusado">
+        Recusados <span class="tab-count" data-contador="recusado">0</span>
+      </button>
+      <button type="button" class="tab" data-filtro="todos">
+        Todos <span class="tab-count" data-contador="todos">0</span>
+      </button>
+    </div>
+
+    <!-- Lista de pedidos (preenchida pelo JavaScript) -->
+    <div id="listaPedidos" class="order-list"></div>
+
+    <!-- Estado vazio -->
+    <div id="estadoVazio" class="empty-state" hidden>
+      <p class="empty-title">Nenhum pedido por aqui</p>
+      <p class="empty-text">Quando um locatário enviar uma solicitação, ela aparece nesta lista.</p>
+      <div class="empty-actions">
+        <a href="solicitar-locacao.html" class="btn btn-primary">Criar solicitação</a>
+        <button type="button" id="btnExemplos" class="btn btn-secondary">Carregar pedidos de exemplo</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>AlugaMáquina - Plataforma de Locação de Máquinas e Equipamentos</span>
+      <span>PUC-Campinas - PI4 - Time 31</span>
+    </div>
+  </footer>
+
+  <script src="../js/pedidos.js"></script>
+</body>
+</html>
