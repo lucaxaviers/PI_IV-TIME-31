@@ -29,6 +29,10 @@ public class Usuario {
 
     private String senhaHash;
 
+    private Double reputacaoMedia = 5.0; // Inicia com reputacao maxima neutra
+
+    private Integer totalAvaliacoes = 0;
+
     public Usuario() {
     }
 
@@ -104,6 +108,22 @@ public class Usuario {
 
     public void setSenhaHash(String senhaHash) {
         this.senhaHash = senhaHash;
+    }
+
+    public Double getReputacaoMedia() {
+        return reputacaoMedia;
+    }
+
+    public void setReputacaoMedia(Double reputacaoMedia) {
+        this.reputacaoMedia = reputacaoMedia;
+    }
+
+    public Integer getTotalAvaliacoes() {
+        return totalAvaliacoes;
+    }
+
+    public void setTotalAvaliacoes(Integer totalAvaliacoes) {
+        this.totalAvaliacoes = totalAvaliacoes;
     }
 }
 

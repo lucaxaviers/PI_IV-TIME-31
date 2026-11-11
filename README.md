@@ -39,17 +39,19 @@
 │       ├── main/
 │       │   ├── java/com/alugamaquina/backend/
 │       │   │   ├── BackendApplication.java
-│       │   │   ├── config/ (WebSocketConfig)
-│       │   │   ├── controller/ (AuthController, ChatController, MaquinaBuscaController)
-│       │   │   ├── dto/ (AuthResponse, CadastroRequest, LoginRequest, MaquinaBuscaResponse)
+│       │   │   ├── config/ (CorsConfig, WebSocketConfig)
+│       │   │   ├── controller/ (AuthController, AvaliacaoController, ChatController, MaquinaBuscaController, StatusController)
+│       │   │   ├── dto/ (AuthResponse, AvaliacaoRequest, AvaliacaoResponse, CadastroRequest, LoginRequest, MaquinaBuscaResponse)
 │       │   │   ├── exception/ (AutenticacaoException, UsuarioJaCadastradoException, etc.)
-│       │   │   ├── model/ (ChatMessage, Maquina, Usuario)
-│       │   │   ├── repository/ (UsuarioRepository)
-│       │   │   └── service/ (AuthService, MaquinaBuscaService)
+│       │   │   ├── model/ (Avaliacao, ChatMessage, Maquina, Usuario)
+│       │   │   ├── repository/ (AvaliacaoRepository, UsuarioRepository)
+│       │   │   └── service/ (AuthService, AvaliacaoService, MaquinaBuscaService)
 │       │   └── resources/
 │       │       └── application.properties
 │       └── test/
-│           └── java/com/alugamaquina/backend/service/ (AuthServiceTest, MaquinaBuscaServiceTest)
+│           └── java/com/alugamaquina/backend/
+│               ├── controller/ (StatusControllerTest)
+│               └── service/ (AuthServiceTest, AvaliacaoServiceTest, MaquinaBuscaServiceTest)
 ├── docs/
 │   ├── AlugaMaquina_Apresentacao.pptx
 │   ├── Relatorio_Ideacao_AlugaMaquina.docx
@@ -129,5 +131,6 @@ O acompanhamento das tarefas, sprints e entregas da equipe está centralizado no
 - [x] Inicialização da arquitetura Backend em Java (Spring Boot REST API)
 - [x] Implementação dos módulos de Autenticação (`#35`) e Busca Geoespacial de Máquinas (`#36`)
 - [x] Início da suíte de testes unitários com JUnit 5 e Mockito
+- [x] Módulo de Avaliação Pós-Locação e recálculo de reputação no backend (#45)
 - [ ] Integração completa dos endpoints REST com as páginas do front-end
-- [ ] Módulos de Contrato Digital em PDF (`#44`) e Avaliação Pós-Locação (`#45`) no backend
+- [ ] Módulo de Contrato Digital em PDF (#44) no backend
