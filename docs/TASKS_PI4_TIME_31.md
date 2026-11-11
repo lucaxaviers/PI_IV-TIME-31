@@ -65,9 +65,9 @@
 ---
 
 ## ⏱️ Calibração de Horas Individual — Lucas Rodrigues Xavier (@lucaxaviers)
-> Horas registradas e sincronizadas com os apontamentos oficiais das issues no GitHub. Total acumulado: **22,5 horas** (22 horas e 30 minutos).
+> Horas registradas e sincronizadas com os apontamentos oficiais das issues no GitHub. Total acumulado: **25,5 horas** (25 horas e 30 minutos).
 
-### Módulos Executados & Concluídos: **22,5 horas**
+### Módulos Executados & Concluídos: **25,5 horas**
 | Issue / Atividade | Descrição Real e Justificativa Técnica | Horas | Status |
 | :--- | :--- | :---: | :---: |
 | **#16 - Cadastro de Máquina (HTML)** | Formulário estruturado com dados técnicos, seleção de tipo, localização e área de upload. | **2,5h** | Concluído |
@@ -75,10 +75,11 @@
 | **#18 - Validações do Cadastro de Máquina (JS)** | Validação client-side completa de 9 campos, cálculo de datas e formatação de valores. | **3,5h** | Concluído |
 | **#34 - Cadastro e Login de Usuários (HTML/CSS)** | Interface de autenticação com abas dinâmicas de login e cadastro de produtor rural. | **3,5h** | Concluído |
 | **#35 - Autenticação e Controle de Acesso (Backend Java)** | API REST (POST /cadastro e /login), hash SHA-256, arquitetura em camadas e testes unitários JUnit 5 com Mockito. | **4,5h** | Concluído |
+| **#21 - Ambiente Java e Servidor Básico (CORS, Status & Testes)** | Configuração de WebMvc/CORS para o front, endpoint de status /api/status e teste JUnit 5. | **3,0h** | Concluído |
 | **#28 - Avaliação Pós-Locação (HTML)** | Interface do formulário de avaliação mútua entre produtor e locatário com notas e feedback. | **2,0h** | Concluído |
 | **#29 - Avaliação Pós-Locação (CSS)** | Estilização responsiva dos componentes de avaliação, notas e estrelas. | **2,0h** | Concluído |
 | **#19 - Global - CSS & Design System (contribuição)** | Padronização de variáveis CSS, tipografia, reset e classes utilitárias compartilhadas. | **2,0h** | Concluído |
-| **Total Executado:** | | **22,5h** | |
+| **Total Executado:** | | **25,5h** | |
 
 ---
 
