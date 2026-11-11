@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: DTO com as notas e comentario da avaliacao pos-locacao
+*/
+
 package com.alugamaquina.backend.dto;
 
 /**

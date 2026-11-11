@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: Testes unitarios com JUnit 5 e Mockito para as regras do AuthService
+*/
+
 package com.alugamaquina.backend.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

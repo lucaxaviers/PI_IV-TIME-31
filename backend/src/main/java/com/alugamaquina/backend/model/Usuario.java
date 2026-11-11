@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: Modelo de entidade Usuario para autenticacao e reputacao no sistema
+*/
+
 package com.alugamaquina.backend.model;
 
 import org.springframework.data.annotation.Id;

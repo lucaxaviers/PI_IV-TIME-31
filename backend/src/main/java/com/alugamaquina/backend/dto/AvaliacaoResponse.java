@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: DTO de resposta da avaliacao registrada com media e reputacao atualizada
+*/
+
 package com.alugamaquina.backend.dto;
 
 import java.time.LocalDateTime;

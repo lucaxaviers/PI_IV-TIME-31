@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: Modelo de entidade Avaliacao pos-locacao de equipamentos e locadores
+*/
+
 package com.alugamaquina.backend.model;
 
 import java.time.LocalDateTime;

@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: Endpoints REST para registro e consulta de avaliacoes (/api/avaliacoes)
+*/
+
 package com.alugamaquina.backend.controller;
 
 import java.util.List;

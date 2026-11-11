@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: Servico de regras de negocio para autenticacao, cadastro e hashing de senhas
+*/
+
 package com.alugamaquina.backend.service;
 
 import java.nio.charset.StandardCharsets;

@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: Servico de regras de avaliacao pos-locacao e calculo de reputacao
+*/
+
 package com.alugamaquina.backend.service;
 
 import java.math.BigDecimal;

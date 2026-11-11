@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: DTO com as credenciais de email e senha para login de usuario
+*/
+
 package com.alugamaquina.backend.dto;
 
 public class LoginRequest {

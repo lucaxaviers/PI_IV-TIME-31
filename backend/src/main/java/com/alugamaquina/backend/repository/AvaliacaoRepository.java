@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: Repositorio MongoDB para persistencia e consulta de avaliacoes
+*/
+
 package com.alugamaquina.backend.repository;
 
 import java.util.List;

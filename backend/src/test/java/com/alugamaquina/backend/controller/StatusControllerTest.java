@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: Testes unitarios com JUnit 5 para o StatusController
+*/
+
 package com.alugamaquina.backend.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

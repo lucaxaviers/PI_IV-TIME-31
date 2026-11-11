@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: DTO com os dados de requisicao para cadastro de novo usuario
+*/
+
 package com.alugamaquina.backend.dto;
 
 public class CadastroRequest {

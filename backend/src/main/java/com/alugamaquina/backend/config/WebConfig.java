@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: Configuracao global de CORS para integracao com o front-end
+*/
+
 package com.alugamaquina.backend.config;
 
 import org.springframework.context.annotation.Configuration;

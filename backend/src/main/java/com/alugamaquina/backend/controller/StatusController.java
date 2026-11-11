@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: Endpoint REST de verificacao de saude e status do servidor (/api/status)
+*/
+
 package com.alugamaquina.backend.controller;
 
 import java.time.LocalDateTime;

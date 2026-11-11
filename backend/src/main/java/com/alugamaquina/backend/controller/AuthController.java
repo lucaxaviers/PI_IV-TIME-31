@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: Endpoints REST para autenticacao (/api/auth/cadastro e /api/auth/login)
+*/
+
 package com.alugamaquina.backend.controller;
 
 import java.util.Map;

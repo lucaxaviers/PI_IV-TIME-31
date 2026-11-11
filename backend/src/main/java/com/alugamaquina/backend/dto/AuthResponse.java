@@ -1,3 +1,8 @@
+/*
+  Autor: Lucas Rodrigues Xavier | 25000508
+  Descricao: DTO de resposta para operacoes de autenticacao com token e dados basicos
+*/
+
 package com.alugamaquina.backend.dto;
 
 public class AuthResponse {
