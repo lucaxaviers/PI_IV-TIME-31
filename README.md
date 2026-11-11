@@ -39,10 +39,11 @@
 │       ├── main/
 │       │   ├── java/com/alugamaquina/backend/
 │       │   │   ├── BackendApplication.java
-│       │   │   ├── controller/ (AuthController, MaquinaBuscaController)
+│       │   │   ├── config/ (WebSocketConfig)
+│       │   │   ├── controller/ (AuthController, ChatController, MaquinaBuscaController)
 │       │   │   ├── dto/ (AuthResponse, CadastroRequest, LoginRequest, MaquinaBuscaResponse)
 │       │   │   ├── exception/ (AutenticacaoException, UsuarioJaCadastradoException, etc.)
-│       │   │   ├── model/ (Maquina, Usuario)
+│       │   │   ├── model/ (ChatMessage, Maquina, Usuario)
 │       │   │   ├── repository/ (UsuarioRepository)
 │       │   │   └── service/ (AuthService, MaquinaBuscaService)
 │       │   └── resources/
@@ -67,7 +68,8 @@
 │   ├── js/
 │   │   ├── busca-catalogo.js
 │   │   ├── cadastro-maquina.js
-│   │   └── chat.js
+│   │   ├── chat.js
+│   │   └── frete.js
 │   └── pages/
 │       ├── avaliacao-pos-locacao.html
 │       ├── busca-catalogo.html

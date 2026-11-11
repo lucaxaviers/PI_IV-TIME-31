@@ -42,7 +42,7 @@
 | **#36** | API REST de Busca Geoespacial de Máquinas - Backend Java | `@mateusor` | Back/DB | 🟢 OPEN |
 | **#13** | Detalhe da máquina e frete - HTML | `@tiago148` | Front | 🟣 CLOSED |
 | **#23** | Detalhe da máquina e frete - CSS | `@tiago148` | Front | 🟣 CLOSED |
-| **#24** | Cálculo de frete estimado (JavaScript) | `@tiago148` | Front/Back | 🟢 OPEN |
+| **#24** | Cálculo de frete estimado (JavaScript) | `@tiago148` | Front/Back | 🟣 CLOSED |
 | **#38** | Solicitação e aceite do pedido de locação - Interface e Fluxo | `@tiago148` | Front | 🟢 OPEN |
 | **#39** | Solicitação e aceite do pedido de locação - Backend Java | `@tiago148` | Back | 🟢 OPEN |
 | **#15** | Contrato digital simplificado - HTML | `@KauanDias-Dev` | Front | 🟣 CLOSED |
@@ -53,7 +53,7 @@
 | **#25** | Chat entre as partes - HTML | `@LeonardoGambaroni` | Front | 🟣 CLOSED |
 | **#26** | Chat entre as partes - CSS | `@LeonardoGambaroni` | Front | 🟣 CLOSED |
 | **#41** | Lógica de envio e renderização de mensagens no chat (JS) | `@LeonardoGambaroni` | Front | 🟢 OPEN |
-| **#40** | Chat em tempo real e WebSockets - Backend Java | `@LeonardoGambaroni` | Back | 🟢 OPEN |
+| **#40** | Chat em tempo real e WebSockets - Backend Java | `@LeonardoGambaroni` | Back | 🟣 CLOSED |
 | **#28** | Avaliação pós-locação - HTML | `@lucaxaviers` | Front | 🟣 CLOSED |
 | **#29** | Avaliação pós-locação - CSS | `@lucaxaviers` | Front | 🟣 CLOSED |
 | **#45** | Avaliação pós-locação e recálculo de reputação - Backend Java | `@lucaxaviers` | Back | 🟢 OPEN |
@@ -61,6 +61,24 @@
 | **#20** | Modelagem do Banco de Dados no MongoDB Atlas | Todo o time | DB | 🟢 OPEN |
 | **#21** | Ambiente Java e servidor básico | Todo o time | Back | 🟢 OPEN |
 | **#46** | Testes Unitários com JUnit 5 - Regras de Negócio e Cálculos Críticos | Todo o time | Testes | 🟢 OPEN |
+
+---
+
+## ⏱️ Calibração de Horas Individual — Lucas Rodrigues Xavier (@lucaxaviers)
+> Horas registradas e sincronizadas com os apontamentos oficiais das issues no GitHub. Total acumulado: **22,5 horas** (22 horas e 30 minutos).
+
+### Módulos Executados & Concluídos: **22,5 horas**
+| Issue / Atividade | Descrição Real e Justificativa Técnica | Horas | Status |
+| :--- | :--- | :---: | :---: |
+| **#16 - Cadastro de Máquina (HTML)** | Formulário estruturado com dados técnicos, seleção de tipo, localização e área de upload. | **2,5h** | Concluído |
+| **#17 - Cadastro de Máquina (CSS)** | Estilização responsiva, layout em grid e design system para o formulário de anúncio. | **2,5h** | Concluído |
+| **#18 - Validações do Cadastro de Máquina (JS)** | Validação client-side completa de 9 campos, cálculo de datas e formatação de valores. | **3,5h** | Concluído |
+| **#34 - Cadastro e Login de Usuários (HTML/CSS)** | Interface de autenticação com abas dinâmicas de login e cadastro de produtor rural. | **3,5h** | Concluído |
+| **#35 - Autenticação e Controle de Acesso (Backend Java)** | API REST (POST /cadastro e /login), hash SHA-256, arquitetura em camadas e testes unitários JUnit 5 com Mockito. | **4,5h** | Concluído |
+| **#28 - Avaliação Pós-Locação (HTML)** | Interface do formulário de avaliação mútua entre produtor e locatário com notas e feedback. | **2,0h** | Concluído |
+| **#29 - Avaliação Pós-Locação (CSS)** | Estilização responsiva dos componentes de avaliação, notas e estrelas. | **2,0h** | Concluído |
+| **#19 - Global - CSS & Design System (contribuição)** | Padronização de variáveis CSS, tipografia, reset e classes utilitárias compartilhadas. | **2,0h** | Concluído |
+| **Total Executado:** | | **22,5h** | |
 
 ---
 
