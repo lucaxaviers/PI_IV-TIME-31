@@ -6,6 +6,7 @@
 package com.alugamaquina.backend.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,7 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * Responsavel: Lucas Rodrigues Xavier | 25000508 (Issue #45)
  */
 @Document(collection = "avaliacoes")
-public class Avaliacao {
+public class Avaliacao implements Comparable<Avaliacao>, Cloneable {
 
     @Id
     private String id;
@@ -170,5 +171,103 @@ public class Avaliacao {
 
     public void setDataAvaliacao(LocalDateTime dataAvaliacao) {
         this.dataAvaliacao = dataAvaliacao;
+    }
+
+    // ---- Metodos canonicos (padrao Prof. Francisco) ----
+
+    public Avaliacao(Avaliacao modelo) throws Exception {
+        if (modelo == null)
+            throw new Exception("Modelo ausente");
+
+        this.id = modelo.id;
+        this.locacaoId = modelo.locacaoId;
+        this.locadorId = modelo.locadorId;
+        this.locatarioId = modelo.locatarioId;
+        this.maquinaId = modelo.maquinaId;
+        this.notaDesempenho = modelo.notaDesempenho;
+        this.notaConservacao = modelo.notaConservacao;
+        this.notaFidelidade = modelo.notaFidelidade;
+        this.notaPontualidade = modelo.notaPontualidade;
+        this.notaSuporte = modelo.notaSuporte;
+        this.mediaFinal = modelo.mediaFinal;
+        this.comentario = modelo.comentario;
+        this.recomenda = modelo.recomenda;
+        this.dataAvaliacao = modelo.dataAvaliacao; // LocalDateTime e imutavel
+    }
+
+    @Override
+    public Object clone() {
+        Avaliacao retorno = null;
+
+        try {
+            retorno = new Avaliacao(this);
+        } catch (Exception erro) {
+            // sei que nao vai dar erro: o this nunca e nulo
+        }
+
+        return retorno;
+    }
+
+    @Override
+    public String toString() {
+        return "Avaliacao da locacao " + this.locacaoId
+                + " - media " + this.mediaFinal
+                + " - " + (this.recomenda ? "recomenda" : "nao recomenda");
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null) return false;
+        if (obj.getClass() != this.getClass()) return false;
+
+        Avaliacao ava = (Avaliacao) obj;
+
+        if (!Objects.equals(this.id, ava.id)) return false;
+        if (!Objects.equals(this.locacaoId, ava.locacaoId)) return false;
+        if (!Objects.equals(this.locadorId, ava.locadorId)) return false;
+        if (!Objects.equals(this.locatarioId, ava.locatarioId)) return false;
+        if (!Objects.equals(this.maquinaId, ava.maquinaId)) return false;
+        if (this.notaDesempenho != ava.notaDesempenho) return false;
+        if (this.notaConservacao != ava.notaConservacao) return false;
+        if (this.notaFidelidade != ava.notaFidelidade) return false;
+        if (this.notaPontualidade != ava.notaPontualidade) return false;
+        if (this.notaSuporte != ava.notaSuporte) return false;
+        if (Double.compare(this.mediaFinal, ava.mediaFinal) != 0) return false;
+        if (!Objects.equals(this.comentario, ava.comentario)) return false;
+        if (this.recomenda != ava.recomenda) return false;
+        if (!Objects.equals(this.dataAvaliacao, ava.dataAvaliacao)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int retorno = 1;
+
+        retorno = retorno * 2 + (this.id == null ? 0 : this.id.hashCode());
+        retorno = retorno * 2 + (this.locacaoId == null ? 0 : this.locacaoId.hashCode());
+        retorno = retorno * 2 + (this.locadorId == null ? 0 : this.locadorId.hashCode());
+        retorno = retorno * 2 + (this.locatarioId == null ? 0 : this.locatarioId.hashCode());
+        retorno = retorno * 2 + (this.maquinaId == null ? 0 : this.maquinaId.hashCode());
+        retorno = retorno * 2 + ((Integer) this.notaDesempenho).hashCode();
+        retorno = retorno * 2 + ((Integer) this.notaConservacao).hashCode();
+        retorno = retorno * 2 + ((Integer) this.notaFidelidade).hashCode();
+        retorno = retorno * 2 + ((Integer) this.notaPontualidade).hashCode();
+        retorno = retorno * 2 + ((Integer) this.notaSuporte).hashCode();
+        retorno = retorno * 2 + ((Double) this.mediaFinal).hashCode();
+        retorno = retorno * 2 + (this.comentario == null ? 0 : this.comentario.hashCode());
+        retorno = retorno * 2 + ((Boolean) this.recomenda).hashCode();
+        retorno = retorno * 2 + (this.dataAvaliacao == null ? 0 : this.dataAvaliacao.hashCode());
+
+        if (retorno < 0) retorno = -retorno;
+        return retorno;
+    }
+
+    @Override
+    public int compareTo(Avaliacao ava) {
+        if (this.mediaFinal < ava.mediaFinal) return -666;
+        if (this.mediaFinal > ava.mediaFinal) return 666;
+        return 0;
     }
 }

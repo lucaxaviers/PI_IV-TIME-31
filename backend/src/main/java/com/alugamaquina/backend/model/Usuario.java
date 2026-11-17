@@ -5,6 +5,8 @@
 
 package com.alugamaquina.backend.model;
 
+import java.util.Objects;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * Entidade que representa os usuarios (locadores e locatarios) da plataforma AlugaMaquina.
  */
 @Document(collection = "usuarios")
-public class Usuario {
+public class Usuario implements Comparable<Usuario>, Cloneable {
 
     @Id
     private String id;
@@ -130,5 +132,103 @@ public class Usuario {
     public void setTotalAvaliacoes(Integer totalAvaliacoes) {
         this.totalAvaliacoes = totalAvaliacoes;
     }
-}
 
+    // ---- Metodos canonicos (padrao Prof. Francisco) ----
+
+    public Usuario(Usuario modelo) throws Exception {
+        if (modelo == null)
+            throw new Exception("Modelo ausente");
+
+        this.id = modelo.id;
+        this.nome = modelo.nome;
+        this.documento = modelo.documento;
+        this.telefone = modelo.telefone;
+        this.email = modelo.email;
+        this.municipio = modelo.municipio;
+        this.perfil = modelo.perfil;
+        this.senhaHash = modelo.senhaHash;
+        this.reputacaoMedia = modelo.reputacaoMedia;
+        this.totalAvaliacoes = modelo.totalAvaliacoes;
+    }
+
+    @Override
+    public Object clone() {
+        Usuario retorno = null;
+
+        try {
+            retorno = new Usuario(this);
+        } catch (Exception erro) {
+            // sei que nao vai dar erro: o this nunca e nulo
+        }
+
+        return retorno;
+    }
+
+    @Override
+    public String toString() {
+        // a senhaHash nunca aparece no texto, por seguranca
+        return this.nome + " (" + this.perfil + ") - " + this.email
+                + " - reputacao " + this.reputacaoMedia
+                + " em " + this.totalAvaliacoes + " avaliacoes";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null) return false;
+        if (obj.getClass() != this.getClass()) return false;
+
+        Usuario usu = (Usuario) obj;
+
+        if (!Objects.equals(this.id, usu.id)) return false;
+        if (!Objects.equals(this.nome, usu.nome)) return false;
+        if (!Objects.equals(this.documento, usu.documento)) return false;
+        if (!Objects.equals(this.telefone, usu.telefone)) return false;
+        if (!Objects.equals(this.email, usu.email)) return false;
+        if (!Objects.equals(this.municipio, usu.municipio)) return false;
+        if (!Objects.equals(this.perfil, usu.perfil)) return false;
+        if (!Objects.equals(this.senhaHash, usu.senhaHash)) return false;
+        if (!Objects.equals(this.reputacaoMedia, usu.reputacaoMedia)) return false;
+        if (!Objects.equals(this.totalAvaliacoes, usu.totalAvaliacoes)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int retorno = 1;
+
+        retorno = retorno * 2 + (this.id == null ? 0 : this.id.hashCode());
+        retorno = retorno * 2 + (this.nome == null ? 0 : this.nome.hashCode());
+        retorno = retorno * 2 + (this.documento == null ? 0 : this.documento.hashCode());
+        retorno = retorno * 2 + (this.telefone == null ? 0 : this.telefone.hashCode());
+        retorno = retorno * 2 + (this.email == null ? 0 : this.email.hashCode());
+        retorno = retorno * 2 + (this.municipio == null ? 0 : this.municipio.hashCode());
+        retorno = retorno * 2 + (this.perfil == null ? 0 : this.perfil.hashCode());
+        retorno = retorno * 2 + (this.senhaHash == null ? 0 : this.senhaHash.hashCode());
+        retorno = retorno * 2 + (this.reputacaoMedia == null ? 0 : this.reputacaoMedia.hashCode());
+        retorno = retorno * 2 + (this.totalAvaliacoes == null ? 0 : this.totalAvaliacoes.hashCode());
+
+        if (retorno < 0) retorno = -retorno;
+        return retorno;
+    }
+
+    @Override
+    public int compareTo(Usuario usu) {
+        int porNome = comparar(this.nome, usu.nome);
+        if (porNome != 0) return porNome;
+
+        return comparar(this.documento, usu.documento);
+    }
+
+    private static int comparar(String a, String b) {
+        if (a == null && b == null) return 0;
+        if (a == null) return -666;
+        if (b == null) return 666;
+
+        int c = a.compareToIgnoreCase(b);
+        if (c < 0) return -666;
+        if (c > 0) return 666;
+        return 0;
+    }
+}
