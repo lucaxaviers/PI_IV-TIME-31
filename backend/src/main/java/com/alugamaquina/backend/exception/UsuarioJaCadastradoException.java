@@ -5,6 +5,7 @@
 
 package com.alugamaquina.backend.exception;
 
+// Erro de cadastro repetido (e-mail ou documento ja existe)
 public class UsuarioJaCadastradoException extends RuntimeException {
 
     public UsuarioJaCadastradoException(String mensagem) {

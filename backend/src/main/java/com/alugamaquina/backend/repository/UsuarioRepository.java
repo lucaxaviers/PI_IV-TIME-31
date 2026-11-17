@@ -15,10 +15,12 @@ import com.alugamaquina.backend.model.Usuario;
 @Repository
 public interface UsuarioRepository extends MongoRepository<Usuario, String> {
 
+    // Busca para o login
     Optional<Usuario> findByEmail(String email);
 
     Optional<Usuario> findByDocumento(String documento);
 
+    // Evita cadastro com e-mail ou documento repetido
     boolean existsByEmail(String email);
 
     boolean existsByDocumento(String documento);

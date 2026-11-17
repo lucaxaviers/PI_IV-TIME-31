@@ -5,6 +5,7 @@
 
 package com.alugamaquina.backend.dto;
 
+// Dados enviados pelo formulario de cadastro
 public class CadastroRequest {
 
     private String nome;

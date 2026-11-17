@@ -119,6 +119,7 @@ public class AvaliacaoService {
         return avaliacaoRepository.findByLocadorId(locadorId);
     }
 
+    // Locacao e locador sao obrigatorios e as 5 notas ficam entre 1 e 5
     private void validarRequest(AvaliacaoRequest request) {
         if (request.getLocacaoId() == null || request.getLocacaoId().trim().isEmpty()) {
             throw new IllegalArgumentException("Identificador da locacao e obrigatorio.");
@@ -140,6 +141,7 @@ public class AvaliacaoService {
         }
     }
 
+    // Arredonda para 2 casas (ex.: 4.666 vira 4.67)
     private double arredondar(double valor) {
         return BigDecimal.valueOf(valor)
                 .setScale(2, RoundingMode.HALF_UP)

@@ -5,6 +5,7 @@
 
 package com.alugamaquina.backend.dto;
 
+// Dados do login: e-mail ou CPF/CNPJ e senha
 public class LoginRequest {
 
     private String identificador; // E-mail ou CPF/CNPJ

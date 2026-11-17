@@ -38,18 +38,21 @@ public class AvaliacaoController {
         this.avaliacaoService = avaliacaoService;
     }
 
+    // POST /api/avaliacoes: salva a avaliacao e responde 201
     @PostMapping
     public ResponseEntity<AvaliacaoResponse> registrarAvaliacao(@RequestBody AvaliacaoRequest request) {
         AvaliacaoResponse response = avaliacaoService.registrarAvaliacao(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    // GET /api/avaliacoes/locador/{id}: lista as avaliacoes do locador
     @GetMapping("/locador/{locadorId}")
     public ResponseEntity<List<Avaliacao>> listarPorLocador(@PathVariable String locadorId) {
         List<Avaliacao> avaliacoes = avaliacaoService.listarPorLocador(locadorId);
         return ResponseEntity.ok(avaliacoes);
     }
 
+    // Nota ou campo invalido vira 400
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, Object>> tratarValidacao(IllegalArgumentException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(

@@ -5,6 +5,7 @@
 
 package com.alugamaquina.backend.dto;
 
+// Resposta de cadastro e login (nunca devolve a senha)
 public class AuthResponse {
 
     private boolean sucesso;
@@ -30,6 +31,7 @@ public class AuthResponse {
         this.municipio = municipio;
     }
 
+    // Atalho para montar uma resposta de sucesso
     public static AuthResponse sucesso(String mensagem, String id, String nome, String email, String documento, String perfil, String municipio) {
         return new AuthResponse(true, mensagem, id, nome, email, documento, perfil, municipio);
     }

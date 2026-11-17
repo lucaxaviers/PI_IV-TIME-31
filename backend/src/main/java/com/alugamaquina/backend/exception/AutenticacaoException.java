@@ -5,6 +5,7 @@
 
 package com.alugamaquina.backend.exception;
 
+// Erro de login (usuario ou senha incorretos)
 public class AutenticacaoException extends RuntimeException {
 
     public AutenticacaoException(String mensagem) {

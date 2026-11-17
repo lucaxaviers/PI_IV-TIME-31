@@ -114,6 +114,7 @@ public class AuthService {
         );
     }
 
+    // Regras minimas: nome 3+, e-mail com @, documento 11+ digitos, senha 6+
     private void validarCadastro(CadastroRequest request) {
         if (request.getNome() == null || request.getNome().trim().length() < 3) {
             throw new IllegalArgumentException("Nome obrigatorio (minimo 3 caracteres).");

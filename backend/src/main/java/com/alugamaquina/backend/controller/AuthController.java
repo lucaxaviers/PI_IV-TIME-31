@@ -22,6 +22,7 @@ import com.alugamaquina.backend.exception.AutenticacaoException;
 import com.alugamaquina.backend.exception.UsuarioJaCadastradoException;
 import com.alugamaquina.backend.service.AuthService;
 
+// Controller de autenticacao: cadastro e login de usuarios
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -32,18 +33,21 @@ public class AuthController {
         this.authService = authService;
     }
 
+    // POST /api/auth/cadastro: cria o usuario e responde 201
     @PostMapping("/cadastro")
     public ResponseEntity<AuthResponse> cadastrar(@RequestBody CadastroRequest request) {
         AuthResponse response = authService.cadastrar(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    // POST /api/auth/login: confere e-mail/CPF e senha e responde 200
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
         AuthResponse response = authService.autenticar(request);
         return ResponseEntity.ok(response);
     }
 
+    // Senha ou usuario errado vira 401
     @ExceptionHandler(AutenticacaoException.class)
     public ResponseEntity<Map<String, Object>> tratarAutenticacao(AutenticacaoException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
@@ -52,6 +56,7 @@ public class AuthController {
         ));
     }
 
+    // E-mail ou CPF repetido vira 409
     @ExceptionHandler(UsuarioJaCadastradoException.class)
     public ResponseEntity<Map<String, Object>> tratarUsuarioExistente(UsuarioJaCadastradoException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of(
@@ -60,6 +65,7 @@ public class AuthController {
         ));
     }
 
+    // Dado invalido vira 400
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, Object>> tratarArgumentoInvalido(IllegalArgumentException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(

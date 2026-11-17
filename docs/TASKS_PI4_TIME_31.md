@@ -58,16 +58,16 @@
 | **#29** | Avaliação pós-locação - CSS | `@lucaxaviers` | Front | 🟣 CLOSED |
 | **#45** | Avaliação pós-locação e recálculo de reputação - Backend Java | `@lucaxaviers` | Back | 🟣 CLOSED |
 | **#19** | Global - CSS & Design System | Todo o time | Front | 🟣 CLOSED |
-| **#20** | Modelagem do Banco de Dados no MongoDB Atlas | Todo o time | DB | 🟡 Parte do Lucas concluída |
+| **#20** | Modelagem do Banco de Dados no MongoDB Atlas | Todo o time | DB | 🟡 Em andamento |
 | **#21** | Ambiente Java e servidor básico | Todo o time | Back | 🟢 OPEN |
-| **#46** | Testes Unitários com JUnit 5 - Regras de Negócio e Cálculos Críticos | Todo o time | Testes | 🟡 Parte do Lucas concluída |
+| **#46** | Testes Unitários com JUnit 5 - Regras de Negócio e Cálculos Críticos | Todo o time | Testes | 🟡 Em andamento |
 
 ---
 
 ## ⏱️ Calibração de Horas Individual — Lucas Rodrigues Xavier (@lucaxaviers)
-> Horas registradas e sincronizadas com os apontamentos oficiais das issues no GitHub. Total acumulado: **36,5 horas** (36 horas e 30 minutos).
+> Horas registradas e sincronizadas com os apontamentos oficiais das issues no GitHub. Total acumulado: **38,5 horas** (38 horas e 30 minutos).
 
-### Módulos Executados & Concluídos: **36,5 horas**
+### Módulos Executados & Concluídos: **38,5 horas**
 | Issue / Atividade | Descrição Real e Justificativa Técnica | Horas | Status |
 | :--- | :--- | :---: | :---: |
 | **#16 - Cadastro de Máquina (HTML)** | Formulário estruturado com dados técnicos, seleção de tipo, localização e área de upload. | **2,5h** | Concluído |
@@ -80,9 +80,10 @@
 | **#28 - Avaliação Pós-Locação (HTML)** | Interface do formulário de avaliação mútua entre produtor e locatário com notas e feedback. | **2,0h** | Concluído |
 | **#29 - Avaliação Pós-Locação (CSS)** | Estilização responsiva dos componentes de avaliação, notas e estrelas. | **2,0h** | Concluído |
 | **#19 - Global - CSS & Design System (contribuição)** | Padronização de variáveis CSS, tipografia, reset e classes utilitárias compartilhadas. | **2,0h** | Concluído |
-| **#20 - Modelagem do Banco de Dados (parte Lucas)** | Documentação das collections `usuarios` e `avaliacoes` no MongoDB, índices, relacionamentos e regras dos dados (`docs/MODELAGEM_MONGODB.md`). Métodos canônicos (`equals`, `hashCode`, `compareTo`, `toString`, cópia e `clone`) em `Usuario` e `Avaliacao`. | **2,5h** | Concluído |
-| **#46 - Testes Unitários JUnit 5 (parte Lucas)** | 106 testes no backend: métodos canônicos dos modelos e testes de Autenticação, Avaliação e Busca com Particionamento de Equivalência, Valores de Fronteira (BVA) e padrão AAA. | **4,5h** | Concluído |
-| **Total Executado:** | | **36,5h** | |
+| **#20 - Modelagem do Banco de Dados** | Documentação das collections `usuarios` e `avaliacoes` no MongoDB, índices, relacionamentos e regras dos dados (`docs/MODELAGEM_MONGODB.md`). Métodos canônicos (`equals`, `hashCode`, `compareTo`, `toString`, cópia e `clone`) em `Usuario` e `Avaliacao`. | **2,5h** | Concluído |
+| **#46 - Testes Unitários JUnit 5** | 106 testes no backend: métodos canônicos dos modelos e testes de Autenticação, Avaliação e Busca com Particionamento de Equivalência, Valores de Fronteira (BVA) e padrão AAA. | **4,5h** | Concluído |
+| **#54 - Revisão e comentários do código (Autenticação e Avaliações)** | Revisão do backend Java e comentários curtos em controllers, services, repositórios, DTOs e exceptions, sem mudar a lógica. | **2,0h** | Concluído |
+| **Total Executado:** | | **38,5h** | |
 
 ---
 
