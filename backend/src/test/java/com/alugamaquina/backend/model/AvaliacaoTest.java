@@ -19,6 +19,7 @@ class AvaliacaoTest {
 
     private static final LocalDateTime DATA_FIXA = LocalDateTime.of(2026, 11, 1, 10, 0);
 
+    // Cria uma avaliacao de exemplo com data fixa
     private Avaliacao criarAvaliacao(String locacaoId, double media) {
         Avaliacao avaliacao = new Avaliacao(locacaoId, "locador1", "locatario1", "maquina1",
                 5, 4, 5, 4, 5, media, "Bom", true);

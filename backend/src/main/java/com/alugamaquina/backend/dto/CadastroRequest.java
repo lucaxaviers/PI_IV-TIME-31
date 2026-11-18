@@ -8,6 +8,7 @@ package com.alugamaquina.backend.dto;
 // Dados enviados pelo formulario de cadastro
 public class CadastroRequest {
 
+    // Campos do formulario de cadastro
     private String nome;
     private String documento;
     private String telefone;
@@ -16,9 +17,11 @@ public class CadastroRequest {
     private String perfil;
     private String senha;
 
+    // Construtor vazio: o Spring usa para ler o JSON
     public CadastroRequest() {
     }
 
+    // Construtor com todos os campos
     public CadastroRequest(String nome, String documento, String telefone, String email, String municipio, String perfil, String senha) {
         this.nome = nome;
         this.documento = documento;

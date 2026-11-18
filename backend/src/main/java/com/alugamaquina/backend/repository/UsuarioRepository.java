@@ -18,6 +18,7 @@ public interface UsuarioRepository extends MongoRepository<Usuario, String> {
     // Busca para o login
     Optional<Usuario> findByEmail(String email);
 
+    // Busca para o login por CPF/CNPJ
     Optional<Usuario> findByDocumento(String documento);
 
     // Evita cadastro com e-mail ou documento repetido

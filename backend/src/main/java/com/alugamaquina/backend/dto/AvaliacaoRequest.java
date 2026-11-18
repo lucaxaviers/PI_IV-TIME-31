@@ -12,23 +12,28 @@ package com.alugamaquina.backend.dto;
  */
 public class AvaliacaoRequest {
 
+    // Ids que ligam a avaliacao a locacao, as pessoas e a maquina
     private String locacaoId;
     private String locadorId;
     private String locatarioId;
     private String maquinaId;
 
+    // Cinco notas, cada uma de 1 a 5
     private int notaDesempenho;   // 1 a 5
     private int notaConservacao;  // 1 a 5
     private int notaFidelidade;   // 1 a 5
     private int notaPontualidade; // 1 a 5
     private int notaSuporte;      // 1 a 5
 
+    // Texto livre e se o locatario recomenda
     private String comentario;
     private boolean recomenda;
 
+    // Construtor vazio: o Spring usa para ler o JSON
     public AvaliacaoRequest() {
     }
 
+    // Construtor com todos os campos (usado nos testes)
     public AvaliacaoRequest(String locacaoId, String locadorId, String locatarioId, String maquinaId,
                             int notaDesempenho, int notaConservacao, int notaFidelidade,
                             int notaPontualidade, int notaSuporte, String comentario, boolean recomenda) {

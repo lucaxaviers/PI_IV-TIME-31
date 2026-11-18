@@ -7,6 +7,7 @@
   padding: 2rem 0 1.5rem 0;
 }
 
+/* Titulo e texto de abertura da pagina */
 .page-title {
   font-size: 1.625rem;
   font-weight: 700;
@@ -30,6 +31,7 @@
   box-shadow: var(--shadow);
 }
 
+/* Resumo da locacao no topo */
 .summary-header {
   display: flex;
   justify-content: space-between;
@@ -101,6 +103,7 @@
   padding-bottom: 0;
 }
 
+/* Titulos de cada bloco do formulario */
 .section-title {
   font-size: 1.05rem;
   font-weight: 700;
@@ -121,6 +124,7 @@
   gap: 1.25rem;
 }
 
+/* Linha de cada criterio avaliado */
 .rating-criterion {
   display: flex;
   align-items: center;
@@ -163,6 +167,7 @@
   gap: 6px;
 }
 
+/* Estrelas de 1 a 5 (acendem ao passar o mouse) */
 .star-rating input[type="radio"] {
   display: none;
 }
@@ -204,6 +209,7 @@
   background-color: #FAFAFA;
 }
 
+/* Textos e campo de upload de fotos */
 .upload-box-title {
   font-size: 0.9rem;
   font-weight: 600;
@@ -229,6 +235,7 @@
   gap: 1rem;
 }
 
+/* Cartoes de recomendacao (sim ou nao) */
 .recommendation-card {
   display: flex;
   align-items: flex-start;

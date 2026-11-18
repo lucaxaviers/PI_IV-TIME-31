@@ -8,6 +8,7 @@
   padding: 2rem 0 1.5rem 0;
 }
 
+/* Titulo e texto de abertura da pagina */
 .page-title {
   font-size: 1.625rem;
   font-weight: 700;
@@ -43,6 +44,7 @@
   padding-bottom: 0;
 }
 
+/* Titulos de cada bloco do formulario */
 .section-title {
   font-size: 1.05rem;
   font-weight: 700;
@@ -65,6 +67,7 @@
   background-color: #FAFAFA;
 }
 
+/* Textos e campo de upload de fotos */
 .upload-box-title {
   font-size: 0.9rem;
   font-weight: 600;
@@ -94,6 +97,7 @@
   margin-top: 2rem;
 }
 
+/* Ajuste para celular */
 @media (max-width: 640px) {
   .form-card {
     padding: 1.25rem;

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 class UsuarioTest {
 
+    // Cria um usuario de exemplo para os testes
     private Usuario criarUsuario(String nome, String documento) {
         return new Usuario(nome, documento, "19999999999", nome.toLowerCase() + "@teste.com",
                 "Paulinia", "locador", "hash");

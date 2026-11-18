@@ -20,9 +20,12 @@ import com.alugamaquina.backend.model.Avaliacao;
 @Repository
 public interface AvaliacaoRepository extends MongoRepository<Avaliacao, String> {
 
+    // Avaliacoes recebidas por um locador (base da reputacao)
     List<Avaliacao> findByLocadorId(String locadorId);
 
+    // Avaliacoes de uma maquina
     List<Avaliacao> findByMaquinaId(String maquinaId);
 
+    // Garante uma avaliacao por locacao
     boolean existsByLocacaoId(String locacaoId);
 }

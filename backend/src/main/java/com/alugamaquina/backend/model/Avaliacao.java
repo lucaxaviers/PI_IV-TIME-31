@@ -22,26 +22,31 @@ public class Avaliacao implements Comparable<Avaliacao>, Cloneable {
     @Id
     private String id;
 
+    // Ids que ligam a avaliacao a locacao, as pessoas e a maquina
     private String locacaoId;
     private String locadorId;
     private String locatarioId;
     private String maquinaId;
 
+    // Cinco notas, cada uma de 1 a 5
     private int notaDesempenho;   // 1 a 5
     private int notaConservacao;  // 1 a 5
     private int notaFidelidade;   // 1 a 5
     private int notaPontualidade; // 1 a 5
     private int notaSuporte;      // 1 a 5
 
+    // Media das 5 notas e dados extras
     private double mediaFinal;
     private String comentario;
     private boolean recomenda;
     private LocalDateTime dataAvaliacao;
 
+    // Construtor vazio: o Spring Data usa para ler do banco
     public Avaliacao() {
         this.dataAvaliacao = LocalDateTime.now();
     }
 
+    // Construtor com todos os campos
     public Avaliacao(String locacaoId, String locadorId, String locatarioId, String maquinaId,
                      int notaDesempenho, int notaConservacao, int notaFidelidade,
                      int notaPontualidade, int notaSuporte, double mediaFinal,

@@ -25,8 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class StatusController {
 
+    // GET /api/status: confirma que a API esta no ar
     @GetMapping("/status")
     public ResponseEntity<Map<String, Object>> verificarStatus() {
+        // Dados simples que a API devolve
         Map<String, Object> status = new HashMap<>();
         status.put("sistema", "AlugaMaquina API");
         status.put("versao", "0.1.0");

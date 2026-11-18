@@ -8,6 +8,7 @@ package com.alugamaquina.backend.dto;
 // Resposta de cadastro e login (nunca devolve a senha)
 public class AuthResponse {
 
+    // Resultado e dados do usuario (sem senha)
     private boolean sucesso;
     private String mensagem;
     private String id;
@@ -17,9 +18,11 @@ public class AuthResponse {
     private String perfil;
     private String municipio;
 
+    // Construtor vazio para o Spring gerar o JSON
     public AuthResponse() {
     }
 
+    // Construtor com todos os campos
     public AuthResponse(boolean sucesso, String mensagem, String id, String nome, String email, String documento, String perfil, String municipio) {
         this.sucesso = sucesso;
         this.mensagem = mensagem;

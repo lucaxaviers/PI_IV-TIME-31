@@ -38,6 +38,7 @@ class AvaliacaoServiceTest {
     private AvaliacaoService avaliacaoService;
 
     @BeforeEach
+    // Cria o service com repositorios falsos (mock) antes de cada teste
     void setUp() {
         avaliacaoRepository = mock(AvaliacaoRepository.class);
         usuarioRepository = mock(UsuarioRepository.class);
@@ -45,6 +46,7 @@ class AvaliacaoServiceTest {
     }
 
     @Test
+    // Avaliacao valida: salva, calcula a media e atualiza a reputacao
     void deveRegistrarAvaliacaoERecalcularReputacao() {
         AvaliacaoRequest request = new AvaliacaoRequest(
                 "loc-100",
@@ -87,6 +89,7 @@ class AvaliacaoServiceTest {
     }
 
     @Test
+    // Nota 0 deve dar erro
     void deveLancarExcecaoParaNotaAbaixoDeUm() {
         AvaliacaoRequest request = new AvaliacaoRequest(
                 "loc-100",
@@ -102,6 +105,7 @@ class AvaliacaoServiceTest {
     }
 
     @Test
+    // Nota 6 deve dar erro
     void deveLancarExcecaoParaNotaAcimaDeCinco() {
         AvaliacaoRequest request = new AvaliacaoRequest(
                 "loc-100",
@@ -117,6 +121,7 @@ class AvaliacaoServiceTest {
     }
 
     @Test
+    // Sem id da locacao deve dar erro
     void deveLancarExcecaoQuandoLocacaoNaoInformada() {
         AvaliacaoRequest request = new AvaliacaoRequest(
                 "", // Locacao vazia
@@ -132,6 +137,7 @@ class AvaliacaoServiceTest {
     }
 
     @Test
+    // Locador sem avaliacoes fica com nota 5.0
     void recalcularReputacaoLocadorSemAvaliacoesRetornaPadraoNeutro() {
         when(avaliacaoRepository.findByLocadorId("locador-novo")).thenReturn(List.of());
 

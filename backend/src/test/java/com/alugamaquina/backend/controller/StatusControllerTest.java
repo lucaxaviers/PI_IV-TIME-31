@@ -23,6 +23,7 @@ class StatusControllerTest {
     private final StatusController controller = new StatusController();
 
     @Test
+    // Confere que a API responde 200 e ONLINE
     void deveRetornarStatusOnlineDoServidor() {
         ResponseEntity<Map<String, Object>> resposta = controller.verificarStatus();
 

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
  */
 public class AvaliacaoResponse {
 
+    // Resultado da avaliacao e a nova reputacao do locador
     private boolean sucesso;
     private String mensagem;
     private String id;
@@ -24,9 +25,11 @@ public class AvaliacaoResponse {
     private int totalAvaliacoesLocador;
     private LocalDateTime dataAvaliacao;
 
+    // Construtor vazio para o Spring gerar o JSON
     public AvaliacaoResponse() {
     }
 
+    // Construtor com todos os campos
     public AvaliacaoResponse(boolean sucesso, String mensagem, String id, String locacaoId,
                              String locadorId, double mediaFinalAvaliacao,
                              double novaReputacaoLocador, int totalAvaliacoesLocador,

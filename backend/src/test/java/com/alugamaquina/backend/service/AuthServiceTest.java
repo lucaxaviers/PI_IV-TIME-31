@@ -32,12 +32,14 @@ class AuthServiceTest {
     private AuthService authService;
 
     @BeforeEach
+    // Cria o service com repositorio falso (mock) antes de cada teste
     void setUp() {
         usuarioRepository = mock(UsuarioRepository.class);
         authService = new AuthService(usuarioRepository);
     }
 
     @Test
+    // Cadastro valido: salva e devolve os dados limpos
     void deveCadastrarUsuarioComSucesso() {
         CadastroRequest request = new CadastroRequest(
                 "Antonio Pereira",
@@ -66,6 +68,7 @@ class AuthServiceTest {
     }
 
     @Test
+    // E-mail repetido deve dar erro
     void deveLancarExcecaoAoCadastrarEmailExistente() {
         CadastroRequest request = new CadastroRequest(
                 "Antonio Pereira",
@@ -83,6 +86,7 @@ class AuthServiceTest {
     }
 
     @Test
+    // Senha com menos de 6 caracteres deve dar erro
     void deveLancarExcecaoParaSenhaCurta() {
         CadastroRequest request = new CadastroRequest(
                 "Antonio Pereira",
@@ -98,6 +102,7 @@ class AuthServiceTest {
     }
 
     @Test
+    // Login correto por e-mail
     void deveAutenticarComSucessoPorEmail() {
         String senha = "senhaSegura123";
         String hash = authService.gerarHashSenha(senha);
@@ -124,6 +129,7 @@ class AuthServiceTest {
     }
 
     @Test
+    // Senha errada deve dar erro de login
     void deveLancarExcecaoParaSenhaIncorreta() {
         String hash = authService.gerarHashSenha("senhaCorreta");
 
@@ -145,6 +151,7 @@ class AuthServiceTest {
     }
 
     @Test
+    // Usuario que nao existe deve dar erro de login
     void deveLancarExcecaoParaUsuarioNaoEncontrado() {
         when(usuarioRepository.findByEmail("inexistente@email.com")).thenReturn(Optional.empty());
         when(usuarioRepository.findByDocumento("inexistente@email.com")).thenReturn(Optional.empty());

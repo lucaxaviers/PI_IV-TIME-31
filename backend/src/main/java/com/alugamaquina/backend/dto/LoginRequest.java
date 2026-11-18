@@ -11,9 +11,11 @@ public class LoginRequest {
     private String identificador; // E-mail ou CPF/CNPJ
     private String senha;
 
+    // Construtor vazio: o Spring usa para ler o JSON
     public LoginRequest() {
     }
 
+    // Construtor com e-mail/CPF e senha
     public LoginRequest(String identificador, String senha) {
         this.identificador = identificador;
         this.senha = senha;

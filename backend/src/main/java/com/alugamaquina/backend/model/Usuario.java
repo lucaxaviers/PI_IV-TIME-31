@@ -20,6 +20,7 @@ public class Usuario implements Comparable<Usuario>, Cloneable {
     @Id
     private String id;
 
+    // Dados pessoais e de contato
     private String nome;
 
     @Indexed(unique = true)
@@ -32,17 +33,22 @@ public class Usuario implements Comparable<Usuario>, Cloneable {
 
     private String municipio;
 
+    // Perfil de acesso: locatario, locador ou ambos
     private String perfil; // locatario, locador, ambos
 
+    // Senha guardada so como hash (nunca em texto puro)
     private String senhaHash;
 
+    // Reputacao do locador, atualizada a cada avaliacao
     private Double reputacaoMedia = 5.0; // Inicia com reputacao maxima neutra
 
     private Integer totalAvaliacoes = 0;
 
+    // Construtor vazio: o Spring Data usa para ler do banco
     public Usuario() {
     }
 
+    // Construtor com os dados do cadastro
     public Usuario(String nome, String documento, String telefone, String email, String municipio, String perfil, String senhaHash) {
         this.nome = nome;
         this.documento = documento;
