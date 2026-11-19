@@ -48,12 +48,16 @@ document.addEventListener("DOMContentLoaded", function () {
       const botao = formLogin.querySelector('button[type="submit"]');
 
       botao.disabled = true;
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
       try {
         const resposta = await fetch(`${API_BASE}/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ identificador, senha })
+          body: JSON.stringify({ identificador, senha }),
+          signal: controller.signal
         });
+        clearTimeout(timeoutId);
         const dados = await resposta.json();
 
         if (!resposta.ok) {
@@ -65,7 +69,8 @@ document.addEventListener("DOMContentLoaded", function () {
         exibirFeedback(formLogin, `Bem-vindo, ${dados.nome}! Redirecionando...`, true);
         setTimeout(() => { window.location.href = "busca-catalogo.html"; }, 900);
       } catch (erro) {
-        exibirFeedback(formLogin, "Não foi possível conectar ao servidor (localhost:8080).", false);
+        clearTimeout(timeoutId);
+        exibirFeedback(formLogin, "Servidor ou banco de dados offline no momento.", false);
       } finally {
         botao.disabled = false;
       }
