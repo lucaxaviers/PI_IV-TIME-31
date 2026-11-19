@@ -3,7 +3,7 @@
  * Módulo: Chat em Tempo Real e Mensageria
  *
  * Autor: Leonardo Gambaroni Alves | RA: 25003494
- * Descrição: Modelo de mensagem do chat (collection "chat_mensagens") com métodos canônicos.
+ * Descrição: Modelo de mensagem do chat (collection "chat_mensagens") com os metodos canonicos.
  */
 package com.alugamaquina.backend.model;
 
@@ -89,7 +89,7 @@ public class ChatMessage implements Comparable<ChatMessage>, Cloneable {
         this.timestamp = timestamp;
     }
 
-    // ---- Metodos canonicos (padrao Prof. Francisco) ----
+    // ---- Metodos canonicos ----
 
     public ChatMessage(ChatMessage modelo) throws Exception {
         if (modelo == null)
