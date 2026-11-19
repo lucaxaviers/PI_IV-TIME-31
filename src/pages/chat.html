@@ -44,36 +44,14 @@
     <!-- Caixão Principal do Chat (Dividido em Lado Esquerdo e Direito) -->
     <div class="chat-container">
 
-      <!-- LADO ESQUERDO: Lista de Conversas -->
+      <!-- LADO ESQUERDO: Lista de Conversas (carregada do MongoDB via API) -->
       <aside class="chat-sidebar">
         <div class="sidebar-header">
           <h2>Suas Conversas</h2>
         </div>
 
-        <div class="conversations-list">
-          <!-- Item da Conversa Ativa -->
-          <div class="conversation-item active">
-            <div class="user-avatar">
-              <img src="https://via.placeholder.com/40" alt="Avatar do Locador" />
-            </div>
-            <div class="conversation-info">
-              <strong class="user-name">José Carlos (Locador)</strong>
-              <span class="machine-name">Trator John Deere 6115J</span>
-              <p class="last-message">Com certeza, a entrega pode ser feita...</p>
-            </div>
-          </div>
-
-          <!-- Outra Conversa de Exemplo -->
-          <div class="conversation-item">
-            <div class="user-avatar">
-              <img src="https://via.placeholder.com/40" alt="Avatar do Locador" />
-            </div>
-            <div class="conversation-info">
-              <strong class="user-name">Fazenda Santa Maria</strong>
-              <span class="machine-name">Colheitadeira Case 2799</span>
-              <p class="last-message">Qual o valor do frete para Paulínia?</p>
-            </div>
-          </div>
+        <div class="conversations-list" id="conversationsList">
+          <p class="last-message" style="padding: 16px;">Carregando conversas...</p>
         </div>
       </aside>
 
@@ -83,8 +61,8 @@
         <!-- Topo da Conversa com Dados do Locador e Máquina -->
         <div class="chat-header">
           <div class="chat-user-details">
-            <h2>José Carlos — Agrícola São José</h2>
-            <span>Paulínia/SP &bull; Equipamento: <strong>Trator John Deere 6115J</strong></span>
+            <h2 id="chatPartnerName">Carregando conversa...</h2>
+            <span>Negociação em tempo real &bull; <span id="chatStatus" style="font-weight: 600;">Conectando...</span></span>
           </div>
           <div style="display: flex; gap: 8px;">
             <a href="detalhe-maquina.html" class="btn btn-secondary">Ver Máquina</a>
@@ -92,33 +70,9 @@
           </div>
         </div>
 
-        <!-- Área Central de Mensagens -->
-        <div class="chat-messages">
-          
-          <!-- Mensagem Recebida (Locador) -->
-          <div class="message received">
-            <div class="message-bubble">
-              Olá! Vi que você tem interesse no Trator John Deere para a próxima semana. A máquina está disponível sim!
-            </div>
-            <span class="message-time">10:14</span>
-          </div>
-
-          <!-- Mensagem Enviada (Locatário) -->
-          <div class="message sent">
-            <div class="message-bubble">
-              Olá José, bom dia! Preciso para 8 diárias. Consegue entregar em Paulínia?
-            </div>
-            <span class="message-time">10:16</span>
-          </div>
-
-          <!-- Mensagem Recebida (Locador) -->
-          <div class="message received">
-            <div class="message-bubble">
-              Com certeza! O frete estimado fica em R$ 145,00. Podemos fechar o contrato digital pela plataforma?
-            </div>
-            <span class="message-time">10:20</span>
-          </div>
-
+        <!-- Área Central de Mensagens (100% carregada do MongoDB / WebSocket) -->
+        <div class="chat-messages" id="chatMessages">
+          <p style="text-align: center; color: #666; margin: auto;">Carregando mensagens...</p>
         </div>
 
         <!-- Rodapé do Chat com Formulário para Enviar Mensagem -->
@@ -144,7 +98,8 @@
       <span>AlugaMáquina - Plataforma de Locação de Máquinas e Equipamentos</span>
     </div>
   </footer>
-x 
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
   <script src="../js/auth-guard.js"></script>
   <script src="../js/chat.js"></script>
 </body>

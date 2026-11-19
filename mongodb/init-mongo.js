@@ -1,0 +1,380 @@
+/**
+ * AlugaMaquina - Inicializacao Oficial do MongoDB (PI4 - Time 31)
+ *
+ * Script idempotente: pode ser executado automaticamente pelo Docker
+ * (/docker-entrypoint-initdb.d/01-init-mongo.js) ou manualmente via mongosh
+ * em instancias locais ou no MongoDB Atlas:
+ *
+ *   mongosh "mongodb://localhost:27017/alugamaquina" mongodb/init-mongo.js
+ *
+ * Cria as 5 collections do projeto com validacao de schema ($jsonSchema),
+ * todos os indices exigidos pelos repositories/services (incluindo 2dsphere)
+ * e carga inicial de dados consistentes com as telas do MVP.
+ */
+
+const database = db.getSiblingDB("alugamaquina");
+
+function ensureCollection(name, validator) {
+  const exists = database.getCollectionNames().includes(name);
+  if (!exists) {
+    database.createCollection(name, {
+      validator,
+      validationLevel: "moderate",
+      validationAction: "error"
+    });
+    print(`[init-mongo] Collection criada: ${name}`);
+  } else {
+    database.runCommand({
+      collMod: name,
+      validator,
+      validationLevel: "moderate",
+      validationAction: "error"
+    });
+    print(`[init-mongo] Validator atualizado: ${name}`);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// 1. Collection: usuarios (Usuario.java)
+// -----------------------------------------------------------------------------
+ensureCollection("usuarios", {
+  $jsonSchema: {
+    bsonType: "object",
+    required: ["nome", "documento", "email", "perfil", "senhaHash"],
+    properties: {
+      nome: { bsonType: "string", minLength: 3 },
+      documento: { bsonType: "string", minLength: 11 },
+      telefone: { bsonType: ["string", "null"] },
+      email: { bsonType: "string", pattern: "^.+@.+$" },
+      municipio: { bsonType: ["string", "null"] },
+      perfil: { enum: ["locatario", "locador", "ambos"] },
+      senhaHash: { bsonType: "string", minLength: 64, maxLength: 64 },
+      reputacaoMedia: { bsonType: ["double", "int", "decimal", "null"], minimum: 0, maximum: 5 },
+      totalAvaliacoes: { bsonType: ["int", "long", "null"], minimum: 0 }
+    }
+  }
+});
+
+database.usuarios.createIndex({ email: 1 }, { name: "email", unique: true });
+database.usuarios.createIndex({ documento: 1 }, { name: "documento", unique: true });
+
+// -----------------------------------------------------------------------------
+// 2. Collection: maquinas (Maquina.java + MaquinaBuscaService.java)
+// -----------------------------------------------------------------------------
+ensureCollection("maquinas", {
+  $jsonSchema: {
+    bsonType: "object",
+    required: ["tituloAnuncio", "tipoEquipamento", "municipio", "valorDiaria", "localizacao"],
+    properties: {
+      tituloAnuncio: { bsonType: "string", minLength: 3 },
+      tipoEquipamento: { bsonType: "string", minLength: 2 },
+      municipio: { bsonType: "string", minLength: 2 },
+      valorDiaria: { bsonType: ["decimal", "double", "int", "long", "string"] },
+      localizacao: {
+        bsonType: "object",
+        required: ["type", "coordinates"],
+        properties: {
+          type: { enum: ["Point"] },
+          coordinates: {
+            bsonType: "array",
+            minItems: 2,
+            maxItems: 2,
+            items: { bsonType: ["double", "int", "decimal"] }
+          }
+        }
+      }
+    }
+  }
+});
+
+database.maquinas.createIndex({ localizacao: "2dsphere" }, { name: "localizacao" });
+database.maquinas.createIndex({ tipoEquipamento: 1 }, { name: "idx_maquinas_tipo" });
+database.maquinas.createIndex({ municipio: 1 }, { name: "idx_maquinas_municipio" });
+
+// -----------------------------------------------------------------------------
+// 3. Collection: locacoes (Locacao.java + LocacaoRepository.java)
+// -----------------------------------------------------------------------------
+ensureCollection("locacoes", {
+  $jsonSchema: {
+    bsonType: "object",
+    required: [
+      "locadorId",
+      "locatarioId",
+      "maquinaId",
+      "dataInicio",
+      "dataFim",
+      "valorDiaria",
+      "valorFrete",
+      "valorTotal",
+      "status"
+    ],
+    properties: {
+      locadorId: { bsonType: "string" },
+      locatarioId: { bsonType: "string" },
+      maquinaId: { bsonType: "string" },
+      dataInicio: { bsonType: ["date", "string"] },
+      dataFim: { bsonType: ["date", "string"] },
+      valorDiaria: { bsonType: ["decimal", "double", "int", "long", "string"] },
+      valorFrete: { bsonType: ["decimal", "double", "int", "long", "string"] },
+      valorTotal: { bsonType: ["decimal", "double", "int", "long", "string"] },
+      status: { enum: ["PENDENTE", "ACEITO", "RECUSADO", "CANCELADO", "FINALIZADO"] },
+      motivoRecusa: { bsonType: ["string", "null"] },
+      dataSolicitacao: { bsonType: ["date", "string", "null"] }
+    }
+  }
+});
+
+database.locacoes.createIndex(
+  { maquinaId: 1, status: 1, dataInicio: 1, dataFim: 1 },
+  { name: "idx_locacoes_conflito_agenda" }
+);
+database.locacoes.createIndex({ locadorId: 1 }, { name: "idx_locacoes_locador" });
+database.locacoes.createIndex({ locatarioId: 1 }, { name: "idx_locacoes_locatario" });
+
+// -----------------------------------------------------------------------------
+// 4. Collection: avaliacoes (Avaliacao.java + AvaliacaoRepository.java)
+// -----------------------------------------------------------------------------
+ensureCollection("avaliacoes", {
+  $jsonSchema: {
+    bsonType: "object",
+    required: [
+      "locacaoId",
+      "locadorId",
+      "notaDesempenho",
+      "notaConservacao",
+      "notaFidelidade",
+      "notaPontualidade",
+      "notaSuporte",
+      "mediaFinal"
+    ],
+    properties: {
+      locacaoId: { bsonType: "string" },
+      locadorId: { bsonType: "string" },
+      locatarioId: { bsonType: ["string", "null"] },
+      maquinaId: { bsonType: ["string", "null"] },
+      notaDesempenho: { bsonType: "int", minimum: 1, maximum: 5 },
+      notaConservacao: { bsonType: "int", minimum: 1, maximum: 5 },
+      notaFidelidade: { bsonType: "int", minimum: 1, maximum: 5 },
+      notaPontualidade: { bsonType: "int", minimum: 1, maximum: 5 },
+      notaSuporte: { bsonType: "int", minimum: 1, maximum: 5 },
+      mediaFinal: { bsonType: ["double", "int", "decimal"], minimum: 1, maximum: 5 },
+      comentario: { bsonType: ["string", "null"] },
+      recomenda: { bsonType: ["bool", "null"] },
+      dataAvaliacao: { bsonType: ["date", "string", "null"] }
+    }
+  }
+});
+
+database.avaliacoes.createIndex({ locacaoId: 1 }, { name: "locacaoId", unique: true });
+database.avaliacoes.createIndex({ locadorId: 1 }, { name: "locadorId" });
+database.avaliacoes.createIndex({ maquinaId: 1 }, { name: "maquinaId" });
+
+// -----------------------------------------------------------------------------
+// 5. Collection: chat_mensagens (ChatMessage.java + ChatMessageRepository.java)
+// -----------------------------------------------------------------------------
+ensureCollection("chat_mensagens", {
+  $jsonSchema: {
+    bsonType: "object",
+    required: ["remetente", "conteudo"],
+    properties: {
+      remetente: { bsonType: "string", minLength: 1 },
+      destinatario: { bsonType: ["string", "null"] },
+      conteudo: { bsonType: "string", minLength: 1, maxLength: 1000 },
+      horario: { bsonType: ["string", "null"] },
+      timestamp: { bsonType: ["date", "string", "null"] }
+    }
+  }
+});
+
+database.chat_mensagens.createIndex(
+  { remetente: 1, destinatario: 1, timestamp: 1 },
+  { name: "idx_chat_conversa_timestamp" }
+);
+database.chat_mensagens.createIndex({ timestamp: 1 }, { name: "timestamp" });
+
+// -----------------------------------------------------------------------------
+// Dados iniciais (Seed idempotente alinhado com o MVP do AlugaMaquina)
+// Senha padrao dos usuarios de demonstracao: 123456
+// SHA-256("123456") = 8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92
+// -----------------------------------------------------------------------------
+const SENHA_DEMO_HASH = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92";
+
+const usuariosSeed = [
+  {
+    _id: "usr-locador-01",
+    nome: "Jose Carlos - Agricola Sao Jose",
+    documento: "11122233344",
+    telefone: "(19) 99123-4567",
+    email: "jose.carlos@alugamaquina.com.br",
+    municipio: "paulinia",
+    perfil: "locador",
+    senhaHash: SENHA_DEMO_HASH,
+    reputacaoMedia: 5.0,
+    totalAvaliacoes: 0,
+    _class: "com.alugamaquina.backend.model.Usuario"
+  },
+  {
+    _id: "usr-locatario-01",
+    nome: "Antonio Carlos Pereira",
+    documento: "55566677788",
+    telefone: "(19) 99234-5678",
+    email: "antonio.pereira@alugamaquina.com.br",
+    municipio: "paulinia",
+    perfil: "locatario",
+    senhaHash: SENHA_DEMO_HASH,
+    reputacaoMedia: 5.0,
+    totalAvaliacoes: 0,
+    _class: "com.alugamaquina.backend.model.Usuario"
+  },
+  {
+    _id: "usr-ambos-01",
+    nome: "Fazenda Santa Maria",
+    documento: "12345678000199",
+    telefone: "(19) 99345-6789",
+    email: "contato@fazendasantamaria.com.br",
+    municipio: "cosmopolis",
+    perfil: "ambos",
+    senhaHash: SENHA_DEMO_HASH,
+    reputacaoMedia: 5.0,
+    totalAvaliacoes: 0,
+    _class: "com.alugamaquina.backend.model.Usuario"
+  }
+];
+
+usuariosSeed.forEach((doc) => {
+  database.usuarios.updateOne({ _id: doc._id }, { $setOnInsert: doc }, { upsert: true });
+});
+
+const maquinasSeed = [
+  {
+    _id: "maq-001",
+    tituloAnuncio: "Trator John Deere 6115J Cabinado",
+    tipoEquipamento: "tratores",
+    municipio: "Paulínia / SP",
+    valorDiaria: NumberDecimal("850.00"),
+    localizacao: { type: "Point", coordinates: [-47.1100, -22.7100] },
+    _class: "com.alugamaquina.backend.model.Maquina"
+  },
+  {
+    _id: "maq-002",
+    tituloAnuncio: "Colheitadeira Case IH 7130",
+    tipoEquipamento: "colheitadeiras",
+    municipio: "Cosmópolis / SP",
+    valorDiaria: NumberDecimal("2400.00"),
+    localizacao: { type: "Point", coordinates: [-47.1960, -22.6458] },
+    _class: "com.alugamaquina.backend.model.Maquina"
+  },
+  {
+    _id: "maq-003",
+    tituloAnuncio: "Pulverizador Jacto Uniport 3030",
+    tipoEquipamento: "pulverizadores",
+    municipio: "Jaguariúna / SP",
+    valorDiaria: NumberDecimal("1300.00"),
+    localizacao: { type: "Point", coordinates: [-46.9858, -22.7055] },
+    _class: "com.alugamaquina.backend.model.Maquina"
+  },
+  {
+    _id: "maq-004",
+    tituloAnuncio: "Trator New Holland TL75E 4x4",
+    tipoEquipamento: "tratores",
+    municipio: "Campinas / SP",
+    valorDiaria: NumberDecimal("600.00"),
+    localizacao: { type: "Point", coordinates: [-47.0608, -22.9056] },
+    _class: "com.alugamaquina.backend.model.Maquina"
+  },
+  {
+    _id: "maq-005",
+    tituloAnuncio: "Grade Aradora Baldan 14 discos",
+    tipoEquipamento: "implementos",
+    municipio: "Holambra / SP",
+    valorDiaria: NumberDecimal("280.00"),
+    localizacao: { type: "Point", coordinates: [-47.0547, -22.6333] },
+    _class: "com.alugamaquina.backend.model.Maquina"
+  },
+  {
+    _id: "maq-006",
+    tituloAnuncio: "Colheitadeira New Holland TC5090",
+    tipoEquipamento: "colheitadeiras",
+    municipio: "Artur Nogueira / SP",
+    valorDiaria: NumberDecimal("1900.00"),
+    localizacao: { type: "Point", coordinates: [-47.1725, -22.5731] },
+    _class: "com.alugamaquina.backend.model.Maquina"
+  }
+];
+
+maquinasSeed.forEach((doc) => {
+  database.maquinas.updateOne({ _id: doc._id }, { $setOnInsert: doc }, { upsert: true });
+});
+
+const locacoesSeed = [
+  {
+    _id: "LOC-2026-0842",
+    locadorId: "usr-locador-01",
+    locatarioId: "usr-locatario-01",
+    maquinaId: "maq-001",
+    dataInicio: ISODate("2026-10-10T00:00:00Z"),
+    dataFim: ISODate("2026-10-17T00:00:00Z"),
+    valorDiaria: NumberDecimal("850.00"),
+    valorFrete: NumberDecimal("280.00"),
+    valorTotal: NumberDecimal("7080.00"),
+    status: "FINALIZADO",
+    motivoRecusa: null,
+    dataSolicitacao: ISODate("2026-10-05T14:30:00Z"),
+    _class: "com.alugamaquina.backend.model.Locacao"
+  },
+  {
+    _id: "LOC-2026-0901",
+    locadorId: "usr-locador-01",
+    locatarioId: "usr-locatario-01",
+    maquinaId: "maq-001",
+    dataInicio: ISODate("2026-11-25T00:00:00Z"),
+    dataFim: ISODate("2026-11-29T00:00:00Z"),
+    valorDiaria: NumberDecimal("850.00"),
+    valorFrete: NumberDecimal("280.00"),
+    valorTotal: NumberDecimal("4530.00"),
+    status: "ACEITO",
+    motivoRecusa: null,
+    dataSolicitacao: ISODate("2026-11-18T09:15:00Z"),
+    _class: "com.alugamaquina.backend.model.Locacao"
+  }
+];
+
+locacoesSeed.forEach((doc) => {
+  database.locacoes.updateOne({ _id: doc._id }, { $setOnInsert: doc }, { upsert: true });
+});
+
+const mensagensSeed = [
+  {
+    _id: "msg-001",
+    remetente: "Jose Carlos - Agricola Sao Jose",
+    destinatario: "Antonio Carlos Pereira",
+    conteudo: "Ola! Vi que voce tem interesse no Trator John Deere 6115J para a proxima semana. A maquina esta disponivel sim!",
+    horario: "10:14",
+    timestamp: ISODate("2026-11-19T10:14:00Z"),
+    _class: "com.alugamaquina.backend.model.ChatMessage"
+  },
+  {
+    _id: "msg-002",
+    remetente: "Antonio Carlos Pereira",
+    destinatario: "Jose Carlos - Agricola Sao Jose",
+    conteudo: "Ola Jose, bom dia! Preciso para 8 diarias. Consegue entregar em Paulinia?",
+    horario: "10:16",
+    timestamp: ISODate("2026-11-19T10:16:00Z"),
+    _class: "com.alugamaquina.backend.model.ChatMessage"
+  },
+  {
+    _id: "msg-003",
+    remetente: "Jose Carlos - Agricola Sao Jose",
+    destinatario: "Antonio Carlos Pereira",
+    conteudo: "Com certeza! O frete estimado fica em R$ 280,00. Podemos fechar o contrato digital pela plataforma?",
+    horario: "10:20",
+    timestamp: ISODate("2026-11-19T10:20:00Z"),
+    _class: "com.alugamaquina.backend.model.ChatMessage"
+  }
+];
+
+mensagensSeed.forEach((doc) => {
+  database.chat_mensagens.updateOne({ _id: doc._id }, { $setOnInsert: doc }, { upsert: true });
+});
+
+print("[init-mongo] Banco 'alugamaquina' inicializado com sucesso!");
