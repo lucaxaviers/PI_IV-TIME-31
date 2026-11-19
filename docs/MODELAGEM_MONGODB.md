@@ -8,6 +8,8 @@ Autor da parte de Maquinas: Mateus Oliveira Rafael | 25001369 (Issue #20 / #36)
 
 Autor da parte de Chat: Leonardo Gambaroni Alves | 25003494 (Issues #20 / #52)
 
+Autor da parte de Contratos e Vistorias: Kauan Aurelio Lasmar Dias | 25001590 (Issues #44 e #43)
+
 A conexao vem da variavel de ambiente `MONGODB_URI` (veja `application.properties`).
 
 ## Collections
@@ -19,6 +21,8 @@ A conexao vem da variavel de ambiente `MONGODB_URI` (veja `application.propertie
 | `avaliacoes` | `Avaliacao` | Lucas | `locacaoId` (unico), `locadorId`, `maquinaId` |
 | `locacoes` | `Locacao` | Tiago | conflito de agenda por `maquinaId` + `status` + `dataInicio`/`dataFim` |
 | `chat_mensagens` | `ChatMessage` | Leonardo | `remetente` + `destinatario` + `timestamp`, `timestamp` |
+| `contratos` | `Contrato` | Kauan | `locacaoId` (unico), `numero` (unico) |
+| `vistorias_checklist` | `VistoriaChecklist` | Kauan | `locacaoId` + `tipo` (unico) |
 
 ## Relacionamentos (por referencia de id)
 
@@ -98,6 +102,66 @@ Indices: indice composto `{ remetente: 1, destinatario: 1, timestamp: 1 }` para 
 
 Endpoints: WebSocket STOMP `/ws-chat` (envio em `/app/chat.enviar` e broadcast em `/topic/mensagens`) e `GET /api/chat/historico` (com filtros opcionais `remetente` e `destinatario`).
 
+## Collection `contratos` (Issue #44)
+
+Autor: Kauan Aurelio Lasmar Dias | 25001590 - guarda o contrato digital de cada locacao aceita.
+
+| Campo | Tipo | Descricao |
+| :--- | :--- | :--- |
+| `id` | `String` | Identificador gerado pelo MongoDB |
+| `locacaoId` | `String` | Locacao do contrato (unico: um contrato por locacao) |
+| `numero` | `String` | Numero no formato `AM-ANO-00123` (unico) |
+| `locadorId`, `locatarioId`, `maquinaId` | `String` | Ids das partes e da maquina |
+| `nomeLocador`, `nomeLocatario`, `descricaoMaquina` | `String` | Copia dos nomes e do equipamento no momento da emissao, como em um documento assinado |
+| `dataInicio`, `dataFim` | `LocalDate` | Periodo da locacao |
+| `valorTotal`, `valorCaucao` | `BigDecimal` | Valores em reais, sempre com 2 casas |
+| `assinadoPeloLocador`, `assinadoPeloLocatario` | `boolean` | Quem ja assinou |
+| `dataAssinaturaLocador`, `dataAssinaturaLocatario` | `LocalDateTime` | Quando cada parte assinou |
+| `dataEmissao` | `LocalDateTime` | Quando o contrato foi gerado |
+
+Indices: `locacaoId` e `numero` sao unicos. O unico em `numero` evita dois contratos com o mesmo numero se duas geracoes ocorrerem ao mesmo tempo.
+
+Regras de negocio (`ContratoService`):
+
+- So locacao `ACEITO` gera contrato, e cada locacao tem no maximo um (409 nos outros casos).
+- O numero segue a contagem de contratos: `AM-2026-00001`, `AM-2026-00002`, e assim por diante.
+- A caucao padrao e de R$ 1.000,00, a mesma da tela.
+- So o locador e o locatario do contrato podem assinar (403 para os demais), e cada um assina uma vez (409).
+- O contrato so fica vigente quando as duas partes assinaram.
+- O PDF e gerado na hora com OpenPDF, com as 6 clausulas e as assinaturas registradas.
+
+Endpoints: `POST /api/contratos/gerar`, `GET /api/contratos/{id}`, `GET /api/contratos/locacao/{locacaoId}`, `GET /api/contratos/{id}/pdf` e `PUT /api/contratos/{id}/assinar`.
+
+## Collection `vistorias_checklist` (Issue #43)
+
+Autor: Kauan Aurelio Lasmar Dias | 25001590 - guarda a vistoria tecnica (checklist de retirada e devolucao) de cada locacao.
+
+| Campo | Tipo | Descricao |
+| :--- | :--- | :--- |
+| `id` | `String` | Identificador gerado pelo MongoDB |
+| `locacaoId` | `String` | Locacao a que a vistoria pertence |
+| `maquinaId` | `String` | Maquina vistoriada (vem da locacao) |
+| `tipo` | `TipoVistoria` | `RETIRADA` ou `DEVOLUCAO` |
+| `itens` | `List<ItemChecklist>` | Itens conferidos, cada um com `descricao`, `conforme` (`true`, `false` ou nulo se ainda nao respondido) e `observacao` |
+| `horimetro` | `Double` | Horas de uso do motor, informadas ao concluir (zero ou maior) |
+| `responsavelId` | `String` | Locador ou locatario que abriu a vistoria |
+| `dataVistoria` | `LocalDateTime` | Quando a vistoria foi aberta |
+| `status` | `StatusVistoria` | `PENDENTE`, `CONCLUIDA` ou `COM_PENDENCIAS` |
+
+Indice: `locacaoId` + `tipo` e unico (`locacao_tipo_unico`), entao cada locacao tem no maximo uma vistoria de retirada e uma de devolucao.
+
+Regras de negocio (`VistoriaChecklistService`):
+
+- So locacao `ACEITO` pode ter vistoria, e quem abre precisa ser o locador ou o locatario da locacao.
+- A vistoria nasce `PENDENTE` com 8 itens padrao sem resposta (pneus, oleo, fluidos, luzes, freios, cabine, implementos e avarias visiveis).
+- Item `nao conforme` exige observacao.
+- Para concluir, todos os itens precisam estar respondidos e o horimetro deve ser zero ou maior.
+- Se algum item esta `nao conforme`, o status final e `COM_PENDENCIAS`; senao e `CONCLUIDA`.
+- Vistoria concluida nao pode ser alterada nem concluida de novo (409).
+- Se uma resposta for invalida, nada e salvo (as respostas sao aplicadas primeiro em uma copia).
+
+Endpoints: `POST /api/vistorias`, `GET /api/vistorias/{id}`, `GET /api/vistorias/locacao/{locacaoId}` e `PUT /api/vistorias/{id}/concluir`.
+
 ## Ambiente local com MongoDB
 
 Para rodar localmente com todas as collections, validadores, indices e dados iniciais:
@@ -110,4 +174,4 @@ O script `mongodb/init-mongo.js` tambem pode ser rodado direto no MongoDB Atlas 
 
 ## Padrao das classes
 
-As entidades `Usuario`, `Maquina`, `Avaliacao`, `Locacao` e `ChatMessage` seguem o padrao da disciplina: `equals(Object)` em 4 passos, `hashCode()` com todos os campos do `equals`, `compareTo`, `toString`, construtor de copia (erro `Modelo ausente` se nulo) e `clone()`.
+As entidades `Usuario`, `Maquina`, `Avaliacao`, `Locacao`, `ChatMessage`, `Contrato`, `VistoriaChecklist` e `ItemChecklist` seguem o padrao da disciplina: `equals(Object)` em 4 passos, `hashCode()` com todos os campos do `equals`, `compareTo`, `toString`, construtor de copia (erro `Modelo ausente` se nulo) e `clone()`. Em `VistoriaChecklist` a lista de itens tem copia profunda: o construtor, o de copia e `getItens()` clonam cada item. As classes `Contrato`, `VistoriaChecklist` e `ItemChecklist` foram acrescentadas por Kauan Aurelio Lasmar Dias | 25001590.
