@@ -1,0 +1,158 @@
+/*
+  Autor: Kauan Aurélio Lasmar Dias | 25001590
+  Descricao: Estilos da tela de meus contratos (abas de pendentes e historico e cards dos contratos)
+*/
+
+.page-intro {
+  padding: 1.5rem 0 1rem 0;
+}
+
+.page-title {
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.25rem;
+}
+
+.page-description {
+  font-size: 0.925rem;
+  color: var(--color-text-muted);
+}
+
+.aviso {
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  background-color: #FDECEA;
+  color: #B71C1C;
+  border: 1px solid #F5C6CB;
+}
+
+/* Abas */
+.abas {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.aba {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.aba.ativa {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.aba:focus-visible {
+  outline: 3px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+.contador {
+  display: inline-block;
+  min-width: 22px;
+  padding: 1px 7px;
+  margin-left: 4px;
+  border-radius: 999px;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* Cards dos contratos */
+.lista-contratos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+}
+
+.lista-contratos[hidden] {
+  display: none;
+}
+
+.carregando,
+.vazio {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.contrato-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem 1.25rem;
+}
+
+.contrato-numero {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-primary);
+}
+
+.contrato-titulo {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 2px 0 4px 0;
+}
+
+.contrato-detalhe {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.selo {
+  display: inline-block;
+  margin-top: 6px;
+  margin-right: 6px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.selo-ok {
+  background-color: #E8F5E9;
+  color: #1B5E20;
+}
+
+.selo-falta {
+  background-color: #FFF4E5;
+  color: #8A4B00;
+}
+
+.contrato-acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 170px;
+}
+
+@media (max-width: 640px) {
+  .contrato-card {
+    flex-direction: column;
+  }
+
+  .contrato-acoes {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

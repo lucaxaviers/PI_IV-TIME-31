@@ -5,6 +5,7 @@
 
 package com.alugamaquina.backend.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpHeaders;
@@ -56,6 +57,12 @@ public class ContratoController {
     @GetMapping("/locacao/{locacaoId}")
     public ResponseEntity<ContratoResponse> buscarPorLocacao(@PathVariable String locacaoId) {
         return ResponseEntity.ok(contratoService.buscarPorLocacao(locacaoId));
+    }
+
+    // GET /api/contratos/usuario/{usuarioId}: contratos do usuario (a tela separa pendentes e historico)
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<ContratoResponse>> listarPorUsuario(@PathVariable String usuarioId) {
+        return ResponseEntity.ok(contratoService.listarPorUsuario(usuarioId));
     }
 
     // GET /api/contratos/{id}/pdf: baixa o PDF
