@@ -2,16 +2,18 @@
  * AlugaMáquina - Projeto Integrador IV (Time 31, PUC-Campinas)
  * Módulo: Solicitação e Aceite de Locações e Frete
  * Autor: Tiago Medeiros | RA: 25000845
- * Descrição: Endpoints REST para solicitar, aceitar e recusar locações (/api/locacoes).
+ * Descrição: Endpoints REST para solicitar, aceitar, recusar e consultar locações (/api/locacoes).
  */
 
 package com.alugamaquina.backend.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,6 +37,18 @@ public class LocacaoController {
 
     public LocacaoController(LocacaoService locacaoService) {
         this.locacaoService = locacaoService;
+    }
+
+    // GET /api/locacoes/{id}: devolve a locacao (404 se nao existir)
+    @GetMapping("/{id}")
+    public ResponseEntity<LocacaoResponse> buscarPorId(@PathVariable String id) {
+        return ResponseEntity.ok(locacaoService.buscarPorId(id));
+    }
+
+    // GET /api/locacoes/usuario/{usuarioId}: locacoes do usuario como locador ou locatario, da mais nova para a mais antiga
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<LocacaoResponse>> listarPorUsuario(@PathVariable String usuarioId) {
+        return ResponseEntity.ok(locacaoService.listarPorUsuario(usuarioId));
     }
 
     // POST /api/locacoes/solicitar: cria a locacao PENDENTE e responde 201
