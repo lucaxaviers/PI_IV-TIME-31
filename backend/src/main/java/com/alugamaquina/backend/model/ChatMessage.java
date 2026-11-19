@@ -12,9 +12,12 @@ import java.util.Comparator;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "chat_mensagens")
+@CompoundIndex(name = "idx_chat_conversa_timestamp", def = "{'remetente': 1, 'destinatario': 1, 'timestamp': 1}")
 public class ChatMessage implements Comparable<ChatMessage>, Cloneable {
 
     private static final Comparator<ChatMessage> ORDEM_NATURAL = Comparator
@@ -27,6 +30,7 @@ public class ChatMessage implements Comparable<ChatMessage>, Cloneable {
     private String destinatario;
     private String conteudo;
     private String horario;
+    @Indexed
     private LocalDateTime timestamp;
 
     public ChatMessage() {}

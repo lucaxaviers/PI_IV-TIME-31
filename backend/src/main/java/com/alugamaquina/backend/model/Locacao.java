@@ -15,9 +15,11 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "locacoes")
+@CompoundIndex(name = "idx_locacoes_conflito_agenda", def = "{'maquinaId': 1, 'status': 1, 'dataInicio': 1, 'dataFim': 1}")
 public class Locacao implements Comparable<Locacao>, Cloneable {
 
     @Id
