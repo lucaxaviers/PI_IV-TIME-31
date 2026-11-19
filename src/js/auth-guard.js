@@ -9,6 +9,7 @@
     "chat.html",
     "avaliacao-pos-locacao.html",
     "contrato-digital.html",
+    // Kauan Aurélio Lasmar Dias | 25001590 - pagina de vistoria tecnica, so para quem esta logado
     "vistoria-checklist.html"
   ];
 
