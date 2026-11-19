@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -23,9 +24,12 @@ public class Avaliacao implements Comparable<Avaliacao>, Cloneable {
     private String id;
 
     // Ids que ligam a avaliacao a locacao, as pessoas e a maquina
+    @Indexed(unique = true)
     private String locacaoId;
+    @Indexed
     private String locadorId;
     private String locatarioId;
+    @Indexed
     private String maquinaId;
 
     // Cinco notas, cada uma de 1 a 5
