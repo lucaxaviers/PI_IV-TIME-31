@@ -78,6 +78,8 @@ A classe `Maquina` segue o mesmo padrao das demais entidades (abaixo), com `comp
 
 ## Collection `contratos` (Issue #44)
 
+Autor: Kauan Aurelio Lasmar Dias | 25001590 - guarda o contrato digital de cada locacao aceita.
+
 | Campo | Tipo | Descricao |
 | :--- | :--- | :--- |
 | `id` | `String` | Identificador gerado pelo MongoDB |
@@ -105,6 +107,8 @@ Regras de negocio (`ContratoService`):
 Endpoints: `POST /api/contratos/gerar`, `GET /api/contratos/{id}`, `GET /api/contratos/locacao/{locacaoId}`, `GET /api/contratos/{id}/pdf` e `PUT /api/contratos/{id}/assinar`.
 
 ## Collection `vistorias_checklist` (Issue #43)
+
+Autor: Kauan Aurelio Lasmar Dias | 25001590 - guarda a vistoria tecnica (checklist de retirada e devolucao) de cada locacao.
 
 | Campo | Tipo | Descricao |
 | :--- | :--- | :--- |
@@ -134,4 +138,4 @@ Endpoints: `POST /api/vistorias`, `GET /api/vistorias/{id}`, `GET /api/vistorias
 
 ## Padrao das classes
 
-As entidades `Usuario`, `Maquina`, `Avaliacao`, `Locacao`, `Contrato`, `VistoriaChecklist` e `ItemChecklist` seguem o padrao da disciplina: `equals(Object)` em 4 passos, `hashCode()` com todos os campos do `equals`, `compareTo`, `toString`, construtor de copia (erro `Modelo ausente` se nulo) e `clone()`. Em `VistoriaChecklist` a lista de itens tem copia profunda: o construtor, o de copia e `getItens()` clonam cada item.
+As entidades `Usuario`, `Maquina`, `Avaliacao`, `Locacao`, `Contrato`, `VistoriaChecklist` e `ItemChecklist` seguem o padrao da disciplina: `equals(Object)` em 4 passos, `hashCode()` com todos os campos do `equals`, `compareTo`, `toString`, construtor de copia (erro `Modelo ausente` se nulo) e `clone()`. Em `VistoriaChecklist` a lista de itens tem copia profunda: o construtor, o de copia e `getItens()` clonam cada item. As classes `Contrato`, `VistoriaChecklist` e `ItemChecklist` foram acrescentadas por Kauan Aurelio Lasmar Dias | 25001590.
