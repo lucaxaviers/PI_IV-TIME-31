@@ -8,7 +8,8 @@
     "cadastro-maquina.html",
     "chat.html",
     "avaliacao-pos-locacao.html",
-    "contrato-digital.html"
+    "contrato-digital.html",
+    "vistoria-checklist.html"
   ];
 
   var paginaAtual = window.location.pathname.split("/").pop();
