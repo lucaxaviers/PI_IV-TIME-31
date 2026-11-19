@@ -4,7 +4,7 @@ Autor da parte de Usuarios e Avaliacoes: Lucas Rodrigues Xavier | 25000508
 
 Autor da parte de Locacoes: Tiago Medeiros | 25000845 (Issue #39)
 
-Autor da parte de Vistorias: Kauan Aurelio Lasmar Dias | 25001590 (Issue #43)
+Autor da parte de Contratos e Vistorias: Kauan Aurelio Lasmar Dias | 25001590 (Issues #44 e #43)
 
 A conexao vem da variavel de ambiente `MONGODB_URI` (veja `application.properties`).
 
@@ -17,6 +17,7 @@ A conexao vem da variavel de ambiente `MONGODB_URI` (veja `application.propertie
 | `avaliacoes` | `Avaliacao` | Lucas | consulta por `locadorId`, `maquinaId` e `locacaoId` |
 | `locacoes` | `Locacao` | Tiago | conflito de agenda por `maquinaId` + `status` + `dataInicio`/`dataFim` |
 | `chat_messages` | `ChatMessage` | Leonardo | - |
+| `contratos` | `Contrato` | Kauan | `locacaoId` (unico), `numero` (unico) |
 | `vistorias_checklist` | `VistoriaChecklist` | Kauan | `locacaoId` + `tipo` (unico) |
 
 ## Relacionamentos (por referencia de id)
@@ -75,6 +76,34 @@ Indice geoespacial: `localizacao` tem `@GeoSpatialIndexed(type = GeoSpatialIndex
 
 A classe `Maquina` segue o mesmo padrao das demais entidades (abaixo), com `compareTo` ordenando primeiro por `valorDiaria` e depois por `tituloAnuncio`.
 
+## Collection `contratos` (Issue #44)
+
+| Campo | Tipo | Descricao |
+| :--- | :--- | :--- |
+| `id` | `String` | Identificador gerado pelo MongoDB |
+| `locacaoId` | `String` | Locacao do contrato (unico: um contrato por locacao) |
+| `numero` | `String` | Numero no formato `AM-ANO-00123` (unico) |
+| `locadorId`, `locatarioId`, `maquinaId` | `String` | Ids das partes e da maquina |
+| `nomeLocador`, `nomeLocatario`, `descricaoMaquina` | `String` | Copia dos nomes e do equipamento no momento da emissao, como em um documento assinado |
+| `dataInicio`, `dataFim` | `LocalDate` | Periodo da locacao |
+| `valorTotal`, `valorCaucao` | `BigDecimal` | Valores em reais, sempre com 2 casas |
+| `assinadoPeloLocador`, `assinadoPeloLocatario` | `boolean` | Quem ja assinou |
+| `dataAssinaturaLocador`, `dataAssinaturaLocatario` | `LocalDateTime` | Quando cada parte assinou |
+| `dataEmissao` | `LocalDateTime` | Quando o contrato foi gerado |
+
+Indices: `locacaoId` e `numero` sao unicos. O unico em `numero` evita dois contratos com o mesmo numero se duas geracoes ocorrerem ao mesmo tempo.
+
+Regras de negocio (`ContratoService`):
+
+- So locacao `ACEITO` gera contrato, e cada locacao tem no maximo um (409 nos outros casos).
+- O numero segue a contagem de contratos: `AM-2026-00001`, `AM-2026-00002`, e assim por diante.
+- A caucao padrao e de R$ 1.000,00, a mesma da tela.
+- So o locador e o locatario do contrato podem assinar (403 para os demais), e cada um assina uma vez (409).
+- O contrato so fica vigente quando as duas partes assinaram.
+- O PDF e gerado na hora com OpenPDF, com as 6 clausulas e as assinaturas registradas.
+
+Endpoints: `POST /api/contratos/gerar`, `GET /api/contratos/{id}`, `GET /api/contratos/locacao/{locacaoId}`, `GET /api/contratos/{id}/pdf` e `PUT /api/contratos/{id}/assinar`.
+
 ## Collection `vistorias_checklist` (Issue #43)
 
 | Campo | Tipo | Descricao |
@@ -105,4 +134,4 @@ Endpoints: `POST /api/vistorias`, `GET /api/vistorias/{id}`, `GET /api/vistorias
 
 ## Padrao das classes
 
-As entidades `Usuario`, `Maquina`, `Avaliacao`, `Locacao`, `VistoriaChecklist` e `ItemChecklist` seguem o padrao da disciplina: `equals(Object)` em 4 passos, `hashCode()` com todos os campos do `equals`, `compareTo`, `toString`, construtor de copia (erro `Modelo ausente` se nulo) e `clone()`. Em `VistoriaChecklist` a lista de itens tem copia profunda: o construtor, o de copia e `getItens()` clonam cada item.
+As entidades `Usuario`, `Maquina`, `Avaliacao`, `Locacao`, `Contrato`, `VistoriaChecklist` e `ItemChecklist` seguem o padrao da disciplina: `equals(Object)` em 4 passos, `hashCode()` com todos os campos do `equals`, `compareTo`, `toString`, construtor de copia (erro `Modelo ausente` se nulo) e `clone()`. Em `VistoriaChecklist` a lista de itens tem copia profunda: o construtor, o de copia e `getItens()` clonam cada item.
