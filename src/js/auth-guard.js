@@ -14,10 +14,9 @@
   var paginaAtual = window.location.pathname.split("/").pop();
   var usuarioSalvo = localStorage.getItem("alugamaquina_usuario");
 
-  // Se for pagina privada e nao estiver logado, manda para o login
+  // Se for pagina privada e nao estiver logado, manda direto para o login com aviso na tela
   if (paginasPrivadas.indexOf(paginaAtual) !== -1 && !usuarioSalvo) {
-    alert("Você precisa fazer login para acessar esta página.");
-    window.location.href = "login-usuario.html";
+    window.location.href = "login-usuario.html?aviso=login";
     return;
   }
 

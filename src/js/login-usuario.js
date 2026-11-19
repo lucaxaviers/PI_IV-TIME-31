@@ -36,6 +36,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (formLogin) {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get("aviso") === "login") {
+      exibirFeedback(formLogin, "Faça login ou crie sua conta para acessar esta página.", false);
+    }
+
     formLogin.addEventListener("submit", async function (event) {
       event.preventDefault();
       const identificador = document.getElementById("loginIdentificador").value.trim();
