@@ -11,7 +11,7 @@ A conexao vem da variavel de ambiente `MONGODB_URI` (veja `application.propertie
 | Collection | Classe | Dono | Indices |
 | :--- | :--- | :--- | :--- |
 | `usuarios` | `Usuario` | Lucas | `email` (unico), `documento` (unico) |
-| `maquinas` | `Maquina` | Equipe | `localizacao` (`2dsphere`) |
+| `maquinas` | `Maquina` | Mateus | `localizacao` (`2dsphere`) |
 | `avaliacoes` | `Avaliacao` | Lucas | consulta por `locadorId`, `maquinaId` e `locacaoId` |
 | `locacoes` | `Locacao` | Tiago | conflito de agenda por `maquinaId` + `status` + `dataInicio`/`dataFim` |
 | `chat_messages` | `ChatMessage` | Leonardo | - |
@@ -57,6 +57,21 @@ Regras de negocio (`LocacaoService`):
 
 Endpoints: `POST /api/locacoes/solicitar`, `PUT /api/locacoes/{id}/aceitar` e `PUT /api/locacoes/{id}/recusar` (corpo opcional com `motivo`).
 
+## Collection `maquinas` (Issue #20)
+
+| Campo | Tipo | Descricao |
+| :--- | :--- | :--- |
+| `id` | `String` | Identificador gerado pelo MongoDB |
+| `tituloAnuncio` | `String` | Titulo do anuncio do equipamento |
+| `tipoEquipamento` | `String` | Categoria (trator, colheitadeira, pulverizador, implemento, etc.) |
+| `municipio` | `String` | Municipio onde a maquina esta disponivel |
+| `valorDiaria` | `BigDecimal` | Valor da diaria em reais |
+| `localizacao` | `GeoJsonPoint` | Coordenadas (longitude, latitude) com indice `2dsphere` |
+
+Indice geoespacial: `localizacao` tem `@GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)`, o que permite a consulta `geoNear` usada em `MaquinaBuscaService.buscarPorRaio` (Issue #36) para encontrar maquinas dentro de um raio em quilometros a partir de uma coordenada `lat`/`lng`.
+
+A classe `Maquina` segue o mesmo padrao do Prof. Francisco das demais entidades (abaixo), com `compareTo` ordenando primeiro por `valorDiaria` e depois por `tituloAnuncio`.
+
 ## Padrao das classes
 
-As entidades `Usuario`, `Avaliacao` e `Locacao` seguem o padrao do Prof. Francisco: `equals(Object)` em 4 passos, `hashCode()` com todos os campos do `equals`, `compareTo`, `toString`, construtor de copia (erro `Modelo ausente` se nulo) e `clone()`.
+As entidades `Usuario`, `Maquina`, `Avaliacao` e `Locacao` seguem o padrao do Prof. Francisco: `equals(Object)` em 4 passos, `hashCode()` com todos os campos do `equals`, `compareTo`, `toString`, construtor de copia (erro `Modelo ausente` se nulo) e `clone()`.
