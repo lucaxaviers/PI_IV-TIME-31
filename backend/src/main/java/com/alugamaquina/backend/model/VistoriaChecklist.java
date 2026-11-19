@@ -11,9 +11,12 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "vistorias_checklist")
+// Uma vistoria de cada tipo por locacao, garantido pelo banco mesmo com dois pedidos ao mesmo tempo
+@CompoundIndex(name = "locacao_tipo_unico", def = "{'locacaoId': 1, 'tipo': 1}", unique = true)
 public class VistoriaChecklist implements Comparable<VistoriaChecklist>, Cloneable {
 
     @Id
