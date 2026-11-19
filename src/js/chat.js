@@ -1,84 +1,54 @@
 /*
   Autor: Leonardo Gambaroni Alves | 25003494
-  Descrição: Validação e interatividade simples do formulário de chat
+  Descrição: Integracao do chat com o historico REST (/api/chat/historico) e envio de mensagens
 */
 
 document.addEventListener("DOMContentLoaded", function () {
+  const API_HISTORICO = "http://localhost:8080/api/chat/historico";
   const chatForm = document.querySelector(".chat-input-area");
   const chatInput = chatForm ? chatForm.querySelector(".form-input") : null;
   const chatMessages = document.querySelector(".chat-messages");
 
   if (!chatForm || !chatInput || !chatMessages) return;
 
+  function escaparHTML(texto) {
+    const div = document.createElement("div");
+    div.textContent = texto;
+    return div.innerHTML;
+  }
+
+  function adicionarBolha(texto, horario, enviada) {
+    const div = document.createElement("div");
+    div.classList.add("message", enviada ? "sent" : "received");
+    div.innerHTML = `<div class="message-bubble">${escaparHTML(texto)}</div><span class="message-time">${escaparHTML(horario)}</span>`;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  fetch(API_HISTORICO)
+    .then((res) => (res.ok ? res.json() : []))
+    .then((lista) => {
+      if (Array.isArray(lista) && lista.length > 0) {
+        const sessao = JSON.parse(localStorage.getItem("alugamaquina_usuario") || "{}");
+        lista.forEach((m) => {
+          adicionarBolha(m.conteudo || "", m.horario || "", m.remetente === sessao.nome);
+        });
+      }
+    })
+    .catch(() => { /* Servidor offline: mantem conversa exibida na tela */ });
+
   chatForm.addEventListener("submit", function (event) {
-    // Impede o envio padrão da página para simular o chat dinamicamente
     event.preventDefault();
-
     const mensagemTexto = chatInput.value.trim();
-
-    // 1. Validação básica: se estiver vazio, alerta o usuário
     if (!mensagemTexto) {
-      alert("Por favor, digite uma mensagem antes de enviar.");
       chatInput.focus();
       return;
     }
 
-    // 2. Descobre a hora atual formatada (ex: 10:25)
     const agora = new Date();
-    const horas = String(agora.getHours()).padStart(2, "0");
-    const minutos = String(agora.getMinutes()).padStart(2, "0");
-    const horarioFormatado = `${horas}:${minutos}`;
-
-    // 3. Cria a estrutura HTML da mensagem enviada (balão verde)
-    const novaMensagemDiv = document.createElement("div");
-    novaMensagemDiv.classList.add("message", "sent");
-
-    novaMensagemDiv.innerHTML = `
-      <div class="message-bubble">
-        ${escaparHTML(mensagemTexto)}
-      </div>
-      <span class="message-time">${horarioFormatado}</span>
-    `;
-
-    // 4. Adiciona a mensagem na área de chat
-    chatMessages.appendChild(novaMensagemDiv);
-
-    // 5. Limpa o input e rola o chat para o final
+    const horarioFormatado = String(agora.getHours()).padStart(2, "0") + ":" + String(agora.getMinutes()).padStart(2, "0");
+    adicionarBolha(mensagemTexto, horarioFormatado, true);
     chatInput.value = "";
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-
-    // (Opcional) Simula uma resposta automática do locador após 2 segundos
-    setTimeout(function () {
-      simularRespostaLocador(chatMessages);
-    }, 2000);
+    chatInput.focus();
   });
 });
-
-/**
- * Função auxiliar simples para evitar injeção de texto malicioso (segurança básica)
- */
-function escaparHTML(texto) {
-  const div = document.createElement("div");
-  div.textContent = texto;
-  return div.innerHTML;
-}
-
-/**
- * Função opcional para simular o locador respondendo no chat
- */
-function simularRespostaLocador(containerMensagens) {
-  const agora = new Date();
-  const horario = `${String(agora.getHours()).padStart(2, '0')}:${String(agora.getMinutes()).padStart(2, '0')}`;
-
-  const respostaDiv = document.createElement("div");
-  respostaDiv.classList.add("message", "received");
-  respostaDiv.innerHTML = `
-    <div class="message-bubble">
-      Recebi sua mensagem! Vou verificar aqui na fazenda e já te retorno com os detalhes.
-    </div>
-    <span class="message-time">${horario}</span>
-  `;
-
-  containerMensagens.appendChild(respostaDiv);
-  containerMensagens.scrollTop = containerMensagens.scrollHeight;
-}
