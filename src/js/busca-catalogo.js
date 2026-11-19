@@ -1,6 +1,7 @@
 /*
   Autor: Mateus Oliveira Rafael | 25001369
-  Descricao: Filtros interativos do catalogo de maquinas (busca, distancia, categoria e valor)
+  Descricao: Catalogo de maquinas integrado a API REST de busca geoespacial (GET /api/maquinas/busca),
+             com filtros combinados de texto, distancia, categoria e valor
 */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -14,29 +15,124 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (!grade) return;
 
-  const cards = Array.from(grade.querySelectorAll(".machine-card"));
+  // Coordenadas de referencia da busca (Paulinia / SP), conforme o prototipo visual
+  const API_BUSCA = "http://localhost:8080/api/maquinas/busca";
+  const LAT_REFERENCIA = -22.7611;
+  const LNG_REFERENCIA = -47.1544;
+  const RAIO_MAXIMO_API = 500; // limite aceito pelo backend (MaquinaBuscaService)
 
-  // Mensagem exibida quando nenhum card atende aos filtros
-  const mensagemVazia = document.createElement("p");
-  mensagemVazia.className = "empty-state";
-  mensagemVazia.textContent = "Nenhuma máquina encontrada para os filtros selecionados.";
-  grade.insertAdjacentElement("afterend", mensagemVazia);
-  mensagemVazia.hidden = true;
+  // Imagem ilustrativa por categoria, ja que a API ainda nao retorna fotos do anuncio
+  const IMAGEM_POR_CATEGORIA = {
+    tratores: "../../assets/maquinas/trator-verde.svg",
+    colheitadeiras: "../../assets/maquinas/colheitadeira-vermelha.svg",
+    pulverizadores: "../../assets/maquinas/pulverizador.svg",
+    implementos: "../../assets/maquinas/implemento-grade.svg",
+  };
+
+  // Normaliza o tipoEquipamento vindo da API para as mesmas chaves do filtro #categoria
+  const MAPA_CATEGORIA = {
+    trator: "tratores",
+    tratores: "tratores",
+    colheitadeira: "colheitadeiras",
+    colheitadeiras: "colheitadeiras",
+    implemento: "implementos",
+    implementos: "implementos",
+    pulverizador: "pulverizadores",
+    pulverizadores: "pulverizadores",
+  };
+
+  let cards = [];
+  let temporizadorDebounce = null;
+
+  // Mensagem exibida quando nao ha cards (sem resultado ou erro de servidor)
+  const mensagemStatus = document.createElement("p");
+  mensagemStatus.className = "empty-state";
+  grade.insertAdjacentElement("afterend", mensagemStatus);
+  mensagemStatus.hidden = true;
+
+  function normalizarCategoria(tipoEquipamento) {
+    if (!tipoEquipamento) return "";
+    const chave = tipoEquipamento.trim().toLowerCase();
+    return MAPA_CATEGORIA[chave] || chave;
+  }
+
+  function formatarValor(valorDiaria) {
+    const numero = Number(valorDiaria) || 0;
+    return numero.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function formatarDistancia(distanciaKm) {
+    const numero = Number(distanciaKm) || 0;
+    return numero.toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  }
+
+  function montarUrlBusca(raioKm) {
+    const parametros = new URLSearchParams({
+      lat: LAT_REFERENCIA,
+      lng: LNG_REFERENCIA,
+      raioKm: raioKm,
+    });
+    return API_BUSCA + "?" + parametros.toString();
+  }
+
+  // Cria um card no mesmo formato visual usado no prototipo estatico
+  function criarCard(maquina) {
+    const categoriaNormalizada = normalizarCategoria(maquina.tipoEquipamento);
+    const imagem = IMAGEM_POR_CATEGORIA[categoriaNormalizada] || "../../assets/maquinas/trator-verde.svg";
+
+    const card = document.createElement("article");
+    card.className = "machine-card";
+    card.dataset.categoria = categoriaNormalizada;
+    card.dataset.distancia = Math.round(Number(maquina.distanciaKm) || 0);
+    card.dataset.preco = Math.round(Number(maquina.valorDiaria) || 0);
+
+    card.innerHTML =
+      '<div class="machine-photo"><img src="' + imagem + '" alt="Imagem ilustrativa do equipamento" /></div>' +
+      '<div class="machine-body">' +
+      '<span class="verified-badge">Verificada</span>' +
+      '<h2 class="machine-title"></h2>' +
+      '<p class="machine-meta"></p>' +
+      '<p class="machine-distance"></p>' +
+      '<p class="machine-price"></p>' +
+      '<a href="detalhe-maquina.html" class="btn btn-primary btn-card">Ver detalhes</a>' +
+      "</div>";
+
+    card.querySelector(".machine-title").textContent = maquina.tituloAnuncio || "Equipamento sem titulo";
+    card.querySelector(".machine-meta").textContent = maquina.tipoEquipamento + " · " + maquina.municipio;
+    card.querySelector(".machine-distance").textContent = "a " + formatarDistancia(maquina.distanciaKm) + " km de você";
+
+    const precoEl = card.querySelector(".machine-price");
+    precoEl.textContent = "R$ " + formatarValor(maquina.valorDiaria) + " ";
+    const sufixo = document.createElement("span");
+    sufixo.textContent = "/ dia";
+    precoEl.appendChild(sufixo);
+
+    return card;
+  }
+
+  function mostrarStatus(texto) {
+    mensagemStatus.textContent = texto;
+    mensagemStatus.hidden = false;
+  }
+
+  function esconderStatus() {
+    mensagemStatus.hidden = true;
+  }
 
   function aplicarFiltros() {
     const termo = busca ? busca.value.trim().toLowerCase() : "";
-    const distanciaMax = raio ? parseInt(raio.value, 10) : Infinity;
+    const distanciaMax = raio ? parseFloat(raio.value) : Infinity;
     const categoriaSelecionada = categoria ? categoria.value : "";
-    const valorMax = valor ? parseInt(valor.value, 10) : Infinity;
+    const valorMax = valor ? parseFloat(valor.value) : Infinity;
 
     let visiveis = 0;
 
     cards.forEach(function (card) {
       const titulo = card.querySelector(".machine-title");
       const nomeMaquina = titulo ? titulo.textContent.toLowerCase() : "";
-      const distanciaMaquina = parseInt(card.dataset.distancia, 10);
+      const distanciaMaquina = parseFloat(card.dataset.distancia);
       const categoriaMaquina = card.dataset.categoria;
-      const precoMaquina = parseInt(card.dataset.preco, 10);
+      const precoMaquina = parseFloat(card.dataset.preco);
 
       const correspondeBusca = termo === "" || nomeMaquina.includes(termo);
       const correspondeDistancia = distanciaMaquina <= distanciaMax;
@@ -53,7 +149,52 @@ document.addEventListener("DOMContentLoaded", function () {
       contagem.textContent = visiveis + (visiveis === 1 ? " máquina encontrada" : " máquinas encontradas");
     }
 
-    mensagemVazia.hidden = visiveis !== 0;
+    mensagemStatus.textContent = "Nenhuma máquina encontrada para os filtros selecionados.";
+    mensagemStatus.hidden = visiveis !== 0;
+  }
+
+  function renderizarMaquinas(maquinas) {
+    grade.innerHTML = "";
+    maquinas.forEach(function (maquina) {
+      grade.appendChild(criarCard(maquina));
+    });
+    cards = Array.from(grade.querySelectorAll(".machine-card"));
+    aplicarFiltros();
+  }
+
+  // Busca as maquinas na API Java (lat/lng fixos + raio escolhido no filtro) e renderiza os cards
+  function buscarMaquinas() {
+    const raioSelecionado = raio ? parseFloat(raio.value) : RAIO_MAXIMO_API;
+    const raioEnviado = Math.min(raioSelecionado > 0 ? raioSelecionado : RAIO_MAXIMO_API, RAIO_MAXIMO_API);
+
+    grade.innerHTML = "";
+    cards = [];
+    if (contagem) contagem.textContent = "Carregando máquinas...";
+    mostrarStatus("Carregando máquinas...");
+
+    return fetch(montarUrlBusca(raioEnviado))
+      .then(function (resposta) {
+        if (!resposta.ok) throw new Error("Resposta invalida da API: " + resposta.status);
+        return resposta.json();
+      })
+      .then(function (maquinas) {
+        esconderStatus();
+        renderizarMaquinas(Array.isArray(maquinas) ? maquinas : []);
+      })
+      .catch(function () {
+        // Fallback seguro: servidor Java offline ou MongoDB indisponivel
+        grade.innerHTML = "";
+        cards = [];
+        if (contagem) contagem.textContent = "0 máquinas encontradas";
+        mostrarStatus("Não foi possível carregar o catálogo agora. Verifique se o servidor está online e tente novamente.");
+      });
+  }
+
+  function comDebounce(funcao, atrasoMs) {
+    return function () {
+      clearTimeout(temporizadorDebounce);
+      temporizadorDebounce = setTimeout(funcao, atrasoMs);
+    };
   }
 
   function limparFiltros() {
@@ -61,14 +202,14 @@ document.addEventListener("DOMContentLoaded", function () {
     if (raio) raio.value = "9999";
     if (categoria) categoria.value = "";
     if (valor) valor.value = "9999999";
-    aplicarFiltros();
+    buscarMaquinas();
   }
 
-  if (busca) busca.addEventListener("input", aplicarFiltros);
-  if (raio) raio.addEventListener("change", aplicarFiltros);
+  if (busca) busca.addEventListener("input", comDebounce(aplicarFiltros, 300));
+  if (raio) raio.addEventListener("change", buscarMaquinas);
   if (categoria) categoria.addEventListener("change", aplicarFiltros);
   if (valor) valor.addEventListener("change", aplicarFiltros);
   if (limpar) limpar.addEventListener("click", limparFiltros);
 
-  aplicarFiltros();
+  buscarMaquinas();
 });
