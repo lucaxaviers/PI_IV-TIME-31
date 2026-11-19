@@ -65,17 +65,17 @@
 ---
 
 ## ⏱️ Calibração de Horas Individual — Lucas Rodrigues Xavier (@lucaxaviers)
-> Horas registradas e sincronizadas com os apontamentos oficiais das issues no GitHub. Total acumulado: **38,5 horas** (38 horas e 30 minutos).
+> Horas registradas e sincronizadas com os apontamentos oficiais das issues no GitHub. Total acumulado: **40,2 horas** (incluindo prototipação no Figma).
 
-### Módulos Executados & Concluídos: **38,5 horas**
+### Módulos Executados & Concluídos: **40,2 horas**
 | Issue / Atividade | Descrição Real e Justificativa Técnica | Horas | Status |
 | :--- | :--- | :---: | :---: |
 | **#16 - Cadastro de Máquina (HTML)** | Formulário estruturado com dados técnicos, seleção de tipo, localização e área de upload. | **2,5h** | Concluído |
 | **#17 - Cadastro de Máquina (CSS)** | Estilização responsiva, layout em grid e design system para o formulário de anúncio. | **2,5h** | Concluído |
-| **#18 - Validações do Cadastro de Máquina (JS)** | Validação client-side completa de 9 campos, cálculo de datas e formatação de valores. | **3,5h** | Concluído |
-| **#34 - Cadastro e Login de Usuários (HTML/CSS)** | Interface de autenticação com abas dinâmicas de login e cadastro de produtor rural. | **3,5h** | Concluído |
+| **#18 - Validações do Cadastro de Máquina (JS)** | Validação client-side completa de 9 campos, cálculo de datas e formatação de valores. | **2,5h** | Concluído |
+| **#34 - Cadastro e Login de Usuários (HTML/CSS)** | Interface de autenticação com abas dinâmicas de login e cadastro de produtor rural. | **2,5h** | Concluído |
 | **#35 - Autenticação e Controle de Acesso (Backend Java)** | API REST (POST /cadastro e /login), hash SHA-256, arquitetura em camadas e testes unitários JUnit 5 com Mockito. | **4,5h** | Concluído |
-| **#21 - Ambiente Java e Servidor Básico (CORS, Status & Testes)** | Configuração de WebMvc/CORS para o front, endpoint de status /api/status e teste JUnit 5. | **3,0h** | Concluído |
+| **#21 - Ambiente Java e Servidor Básico (CORS, Status & Testes)** | Configuração de WebMvc/CORS para o front, endpoint de status /api/status e teste JUnit 5. | **2,2h** | Concluído |
 | **#45 - Avaliação Pós-Locação e Reputação (Backend Java)** | API REST (POST /api/avaliacoes), modelo MongoDB, recálculo automático da reputação média do locador e testes JUnit 5. | **4,0h** | Concluído |
 | **#28 - Avaliação Pós-Locação (HTML)** | Interface do formulário de avaliação mútua entre produtor e locatário com notas e feedback. | **2,0h** | Concluído |
 | **#29 - Avaliação Pós-Locação (CSS)** | Estilização responsiva dos componentes de avaliação, notas e estrelas. | **2,0h** | Concluído |
@@ -83,7 +83,8 @@
 | **#20 - Modelagem do Banco de Dados** | Documentação das collections `usuarios` e `avaliacoes` no MongoDB, índices, relacionamentos e regras dos dados (`docs/MODELAGEM_MONGODB.md`). Métodos canônicos (`equals`, `hashCode`, `compareTo`, `toString`, cópia e `clone`) em `Usuario` e `Avaliacao`. | **2,5h** | Concluído |
 | **#46 - Testes Unitários JUnit 5** | 106 testes no backend: métodos canônicos dos modelos e testes de Autenticação, Avaliação e Busca com Particionamento de Equivalência, Valores de Fronteira (BVA) e padrão AAA. | **4,5h** | Concluído |
 | **#54 - Revisão e comentários do código (Autenticação e Avaliações)** | Revisão do backend Java e comentários curtos em controllers, services, repositórios, DTOs e exceptions, sem mudar a lógica. | **2,0h** | Concluído |
-| **Total Executado:** | | **38,5h** | |
+| **#55 - Prototipação das telas no Figma** | Baixa Fidelidade, Alta Fidelidade e Mobile dos módulos de Login, Cadastro de Usuário, Cadastro de Máquinas e Avaliação Pós-Locação. | **4,5h** | Concluído |
+| **Total Executado:** | | **40,2h** | |
 
 ---
 
