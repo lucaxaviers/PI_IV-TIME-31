@@ -139,7 +139,7 @@ public class Usuario implements Comparable<Usuario>, Cloneable {
         this.totalAvaliacoes = totalAvaliacoes;
     }
 
-    // ---- Metodos canonicos (padrao Prof. Francisco) ----
+    // ---- Metodos canonicos (padrao da disciplina) ----
 
     public Usuario(Usuario modelo) throws Exception {
         if (modelo == null)

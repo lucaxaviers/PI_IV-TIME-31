@@ -70,8 +70,8 @@ Endpoints: `POST /api/locacoes/solicitar`, `PUT /api/locacoes/{id}/aceitar` e `P
 
 Indice geoespacial: `localizacao` tem `@GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)`, o que permite a consulta `geoNear` usada em `MaquinaBuscaService.buscarPorRaio` (Issue #36) para encontrar maquinas dentro de um raio em quilometros a partir de uma coordenada `lat`/`lng`.
 
-A classe `Maquina` segue o mesmo padrao do Prof. Francisco das demais entidades (abaixo), com `compareTo` ordenando primeiro por `valorDiaria` e depois por `tituloAnuncio`.
+A classe `Maquina` segue o mesmo padrao das demais entidades (abaixo), com `compareTo` ordenando primeiro por `valorDiaria` e depois por `tituloAnuncio`.
 
 ## Padrao das classes
 
-As entidades `Usuario`, `Maquina`, `Avaliacao` e `Locacao` seguem o padrao do Prof. Francisco: `equals(Object)` em 4 passos, `hashCode()` com todos os campos do `equals`, `compareTo`, `toString`, construtor de copia (erro `Modelo ausente` se nulo) e `clone()`.
+As entidades `Usuario`, `Maquina`, `Avaliacao` e `Locacao` seguem o padrao da disciplina: `equals(Object)` em 4 passos, `hashCode()` com todos os campos do `equals`, `compareTo`, `toString`, construtor de copia (erro `Modelo ausente` se nulo) e `clone()`.

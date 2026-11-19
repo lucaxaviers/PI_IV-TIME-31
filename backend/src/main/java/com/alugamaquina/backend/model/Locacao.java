@@ -163,7 +163,7 @@ public class Locacao implements Comparable<Locacao>, Cloneable {
         this.dataSolicitacao = dataSolicitacao;
     }
 
-    // ---- Metodos canonicos (padrao Prof. Francisco) ----
+    // ---- Metodos canonicos (padrao da disciplina) ----
 
     public Locacao(Locacao modelo) throws Exception {
         if (modelo == null)

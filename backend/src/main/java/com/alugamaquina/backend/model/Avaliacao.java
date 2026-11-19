@@ -178,7 +178,7 @@ public class Avaliacao implements Comparable<Avaliacao>, Cloneable {
         this.dataAvaliacao = dataAvaliacao;
     }
 
-    // ---- Metodos canonicos (padrao Prof. Francisco) ----
+    // ---- Metodos canonicos (padrao da disciplina) ----
 
     public Avaliacao(Avaliacao modelo) throws Exception {
         if (modelo == null)

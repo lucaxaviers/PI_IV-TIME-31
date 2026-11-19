@@ -96,7 +96,7 @@ public class Maquina implements Comparable<Maquina>, Cloneable {
         this.localizacao = localizacao;
     }
 
-    // ---- Metodos canonicos (padrao Prof. Francisco) ----
+    // ---- Metodos canonicos (padrao da disciplina) ----
 
     public Maquina(Maquina modelo) throws Exception {
         if (modelo == null)
