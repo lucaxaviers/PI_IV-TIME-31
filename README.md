@@ -53,20 +53,20 @@ O arquivo é estruturado em três camadas principais:
 │       │   ├── java/com/alugamaquina/backend/
 │       │   │   ├── BackendApplication.java
 │       │   │   ├── config/ (CorsConfig, WebSocketConfig)
-│       │   │   ├── controller/ (AuthController, AvaliacaoController, ChatController, LocacaoController, MaquinaBuscaController, StatusController)
-│       │   │   ├── dto/ (AuthResponse, AvaliacaoRequest, AvaliacaoResponse, CadastroRequest, LocacaoResponse, LoginRequest, MaquinaBuscaResponse, RecusaLocacaoRequest, SolicitacaoLocacaoRequest)
-│       │   │   ├── exception/ (AutenticacaoException, ConflitoAgendaException, LocacaoNaoEncontradaException, ParametroBuscaInvalidoException, TransicaoStatusInvalidaException, UsuarioJaCadastradoException)
-│       │   │   ├── model/ (Avaliacao, ChatMessage, Locacao, Maquina, StatusLocacao, Usuario)
-│       │   │   ├── repository/ (AvaliacaoRepository, LocacaoRepository, UsuarioRepository)
-│       │   │   └── service/ (AuthService, AvaliacaoService, LocacaoService, MaquinaBuscaService)
+│       │   │   ├── controller/ (AuthController, AvaliacaoController, ChatController, LocacaoController, MaquinaBuscaController, StatusController, ContratoController, VistoriaChecklistController)
+│       │   │   ├── dto/ (AuthResponse, AvaliacaoRequest, AvaliacaoResponse, CadastroRequest, LocacaoResponse, LoginRequest, MaquinaBuscaResponse, RecusaLocacaoRequest, SolicitacaoLocacaoRequest, GerarContratoRequest, AssinarContratoRequest, ContratoResponse, CriarVistoriaRequest, ConcluirVistoriaRequest, ItemChecklistDto, VistoriaResponse)
+│       │   │   ├── exception/ (AutenticacaoException, ConflitoAgendaException, LocacaoNaoEncontradaException, ParametroBuscaInvalidoException, TransicaoStatusInvalidaException, UsuarioJaCadastradoException, ContratoNaoEncontradoException, ContratoConflitoException, AssinaturaNaoPermitidaException, VistoriaNaoEncontradaException, VistoriaConflitoException)
+│       │   │   ├── model/ (Avaliacao, ChatMessage, Contrato, ItemChecklist, Locacao, Maquina, StatusLocacao, StatusVistoria, TipoVistoria, Usuario, VistoriaChecklist)
+│       │   │   ├── repository/ (AvaliacaoRepository, ContratoRepository, LocacaoRepository, MaquinaRepository, UsuarioRepository, VistoriaChecklistRepository)
+│       │   │   └── service/ (AuthService, AvaliacaoService, ContratoService, GeradorPdfContrato, LocacaoService, MaquinaBuscaService, VistoriaChecklistService)
 │       │   └── resources/
 │       │       └── application.properties
 │       └── test/
 │           └── java/com/alugamaquina/backend/
 │               ├── controller/ (StatusControllerTest)
-│               ├── model/ (AvaliacaoTest, LocacaoTest, UsuarioTest)
+│               ├── model/ (AvaliacaoTest, ContratoBvaTest, ContratoIntraclasseTest, ItemChecklistTest, LocacaoTest, UsuarioTest, VistoriaChecklistBvaTest, VistoriaChecklistIntraclasseTest)
 │               ├── repository/ (LocacaoRepositoryQueryTest)
-│               └── service/ (AuthServiceBvaTest, AuthServiceTest, AvaliacaoServiceBvaTest, AvaliacaoServiceTest, LocacaoServiceTest, MaquinaBuscaServiceBvaTest, MaquinaBuscaServiceTest)
+│               └── service/ (AuthServiceBvaTest, AuthServiceTest, AvaliacaoServiceBvaTest, AvaliacaoServiceTest, LocacaoServiceTest, MaquinaBuscaServiceBvaTest, MaquinaBuscaServiceTest, ContratoServiceTest, ContratoInterclasseTest, GeradorPdfContratoTest, VistoriaChecklistServiceTest, VistoriaInterclasseTest)
 ├── docs/
 │   ├── AlugaMaquina_Apresentacao.pptx
 │   ├── MODELAGEM_MONGODB.md (Documentação detalhada das collections e índices)
@@ -82,14 +82,17 @@ O arquivo é estruturado em três camadas principais:
 │   │   ├── chat.css
 │   │   ├── contrato-digital.css
 │   │   ├── detalhe-maquina.css
-│   │   └── login-usuario.css
+│   │   ├── login-usuario.css
+│   │   └── vistoria-checklist.css
 │   ├── js/
 │   │   ├── avaliacao-pos-locacao.js
 │   │   ├── busca-catalogo.js
 │   │   ├── cadastro-maquina.js
 │   │   ├── chat.js
+│   │   ├── contrato-digital.js
 │   │   ├── frete.js
-│   │   └── login-usuario.js
+│   │   ├── login-usuario.js
+│   │   └── vistoria-checklist.js
 │   └── pages/
 │       ├── avaliacao-pos-locacao.html
 │       ├── busca-catalogo.html
@@ -97,7 +100,8 @@ O arquivo é estruturado em três camadas principais:
 │       ├── chat.html
 │       ├── contrato-digital.html
 │       ├── detalhe-maquina.html
-│       └── login-usuario.html
+│       ├── login-usuario.html
+│       └── vistoria-checklist.html
 ├── .gitignore
 └── README.md
 ```
@@ -157,4 +161,6 @@ O acompanhamento das tarefas, sprints e entregas da equipe está centralizado no
 - [x] Documentação formal da modelagem NoSQL MongoDB (`docs/MODELAGEM_MONGODB.md`)
 - [x] Integração das páginas de Login, Cadastro e Avaliação Pós-Locação com a API REST
 - [ ] Integração completa dos demais endpoints REST com o front-end e conexão final com MongoDB Atlas
-- [ ] Módulo de Contrato Digital em PDF (`#44`) e Verificação Técnica (`#42` / `#43`) no backend
+<!-- Kauan Aurélio Lasmar Dias | 25001590 - itens abaixo: contrato digital em PDF e vistoria técnica (checklist) -->
+- [x] Módulo de Contrato Digital em PDF (`#44`) no backend e integração da tela de contrato com a API
+- [x] Módulo de Vistoria Técnica com checklist (`#43` backend e `#42` tela)
