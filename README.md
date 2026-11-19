@@ -71,7 +71,8 @@ O arquivo é estruturado em três camadas principais:
 │   ├── AlugaMaquina_Apresentacao.pptx
 │   ├── MODELAGEM_MONGODB.md (Documentação detalhada das collections e índices)
 │   ├── Relatorio_Ideacao_AlugaMaquina.docx
-│   └── Relatorio_Ideacao_AlugaMaquina.pdf
+│   ├── Relatorio_Ideacao_AlugaMaquina.pdf
+│   └── TASKS_PI4_TIME_31.md (Quadro simples de tarefas e responsáveis)
 ├── src/
 │   ├── css/
 │   │   ├── global.css
@@ -106,6 +107,7 @@ O arquivo é estruturado em três camadas principais:
 ## 📌 Documentação e Entregas (Etapa de Ideação & Planejamento)
 
 Todos os artefatos oficiais de ideação e escopo encontram-se organizados na pasta [`docs/`](./docs/):
+- **Tarefas do PI4 (`TASKS_PI4_TIME_31.md`):** Quadro simples com as tarefas e os responsáveis de cada integrante.
 - **Modelagem do Banco de Dados MongoDB (`MODELAGEM_MONGODB.md`):** Documentação técnica das collections, índices NoSQL, validação de schemas e regras de integridade.
 - **Apresentação da Solução (`AlugaMaquina_Apresentacao.pptx`):** Slides executivos com problema, proposta de valor, modelo de negócio, persona e roadmap do MVP.
 - **Relatório Consolidado de Ideação (`Relatorio_Ideacao_AlugaMaquina.pdf` / `.docx`):** Documento oficial completo reunindo contexto, personas, fundamentação quantitativa (IBGE/Embrapa/Cepea), Mapa de Empatia, Matriz SWOT e SWOT Cruzada, Business Model Canvas (BMC), Mapa Mental, 5W2H e wireframes do MVP.
@@ -144,7 +146,8 @@ O acompanhamento das tarefas, sprints e entregas da equipe está centralizado no
 - [x] Criação do repositório remoto no GitHub (`PI_IV-TIME-31`)
 - [x] Envio e aceite de convites de todos os colaboradores e docente
 - [x] Configuração do [GitHub Projects](https://github.com/users/lucaxaviers/projects/8) vinculado ao repositório
-- [x] Mapeamento oficial de tarefas do PI4 com base na devolutiva de escopo da orientação- [x] Prototipação completa no Figma (Baixa Fidelidade, Alta Fidelidade e Mobile com Fluxo)
+- [x] Mapeamento oficial de tarefas do PI4 com base na devolutiva de escopo da orientação ([docs/TASKS_PI4_TIME_31.md](./docs/TASKS_PI4_TIME_31.md))
+- [x] Prototipação completa no Figma (Baixa Fidelidade, Alta Fidelidade e Mobile com Fluxo)
 - [x] Implementação, estilização e interligação de todos os protótipos de interface HTML5/CSS3 do MVP
 - [x] Inicialização da arquitetura Backend em Java (Spring Boot REST API)
 - [x] Implementação dos módulos de Autenticação (`#35`) e Busca Geoespacial de Máquinas (`#36`)
