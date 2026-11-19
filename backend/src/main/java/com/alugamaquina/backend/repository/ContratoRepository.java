@@ -5,6 +5,7 @@
 
 package com.alugamaquina.backend.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -19,4 +20,7 @@ public interface ContratoRepository extends MongoRepository<Contrato, String> {
     Optional<Contrato> findByLocacaoId(String locacaoId);
 
     boolean existsByLocacaoId(String locacaoId);
+
+    // Contratos em que o usuario e o locador ou o locatario (lista de pendentes e historico)
+    List<Contrato> findByLocadorIdOrLocatarioId(String locadorId, String locatarioId);
 }

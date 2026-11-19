@@ -17,6 +17,7 @@ import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -492,5 +493,56 @@ class ContratoServiceTest {
         // Action + Assert
         assertThrows(ContratoNaoEncontradoException.class, () -> servico.gerarPdf("con1"));
         verify(geradorPdfContrato, never()).gerar(any());
+    }
+
+    // ---------- listar por usuario ----------
+
+    // CT-SRV-25 | V1: devolve os contratos do usuario, do mais recente para o mais antigo
+    @Test
+    void testListarPorUsuarioDevolveOsContratosDoMaisRecenteParaOMaisAntigo() throws Exception {
+        // Arrange
+        Contrato antigo = criarContratoSalvo();
+        antigo.setId("con-antigo");
+        antigo.setDataEmissao(java.time.LocalDateTime.of(2026, 11, 1, 10, 0));
+        Contrato novo = criarContratoSalvo();
+        novo.setId("con-novo");
+        novo.setDataEmissao(java.time.LocalDateTime.of(2026, 11, 15, 10, 0));
+        when(contratoRepository.findByLocadorIdOrLocatarioId("locador1", "locador1")).thenReturn(List.of(antigo, novo));
+
+        // Action
+        List<ContratoResponse> lista = servico.listarPorUsuario("locador1");
+
+        // Assert
+        assertEquals(2, lista.size());
+        assertEquals("con-novo", lista.get(0).getId());
+        assertEquals("con-antigo", lista.get(1).getId());
+    }
+
+    // CT-SRV-26 | V1: usuario sem contratos recebe lista vazia
+    @Test
+    void testListarPorUsuarioSemContratosDevolveListaVazia() {
+        // Arrange
+        when(contratoRepository.findByLocadorIdOrLocatarioId("locatario1", "locatario1")).thenReturn(List.of());
+
+        // Action
+        List<ContratoResponse> lista = servico.listarPorUsuario("  locatario1  ");
+
+        // Assert
+        assertTrue(lista.isEmpty());
+    }
+
+    // CT-SRV-27 | I1: usuario vazio
+    @ParameterizedTest(name = "CT-SRV-27 usuarioId=[{0}]")
+    @NullAndEmptySource
+    @ValueSource(strings = {"  "})
+    void testListarPorUsuarioRejeitaUsuarioVazio(String usuarioId) {
+        // Arrange - usuario invalido
+
+        // Action
+        IllegalArgumentException erro = assertThrows(IllegalArgumentException.class,
+                () -> servico.listarPorUsuario(usuarioId));
+
+        // Assert
+        assertEquals("Identificador do usuario e obrigatorio.", erro.getMessage());
     }
 }

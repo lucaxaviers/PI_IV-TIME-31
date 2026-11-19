@@ -8,6 +8,9 @@ package com.alugamaquina.backend.service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -100,6 +103,20 @@ public class ContratoService {
                 .orElseThrow(() -> new ContratoNaoEncontradoException(
                         "Nao ha contrato para a locacao: " + locacaoId.trim()));
         return montarResposta("Contrato encontrado.", contrato);
+    }
+
+    // Contratos em que o usuario e locador ou locatario, do mais recente para o mais antigo
+    public List<ContratoResponse> listarPorUsuario(String usuarioId) {
+        exigirTexto(usuarioId, "Identificador do usuario");
+        String id = usuarioId.trim();
+
+        List<ContratoResponse> respostas = new ArrayList<>();
+        for (Contrato contrato : contratoRepository.findByLocadorIdOrLocatarioId(id, id)) {
+            respostas.add(montarResposta("Contrato encontrado.", contrato));
+        }
+        respostas.sort(Comparator.comparing(ContratoResponse::getDataEmissao,
+                Comparator.nullsLast(Comparator.reverseOrder())));
+        return respostas;
     }
 
     /**
