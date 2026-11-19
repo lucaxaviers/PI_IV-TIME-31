@@ -1,12 +1,63 @@
 /*
   Autor: Lucas Rodrigues Xavier | 25000508
-  Descricao: Integracao real da tela de avaliacao pos-locacao com a API REST (POST /api/avaliacoes)
+  Descricao: Integracao real da tela de avaliacao pos-locacao com a API REST (GET /api/locacoes/{id} para o resumo e POST /api/avaliacoes)
 */
 
 document.addEventListener("DOMContentLoaded", function () {
   const API_AVALIACOES = "http://localhost:8080/api/avaliacoes";
+  const API_LOCACOES = "http://localhost:8080/api/locacoes";
   const form = document.querySelector("main form");
   if (!form) return;
+
+  // Ids vindos da locacao carregada (usados no envio se nao estiverem na URL)
+  let locacaoCarregada = null;
+
+  function formatarData(iso) {
+    if (!iso) return "";
+    const partes = iso.split("-");
+    return partes.length === 3 ? partes[2] + "/" + partes[1] + "/" + partes[0] : iso;
+  }
+
+  function formatarMoeda(valor) {
+    return Number(valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  }
+
+  function preencher(id, texto) {
+    const elemento = document.getElementById(id);
+    if (elemento && texto) elemento.textContent = texto;
+  }
+
+  // Carrega o resumo da locacao (GET /api/locacoes/{id}); campos que a API ainda nao envia ficam como estao
+  async function carregarResumo() {
+    const locacaoId = new URLSearchParams(window.location.search).get("locacaoId");
+    if (!locacaoId) return;
+
+    try {
+      const resposta = await fetch(API_LOCACOES + "/" + encodeURIComponent(locacaoId));
+      if (!resposta.ok) return;
+      const l = await resposta.json();
+      locacaoCarregada = l;
+
+      preencher("resumoMaquina", l.tituloMaquina);
+      preencher("resumoContrato", l.id ? "LOC-" + String(l.id).slice(-6).toUpperCase() : "");
+      preencher("resumoStatus", l.status);
+      preencher("resumoLocador", l.nomeLocador);
+      if (l.dataInicio && l.dataFim) {
+        preencher("resumoPeriodo", formatarData(l.dataInicio) + " a " + formatarData(l.dataFim)
+          + " (" + l.diarias + (l.diarias === 1 ? " diaria)" : " diarias)"));
+      }
+      if (l.valorTotal != null) preencher("resumoTotal", formatarMoeda(l.valorTotal));
+
+      const linkContrato = document.getElementById("resumoContrato");
+      if (linkContrato) linkContrato.href = "contrato-digital.html?locacaoId=" + encodeURIComponent(l.id);
+      const linkMaquina = document.getElementById("resumoMaquina");
+      if (linkMaquina && l.maquinaId) linkMaquina.href = "detalhe-maquina.html?id=" + encodeURIComponent(l.maquinaId);
+    } catch (erro) {
+      // sem servidor: o resumo continua com o texto da tela
+    }
+  }
+
+  carregarResumo();
 
   function lerNota(nomeGrupo) {
     const marcado = form.querySelector(`input[name="${nomeGrupo}"]:checked`);
@@ -38,9 +89,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const sessao = sessaoRaw ? JSON.parse(sessaoRaw) : {};
 
     const locacaoId = params.get("locacaoId") || "";
-    const locadorId = params.get("locadorId") || "";
-    const maquinaId = params.get("maquinaId") || "";
-    const locatarioId = params.get("locatarioId") || sessao.usuarioId || "";
+    const locadorId = params.get("locadorId") || (locacaoCarregada && locacaoCarregada.locadorId) || "";
+    const maquinaId = params.get("maquinaId") || (locacaoCarregada && locacaoCarregada.maquinaId) || "";
+    const locatarioId = params.get("locatarioId") || (locacaoCarregada && locacaoCarregada.locatarioId) || sessao.usuarioId || "";
 
     if (!locacaoId || !locadorId || !locatarioId || !maquinaId) {
       exibirFeedback("Informe locacaoId, locadorId, locatarioId e maquinaId na URL ou faça login antes de avaliar.", false);
