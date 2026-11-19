@@ -1,12 +1,60 @@
 /*
   Autor: Lucas Rodrigues Xavier | 25000508
-  Descricao: Validacoes do formulario de cadastro de maquinas
+  Descricao: Validacoes do formulario de cadastro de maquinas e envio do equipamento a API REST (POST /api/maquinas)
 */
 
 document.addEventListener("DOMContentLoaded", function () {
+  const API_BASE = "http://localhost:8080/api/maquinas";
   const form = document.querySelector("form");
 
   if (!form) return;
+
+  // Aviso na propria tela (sucesso em verde, erro em vermelho), sem alert
+  function exibirFeedback(mensagem, sucesso) {
+    let caixa = form.querySelector(".cadastro-feedback");
+    if (!caixa) {
+      caixa = document.createElement("p");
+      caixa.className = "cadastro-feedback";
+      caixa.setAttribute("role", "status");
+      caixa.style.padding = "10px 14px";
+      caixa.style.borderRadius = "8px";
+      caixa.style.margin = "12px 0";
+      caixa.style.fontSize = "0.95rem";
+      form.prepend(caixa);
+    }
+    caixa.textContent = mensagem;
+    caixa.style.backgroundColor = sucesso ? "#e8f5e9" : "#fdecea";
+    caixa.style.color = sucesso ? "#1b5e20" : "#b71c1c";
+    caixa.style.border = sucesso ? "1px solid #a5d6a7" : "1px solid #f5c6cb";
+    caixa.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  // Envia o equipamento para a API e grava no MongoDB
+  async function enviarCadastro(dados) {
+    const botao = form.querySelector('button[type="submit"]');
+    if (botao) botao.disabled = true;
+
+    try {
+      const resposta = await fetch(API_BASE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados)
+      });
+      const corpo = await resposta.json();
+
+      if (!resposta.ok) {
+        exibirFeedback(corpo.erro || "Nao foi possivel cadastrar o equipamento.", false);
+        return;
+      }
+
+      exibirFeedback(corpo.mensagem, true);
+      form.reset();
+    } catch (erro) {
+      exibirFeedback("Servidor ou banco de dados offline no momento.", false);
+    } finally {
+      if (botao) botao.disabled = false;
+    }
+  }
 
   form.addEventListener("submit", function (event) {
     // 1. Tipo de Equipamento
@@ -136,7 +184,13 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    // Sucesso na validação
-    alert("Equipamento validado com sucesso! O anúncio será disponibilizado no catálogo.");
+    // Sucesso na validação: manda para a API (a pagina nao recarrega)
+    event.preventDefault();
+    enviarCadastro({
+      tipoEquipamento: tipo.value,
+      tituloAnuncio: titulo.value.trim(),
+      municipio: municipio.value,
+      valorDiaria: valorNumerico
+    });
   });
 });

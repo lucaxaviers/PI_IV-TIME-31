@@ -28,7 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function salvarSessao(dados) {
     localStorage.setItem("alugamaquina_usuario", JSON.stringify({
-      usuarioId: dados.usuarioId,
+      // A API de login devolve o id do usuario em "id"; as telas leem usuarioId
+      usuarioId: dados.usuarioId || dados.id,
       nome: dados.nome,
       email: dados.email,
       perfil: dados.perfil
