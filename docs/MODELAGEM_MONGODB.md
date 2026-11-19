@@ -170,7 +170,9 @@ Para rodar localmente com todas as collections, validadores, indices e dados ini
 docker compose up -d mongodb
 ```
 
-O script `mongodb/init-mongo.js` tambem pode ser rodado direto no MongoDB Atlas via `mongosh` para criar os indices e a carga inicial de demonstracao.
+O script `mongodb/init-mongo.js` inicializa as 7 collections do banco (incluindo `contratos` e `vistorias_checklist`) com validadores, indices e carga inicial, podendo tambem ser rodado direto no MongoDB Atlas via `mongosh`.
+
+Para o detalhamento conceitual completo de entidades, atributos, exemplos e desdobramento fisico, consulte o [Dicionario de Dados](./DICIONARIO_DE_DADOS.md).
 
 ## Padrao das classes
 
