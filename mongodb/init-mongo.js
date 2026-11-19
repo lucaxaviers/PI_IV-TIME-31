@@ -7,7 +7,7 @@
  *
  *   mongosh "mongodb://localhost:27017/alugamaquina" mongodb/init-mongo.js
  *
- * Cria as 5 collections do projeto com validacao de schema ($jsonSchema),
+ * Cria as 7 collections do projeto com validacao de schema ($jsonSchema),
  * todos os indices exigidos pelos repositories/services (incluindo 2dsphere)
  * e carga inicial de dados consistentes com as telas do MVP.
  */
@@ -193,6 +193,91 @@ database.chat_mensagens.createIndex(
 database.chat_mensagens.createIndex({ timestamp: 1 }, { name: "timestamp" });
 
 // -----------------------------------------------------------------------------
+// 6. Collection: contratos (Contrato.java + ContratoRepository.java)
+// -----------------------------------------------------------------------------
+ensureCollection("contratos", {
+  $jsonSchema: {
+    bsonType: "object",
+    required: [
+      "locacaoId",
+      "numero",
+      "locadorId",
+      "locatarioId",
+      "maquinaId",
+      "nomeLocador",
+      "nomeLocatario",
+      "descricaoMaquina",
+      "dataInicio",
+      "dataFim",
+      "valorTotal",
+      "valorCaucao"
+    ],
+    properties: {
+      locacaoId: { bsonType: "string" },
+      numero: { bsonType: "string", pattern: "^AM-\\d{4}-\\d{5}$" },
+      locadorId: { bsonType: "string" },
+      locatarioId: { bsonType: "string" },
+      maquinaId: { bsonType: "string" },
+      nomeLocador: { bsonType: "string", minLength: 1 },
+      nomeLocatario: { bsonType: "string", minLength: 1 },
+      descricaoMaquina: { bsonType: "string", minLength: 1 },
+      dataInicio: { bsonType: ["date", "string"] },
+      dataFim: { bsonType: ["date", "string"] },
+      valorTotal: { bsonType: ["decimal", "double", "int", "long", "string"] },
+      valorCaucao: { bsonType: ["decimal", "double", "int", "long", "string"] },
+      assinadoPeloLocador: { bsonType: "bool" },
+      assinadoPeloLocatario: { bsonType: "bool" },
+      dataAssinaturaLocador: { bsonType: ["date", "string", "null"] },
+      dataAssinaturaLocatario: { bsonType: ["date", "string", "null"] },
+      dataEmissao: { bsonType: ["date", "string", "null"] }
+    }
+  }
+});
+
+database.contratos.createIndex({ locacaoId: 1 }, { name: "locacaoId", unique: true });
+database.contratos.createIndex({ numero: 1 }, { name: "numero", unique: true });
+database.contratos.createIndex({ locadorId: 1 }, { name: "idx_contratos_locador" });
+database.contratos.createIndex({ locatarioId: 1 }, { name: "idx_contratos_locatario" });
+
+// -----------------------------------------------------------------------------
+// 7. Collection: vistorias_checklist (VistoriaChecklist.java + Repository)
+// -----------------------------------------------------------------------------
+ensureCollection("vistorias_checklist", {
+  $jsonSchema: {
+    bsonType: "object",
+    required: ["locacaoId", "maquinaId", "tipo", "itens", "responsavelId", "status"],
+    properties: {
+      locacaoId: { bsonType: "string" },
+      maquinaId: { bsonType: "string" },
+      tipo: { enum: ["RETIRADA", "DEVOLUCAO"] },
+      itens: {
+        bsonType: "array",
+        minItems: 1,
+        items: {
+          bsonType: "object",
+          required: ["descricao"],
+          properties: {
+            descricao: { bsonType: "string", minLength: 1 },
+            conforme: { bsonType: ["bool", "null"] },
+            observacao: { bsonType: ["string", "null"] }
+          }
+        }
+      },
+      horimetro: { bsonType: ["double", "int", "decimal", "long", "null"], minimum: 0 },
+      responsavelId: { bsonType: "string" },
+      dataVistoria: { bsonType: ["date", "string", "null"] },
+      status: { enum: ["PENDENTE", "CONCLUIDA", "COM_PENDENCIAS"] }
+    }
+  }
+});
+
+database.vistorias_checklist.createIndex(
+  { locacaoId: 1, tipo: 1 },
+  { name: "locacao_tipo_unico", unique: true }
+);
+database.vistorias_checklist.createIndex({ locacaoId: 1 }, { name: "idx_vistorias_locacao" });
+
+// -----------------------------------------------------------------------------
 // Dados iniciais (Seed idempotente alinhado com o MVP do AlugaMaquina)
 // Senha padrao dos usuarios de demonstracao: 123456
 // SHA-256("123456") = 8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92
@@ -312,8 +397,8 @@ const locacoesSeed = [
     locadorId: "usr-locador-01",
     locatarioId: "usr-locatario-01",
     maquinaId: "maq-001",
-    dataInicio: ISODate("2026-10-10T00:00:00Z"),
-    dataFim: ISODate("2026-10-17T00:00:00Z"),
+    dataInicio: ISODate("2026-10-10T03:00:00Z"),
+    dataFim: ISODate("2026-10-17T03:00:00Z"),
     valorDiaria: NumberDecimal("850.00"),
     valorFrete: NumberDecimal("280.00"),
     valorTotal: NumberDecimal("7080.00"),
@@ -327,14 +412,29 @@ const locacoesSeed = [
     locadorId: "usr-locador-01",
     locatarioId: "usr-locatario-01",
     maquinaId: "maq-001",
-    dataInicio: ISODate("2026-11-25T00:00:00Z"),
-    dataFim: ISODate("2026-11-29T00:00:00Z"),
+    dataInicio: ISODate("2026-11-25T03:00:00Z"),
+    dataFim: ISODate("2026-11-29T03:00:00Z"),
     valorDiaria: NumberDecimal("850.00"),
     valorFrete: NumberDecimal("280.00"),
     valorTotal: NumberDecimal("4530.00"),
     status: "ACEITO",
     motivoRecusa: null,
     dataSolicitacao: ISODate("2026-11-18T09:15:00Z"),
+    _class: "com.alugamaquina.backend.model.Locacao"
+  },
+  {
+    _id: "LOC-2026-0910",
+    locadorId: "usr-ambos-01",
+    locatarioId: "usr-locatario-01",
+    maquinaId: "maq-002",
+    dataInicio: ISODate("2026-12-05T03:00:00Z"),
+    dataFim: ISODate("2026-12-08T03:00:00Z"),
+    valorDiaria: NumberDecimal("2400.00"),
+    valorFrete: NumberDecimal("384.00"),
+    valorTotal: NumberDecimal("9984.00"),
+    status: "PENDENTE",
+    motivoRecusa: null,
+    dataSolicitacao: ISODate("2026-11-19T11:00:00Z"),
     _class: "com.alugamaquina.backend.model.Locacao"
   }
 ];
@@ -375,6 +475,115 @@ const mensagensSeed = [
 
 mensagensSeed.forEach((doc) => {
   database.chat_mensagens.updateOne({ _id: doc._id }, { $setOnInsert: doc }, { upsert: true });
+});
+
+const contratosSeed = [
+  {
+    _id: "ctr-001",
+    locacaoId: "LOC-2026-0842",
+    numero: "AM-2026-00001",
+    locadorId: "usr-locador-01",
+    locatarioId: "usr-locatario-01",
+    maquinaId: "maq-001",
+    nomeLocador: "Jose Carlos - Agricola Sao Jose",
+    nomeLocatario: "Antonio Carlos Pereira",
+    descricaoMaquina: "Trator John Deere 6115J Cabinado - Paulínia / SP",
+    dataInicio: ISODate("2026-10-10T03:00:00Z"),
+    dataFim: ISODate("2026-10-17T03:00:00Z"),
+    valorTotal: NumberDecimal("7080.00"),
+    valorCaucao: NumberDecimal("1000.00"),
+    assinadoPeloLocador: true,
+    assinadoPeloLocatario: true,
+    dataAssinaturaLocador: ISODate("2026-10-06T10:00:00Z"),
+    dataAssinaturaLocatario: ISODate("2026-10-06T11:30:00Z"),
+    dataEmissao: ISODate("2026-10-06T09:00:00Z"),
+    _class: "com.alugamaquina.backend.model.Contrato"
+  },
+  {
+    _id: "ctr-002",
+    locacaoId: "LOC-2026-0901",
+    numero: "AM-2026-00002",
+    locadorId: "usr-locador-01",
+    locatarioId: "usr-locatario-01",
+    maquinaId: "maq-001",
+    nomeLocador: "Jose Carlos - Agricola Sao Jose",
+    nomeLocatario: "Antonio Carlos Pereira",
+    descricaoMaquina: "Trator John Deere 6115J Cabinado - Paulínia / SP",
+    dataInicio: ISODate("2026-11-25T03:00:00Z"),
+    dataFim: ISODate("2026-11-29T03:00:00Z"),
+    valorTotal: NumberDecimal("4530.00"),
+    valorCaucao: NumberDecimal("1000.00"),
+    assinadoPeloLocador: true,
+    assinadoPeloLocatario: false,
+    dataAssinaturaLocador: ISODate("2026-11-18T11:00:00Z"),
+    dataAssinaturaLocatario: null,
+    dataEmissao: ISODate("2026-11-18T10:00:00Z"),
+    _class: "com.alugamaquina.backend.model.Contrato"
+  }
+];
+
+contratosSeed.forEach((doc) => {
+  database.contratos.updateOne({ _id: doc._id }, { $setOnInsert: doc }, { upsert: true });
+});
+
+const vistoriasSeed = [
+  {
+    _id: "vst-001",
+    locacaoId: "LOC-2026-0901",
+    maquinaId: "maq-001",
+    tipo: "RETIRADA",
+    itens: [
+      {
+        descricao: "Pneus, rodas ou esteiras sem avarias",
+        conforme: true,
+        observacao: null
+      },
+      {
+        descricao: "Nivel de oleo do motor",
+        conforme: true,
+        observacao: null
+      },
+      {
+        descricao: "Nivel de fluidos (arrefecimento e hidraulico)",
+        conforme: true,
+        observacao: null
+      },
+      {
+        descricao: "Luzes e sinalizacao funcionando",
+        conforme: true,
+        observacao: null
+      },
+      {
+        descricao: "Freios funcionando",
+        conforme: true,
+        observacao: null
+      },
+      {
+        descricao: "Cabine, vidros e bancos em bom estado",
+        conforme: true,
+        observacao: null
+      },
+      {
+        descricao: "Implementos acoplados conferidos",
+        conforme: true,
+        observacao: null
+      },
+      {
+        descricao: "Avarias visiveis (riscos, amassados, vazamentos)",
+        conforme: true,
+        observacao: null
+      }
+    ],
+    horimetro: 1200.0,
+    responsavelId: "usr-locador-01",
+    dataVistoria: ISODate("2026-11-19T08:30:00Z"),
+    status: "CONCLUIDA",
+    _class: "com.alugamaquina.backend.model.VistoriaChecklist"
+  }
+];
+
+vistoriasSeed.forEach((doc) => {
+  database.vistorias_checklist.updateOne({ _id: doc._id }, { $setOnInsert: doc }, { upsert: true });
 });
 
 print("[init-mongo] Banco 'alugamaquina' inicializado com sucesso!");
