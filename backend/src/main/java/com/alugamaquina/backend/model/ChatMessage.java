@@ -32,6 +32,15 @@ public class ChatMessage implements Comparable<ChatMessage>, Cloneable {
     public ChatMessage() {
     }
 
+    // Construtor com os campos principais da mensagem
+    public ChatMessage(String remetente, String destinatario, String conteudo, String horario) {
+        this.remetente = remetente;
+        this.destinatario = destinatario;
+        this.conteudo = conteudo;
+        this.horario = horario;
+        this.timestamp = LocalDateTime.now();
+    }
+
     public String getId() {
         return this.id;
     }

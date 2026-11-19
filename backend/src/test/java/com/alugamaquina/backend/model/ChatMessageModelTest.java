@@ -6,6 +6,7 @@ package com.alugamaquina.backend.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -25,6 +26,19 @@ class ChatMessageModelTest {
         msg.setHorario("10:15");
         msg.setTimestamp(timestamp);
         return msg;
+    }
+
+    @Test
+    void construtorComCamposDevePreencherDadosETimestamp() {
+        // Arrange + Act
+        ChatMessage msg = new ChatMessage("Antonio", "Jose Carlos", "Bom dia!", "09:30");
+
+        // Assert
+        assertEquals("Antonio", msg.getRemetente());
+        assertEquals("Jose Carlos", msg.getDestinatario());
+        assertEquals("Bom dia!", msg.getConteudo());
+        assertEquals("09:30", msg.getHorario());
+        assertNotNull(msg.getTimestamp());
     }
 
     @Test
