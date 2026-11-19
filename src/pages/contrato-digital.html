@@ -69,13 +69,13 @@
           <div class="parties">
             <div class="party">
               <span class="party-role">Locador</span>
-              <strong>Carlos Eduardo Pereira</strong>
+              <strong id="nomeLocador">Carlos Eduardo Pereira</strong>
               <span>Fazenda Santa Maria &middot; Paulínia / SP</span>
               <span>CPF ***.***.***-01</span>
             </div>
             <div class="party">
               <span class="party-role">Locatário</span>
-              <strong>Antônio Ferreira da Silva</strong>
+              <strong id="nomeLocatario">Antônio Ferreira da Silva</strong>
               <span>Sítio Boa Vista &middot; Cosmópolis / SP</span>
               <span>CPF ***.***.***-02</span>
             </div>
@@ -84,27 +84,27 @@
           <dl class="summary-list">
             <div class="summary-row">
               <dt>Equipamento</dt>
-              <dd>Trator John Deere 6115J Cabinado (2021)</dd>
+              <dd id="resumoEquipamento">Trator John Deere 6115J Cabinado (2021)</dd>
             </div>
             <div class="summary-row">
               <dt>Período de uso</dt>
-              <dd>10/11/2026 a 14/11/2026 (5 diárias)</dd>
+              <dd id="resumoPeriodo">10/11/2026 a 14/11/2026 (5 diárias)</dd>
             </div>
-            <div class="summary-row">
+            <div class="summary-row" id="linhaDiarias">
               <dt>Diárias</dt>
               <dd>5 x R$ 850,00 = R$ 4.250,00</dd>
             </div>
-            <div class="summary-row">
+            <div class="summary-row" id="linhaFrete">
               <dt>Frete estimado (ida e volta)</dt>
               <dd>28 km x R$ 6,50/km x 2 = R$ 364,00</dd>
             </div>
             <div class="summary-row summary-total">
               <dt>Total da locação</dt>
-              <dd>R$ 4.614,00</dd>
+              <dd id="resumoTotal">R$ 4.614,00</dd>
             </div>
             <div class="summary-row">
               <dt>Caução (devolvida na entrega sem avarias)</dt>
-              <dd>R$ 1.000,00</dd>
+              <dd id="resumoCaucao">R$ 1.000,00</dd>
             </div>
           </dl>
         </section>
@@ -116,30 +116,30 @@
               <h2 class="section-title">Prévia da minuta</h2>
               <p class="section-subtitle">Layout do PDF que será gerado após a assinatura.</p>
             </div>
-            <a href="#" onclick="window.print(); return false;" class="btn btn-secondary">Baixar Minuta em PDF</a>
+            <a href="#" id="btnBaixarPdf" onclick="window.print(); return false;" class="btn btn-secondary">Baixar Minuta em PDF</a>
           </div>
 
           <article class="paper" aria-label="Minuta do contrato">
             <h3 class="paper-title">CONTRATO DE LOCAÇÃO DE EQUIPAMENTO AGRÍCOLA</h3>
-            <p class="paper-code">Nº AM-2026-00123 &middot; Emitido via AlugaMáquina</p>
+            <p class="paper-code" id="codigoContrato">Nº AM-2026-00123 &middot; Emitido via AlugaMáquina</p>
 
             <h4>Cláusula 1ª - Do objeto</h4>
-            <p>O LOCADOR cede ao LOCATÁRIO, em caráter temporário, o equipamento Trator John Deere 6115J Cabinado, ano 2021, horímetro 1.200 h, em perfeito estado de funcionamento.</p>
+            <p id="clausulaObjeto">O LOCADOR cede ao LOCATÁRIO, em caráter temporário, o equipamento Trator John Deere 6115J Cabinado, ano 2021, horímetro 1.200 h, em perfeito estado de funcionamento.</p>
 
             <h4>Cláusula 2ª - Do prazo</h4>
-            <p>A locação vigora de 10/11/2026 a 14/11/2026, devendo o equipamento ser devolvido no último dia, no mesmo local da retirada.</p>
+            <p id="clausulaPrazo">A locação vigora de 10/11/2026 a 14/11/2026, devendo o equipamento ser devolvido no último dia, no mesmo local da retirada.</p>
 
             <h4>Cláusula 3ª - Do valor e do frete</h4>
-            <p>O valor total é de R$ 4.614,00, sendo R$ 4.250,00 de diárias e R$ 364,00 de frete estimado, pago conforme combinado na plataforma.</p>
+            <p id="clausulaValor">O valor total é de R$ 4.614,00, sendo R$ 4.250,00 de diárias e R$ 364,00 de frete estimado, pago conforme combinado na plataforma.</p>
 
             <h4>Cláusula 4ª - Dos termos de uso</h4>
             <p>O LOCATÁRIO compromete-se a utilizar o equipamento apenas para fins agrícolas, por operador habilitado, seguindo as orientações do fabricante e as regras de uso da plataforma.</p>
 
             <h4>Cláusula 5ª - Dos danos e da caução</h4>
-            <p>Foi retida caução de R$ 1.000,00. Em caso de danos não decorrentes do desgaste normal, apurados no checklist de devolução, o valor do reparo será abatido da caução, cabendo ao LOCATÁRIO complementar eventual diferença.</p>
+            <p id="clausulaCaucao">Foi retida caução de R$ 1.000,00. Em caso de danos não decorrentes do desgaste normal, apurados no checklist de devolução, o valor do reparo será abatido da caução, cabendo ao LOCATÁRIO complementar eventual diferença.</p>
 
             <h4>Cláusula 6ª - Do foro</h4>
-            <p>As partes elegem o foro da comarca de Paulínia / SP para dirimir quaisquer dúvidas deste contrato.</p>
+            <p id="clausulaForo">As partes elegem o foro da comarca de Paulínia / SP para dirimir quaisquer dúvidas deste contrato.</p>
 
             <div class="paper-sign">
               <div><span class="sign-line"></span><small>Locador</small></div>
@@ -177,7 +177,7 @@
 
           <div class="total-box">
             <span>Total da locação</span>
-            <strong>R$ 4.614,00</strong>
+            <strong id="totalAssinatura">R$ 4.614,00</strong>
           </div>
 
           <div class="form-group">
@@ -186,12 +186,13 @@
           </div>
 
           <label class="accept">
-            <input type="checkbox" />
+            <input type="checkbox" id="aceiteContrato" />
             <span>Li e concordo com os termos do contrato e com as regras da plataforma.</span>
           </label>
 
-          <a href="avaliacao-pos-locacao.html" class="btn btn-primary btn-block">Aceitar e Assinar Contrato Digital</a>
-          <a href="#" onclick="window.print(); return false;" class="btn btn-secondary btn-block">Baixar Minuta em PDF</a>
+          <a href="avaliacao-pos-locacao.html" id="btnAssinar" class="btn btn-primary btn-block">Aceitar e Assinar Contrato Digital</a>
+          <a href="#" id="btnBaixarPdfLateral" onclick="window.print(); return false;" class="btn btn-secondary btn-block">Baixar Minuta em PDF</a>
+          <p id="feedbackContrato" class="legal-note" hidden></p>
           <a href="chat.html" class="back-link">Voltar para o chat</a>
 
           <p class="legal-note">
@@ -211,5 +212,6 @@
   </footer>
 
   <script src="../js/auth-guard.js"></script>
+  <script src="../js/contrato-digital.js"></script>
 </body>
 </html>
