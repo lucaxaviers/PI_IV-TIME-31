@@ -4,6 +4,8 @@ Autor da parte de Usuarios e Avaliacoes: Lucas Rodrigues Xavier | 25000508
 
 Autor da parte de Locacoes: Tiago Medeiros | 25000845 (Issue #39)
 
+Autor da parte de Vistorias: Kauan Aurelio Lasmar Dias | 25001590 (Issue #43)
+
 A conexao vem da variavel de ambiente `MONGODB_URI` (veja `application.properties`).
 
 ## Collections
@@ -15,6 +17,7 @@ A conexao vem da variavel de ambiente `MONGODB_URI` (veja `application.propertie
 | `avaliacoes` | `Avaliacao` | Lucas | consulta por `locadorId`, `maquinaId` e `locacaoId` |
 | `locacoes` | `Locacao` | Tiago | conflito de agenda por `maquinaId` + `status` + `dataInicio`/`dataFim` |
 | `chat_messages` | `ChatMessage` | Leonardo | - |
+| `vistorias_checklist` | `VistoriaChecklist` | Kauan | `locacaoId` + `tipo` (unico) |
 
 ## Relacionamentos (por referencia de id)
 
@@ -72,6 +75,34 @@ Indice geoespacial: `localizacao` tem `@GeoSpatialIndexed(type = GeoSpatialIndex
 
 A classe `Maquina` segue o mesmo padrao das demais entidades (abaixo), com `compareTo` ordenando primeiro por `valorDiaria` e depois por `tituloAnuncio`.
 
+## Collection `vistorias_checklist` (Issue #43)
+
+| Campo | Tipo | Descricao |
+| :--- | :--- | :--- |
+| `id` | `String` | Identificador gerado pelo MongoDB |
+| `locacaoId` | `String` | Locacao a que a vistoria pertence |
+| `maquinaId` | `String` | Maquina vistoriada (vem da locacao) |
+| `tipo` | `TipoVistoria` | `RETIRADA` ou `DEVOLUCAO` |
+| `itens` | `List<ItemChecklist>` | Itens conferidos, cada um com `descricao`, `conforme` (`true`, `false` ou nulo se ainda nao respondido) e `observacao` |
+| `horimetro` | `Double` | Horas de uso do motor, informadas ao concluir (zero ou maior) |
+| `responsavelId` | `String` | Locador ou locatario que abriu a vistoria |
+| `dataVistoria` | `LocalDateTime` | Quando a vistoria foi aberta |
+| `status` | `StatusVistoria` | `PENDENTE`, `CONCLUIDA` ou `COM_PENDENCIAS` |
+
+Indice: `locacaoId` + `tipo` e unico (`locacao_tipo_unico`), entao cada locacao tem no maximo uma vistoria de retirada e uma de devolucao.
+
+Regras de negocio (`VistoriaChecklistService`):
+
+- So locacao `ACEITO` pode ter vistoria, e quem abre precisa ser o locador ou o locatario da locacao.
+- A vistoria nasce `PENDENTE` com 8 itens padrao sem resposta (pneus, oleo, fluidos, luzes, freios, cabine, implementos e avarias visiveis).
+- Item `nao conforme` exige observacao.
+- Para concluir, todos os itens precisam estar respondidos e o horimetro deve ser zero ou maior.
+- Se algum item esta `nao conforme`, o status final e `COM_PENDENCIAS`; senao e `CONCLUIDA`.
+- Vistoria concluida nao pode ser alterada nem concluida de novo (409).
+- Se uma resposta for invalida, nada e salvo (as respostas sao aplicadas primeiro em uma copia).
+
+Endpoints: `POST /api/vistorias`, `GET /api/vistorias/{id}`, `GET /api/vistorias/locacao/{locacaoId}` e `PUT /api/vistorias/{id}/concluir`.
+
 ## Padrao das classes
 
-As entidades `Usuario`, `Maquina`, `Avaliacao` e `Locacao` seguem o padrao da disciplina: `equals(Object)` em 4 passos, `hashCode()` com todos os campos do `equals`, `compareTo`, `toString`, construtor de copia (erro `Modelo ausente` se nulo) e `clone()`.
+As entidades `Usuario`, `Maquina`, `Avaliacao`, `Locacao`, `VistoriaChecklist` e `ItemChecklist` seguem o padrao da disciplina: `equals(Object)` em 4 passos, `hashCode()` com todos os campos do `equals`, `compareTo`, `toString`, construtor de copia (erro `Modelo ausente` se nulo) e `clone()`. Em `VistoriaChecklist` a lista de itens tem copia profunda: o construtor, o de copia e `getItens()` clonam cada item.
