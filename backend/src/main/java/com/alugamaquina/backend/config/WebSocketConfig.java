@@ -29,6 +29,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // Registra o endpoint do WebSocket que o frontend vai utilizar para conectar
-        registry.addEndpoint("/ws-chat").withSockJS();
+        registry.addEndpoint("/ws-chat")
+                .setAllowedOriginPatterns("*")
+                .withSockJS();
     }
 }

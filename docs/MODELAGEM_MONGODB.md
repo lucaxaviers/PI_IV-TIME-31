@@ -4,6 +4,10 @@ Autor da parte de Usuarios e Avaliacoes: Lucas Rodrigues Xavier | 25000508
 
 Autor da parte de Locacoes: Tiago Medeiros | 25000845 (Issue #39)
 
+Autor da parte de Maquinas: Mateus Oliveira Rafael | 25001369 (Issue #20 / #36)
+
+Autor da parte de Chat: Leonardo Gambaroni Alves | 25003494 (Issues #20 / #52)
+
 Autor da parte de Contratos e Vistorias: Kauan Aurelio Lasmar Dias | 25001590 (Issues #44 e #43)
 
 A conexao vem da variavel de ambiente `MONGODB_URI` (veja `application.properties`).
@@ -13,10 +17,10 @@ A conexao vem da variavel de ambiente `MONGODB_URI` (veja `application.propertie
 | Collection | Classe | Dono | Indices |
 | :--- | :--- | :--- | :--- |
 | `usuarios` | `Usuario` | Lucas | `email` (unico), `documento` (unico) |
-| `maquinas` | `Maquina` | Mateus | `localizacao` (`2dsphere`) |
-| `avaliacoes` | `Avaliacao` | Lucas | consulta por `locadorId`, `maquinaId` e `locacaoId` |
+| `maquinas` | `Maquina` | Mateus | `localizacao` (`2dsphere`), `tipoEquipamento`, `municipio` |
+| `avaliacoes` | `Avaliacao` | Lucas | `locacaoId` (unico), `locadorId`, `maquinaId` |
 | `locacoes` | `Locacao` | Tiago | conflito de agenda por `maquinaId` + `status` + `dataInicio`/`dataFim` |
-| `chat_messages` | `ChatMessage` | Leonardo | - |
+| `chat_mensagens` | `ChatMessage` | Leonardo | `remetente` + `destinatario` + `timestamp`, `timestamp` |
 | `contratos` | `Contrato` | Kauan | `locacaoId` (unico), `numero` (unico) |
 | `vistorias_checklist` | `VistoriaChecklist` | Kauan | `locacaoId` + `tipo` (unico) |
 
@@ -75,6 +79,28 @@ Endpoints: `POST /api/locacoes/solicitar`, `PUT /api/locacoes/{id}/aceitar` e `P
 Indice geoespacial: `localizacao` tem `@GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)`, o que permite a consulta `geoNear` usada em `MaquinaBuscaService.buscarPorRaio` (Issue #36) para encontrar maquinas dentro de um raio em quilometros a partir de uma coordenada `lat`/`lng`.
 
 A classe `Maquina` segue o mesmo padrao das demais entidades (abaixo), com `compareTo` ordenando primeiro por `valorDiaria` e depois por `tituloAnuncio`.
+
+## Collection `chat_mensagens` (Issues #20 / #52)
+
+| Campo | Tipo | Descricao |
+| :--- | :--- | :--- |
+| `id` | `String` | Identificador gerado pelo MongoDB |
+| `remetente` | `String` | Nome ou identificador de quem enviou a mensagem |
+| `destinatario` | `String` | Nome ou identificador de quem recebe a mensagem |
+| `conteudo` | `String` | Texto sanitizado da mensagem (de 1 ate 1000 caracteres) |
+| `horario` | `String` | Horario formatado para exibicao na tela (ex.: `10:15`) |
+| `timestamp` | `LocalDateTime` | Data e hora exatas usadas na ordenacao cronologica |
+
+Regras de negocio (`ChatMessageService`):
+
+- Remetente e conteudo sao obrigatorios e nao podem ser vazios.
+- Remetente e destinatario nao podem ser iguais.
+- O conteudo aceita no maximo 1000 caracteres e passa por sanitizacao de tags HTML (`<` e `>`) antes de gravar no banco.
+- Quando `timestamp` nao e informado, o servico preenche automaticamente com `LocalDateTime.now()`.
+
+Indices: indice composto `{ remetente: 1, destinatario: 1, timestamp: 1 }` para filtrar conversas em ordem cronologica e indice `{ timestamp: 1 }` para o historico geral.
+
+Endpoints: WebSocket STOMP `/ws-chat` (envio em `/app/chat.enviar` e broadcast em `/topic/mensagens`) e `GET /api/chat/historico` (com filtros opcionais `remetente` e `destinatario`).
 
 ## Collection `contratos` (Issue #44)
 
@@ -136,6 +162,16 @@ Regras de negocio (`VistoriaChecklistService`):
 
 Endpoints: `POST /api/vistorias`, `GET /api/vistorias/{id}`, `GET /api/vistorias/locacao/{locacaoId}` e `PUT /api/vistorias/{id}/concluir`.
 
+## Ambiente local com MongoDB
+
+Para rodar localmente com todas as collections, validadores, indices e dados iniciais:
+
+```bash
+docker compose up -d mongodb
+```
+
+O script `mongodb/init-mongo.js` tambem pode ser rodado direto no MongoDB Atlas via `mongosh` para criar os indices e a carga inicial de demonstracao.
+
 ## Padrao das classes
 
-As entidades `Usuario`, `Maquina`, `Avaliacao`, `Locacao`, `Contrato`, `VistoriaChecklist` e `ItemChecklist` seguem o padrao da disciplina: `equals(Object)` em 4 passos, `hashCode()` com todos os campos do `equals`, `compareTo`, `toString`, construtor de copia (erro `Modelo ausente` se nulo) e `clone()`. Em `VistoriaChecklist` a lista de itens tem copia profunda: o construtor, o de copia e `getItens()` clonam cada item. As classes `Contrato`, `VistoriaChecklist` e `ItemChecklist` foram acrescentadas por Kauan Aurelio Lasmar Dias | 25001590.
+As entidades `Usuario`, `Maquina`, `Avaliacao`, `Locacao`, `ChatMessage`, `Contrato`, `VistoriaChecklist` e `ItemChecklist` seguem o padrao da disciplina: `equals(Object)` em 4 passos, `hashCode()` com todos os campos do `equals`, `compareTo`, `toString`, construtor de copia (erro `Modelo ausente` se nulo) e `clone()`. Em `VistoriaChecklist` a lista de itens tem copia profunda: o construtor, o de copia e `getItens()` clonam cada item. As classes `Contrato`, `VistoriaChecklist` e `ItemChecklist` foram acrescentadas por Kauan Aurelio Lasmar Dias | 25001590.
