@@ -30,7 +30,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-websocket</artifactId>
     </dependency>
-    <!-- OpenPDF: gera o PDF do contrato digital (Issue #44) -->
+    <!-- Kauan Aurélio Lasmar Dias | 25001590 - OpenPDF: biblioteca que gera o PDF do contrato digital (#44) -->
     <dependency>
       <groupId>com.github.librepdf</groupId>
       <artifactId>openpdf</artifactId>
