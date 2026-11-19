@@ -28,6 +28,8 @@ public class Contrato implements Comparable<Contrato>, Cloneable {
     @Indexed(unique = true)
     private String locacaoId;
 
+    // Numero unico: evita dois contratos com o mesmo numero se duas geracoes ocorrerem juntas
+    @Indexed(unique = true)
     private String numero;
 
     private String locadorId;
