@@ -29,7 +29,7 @@ class ChatMessageModelTest {
     }
 
     @Test
-    void construtorComCamposDevePreencherDadosETimestamp() {
+    void construtorComCamposDevePreencherDadosETimestamp() throws Exception {
         // Arrange + Act
         ChatMessage msg = new ChatMessage("Antonio", "Jose Carlos", "Bom dia!", "09:30");
 
