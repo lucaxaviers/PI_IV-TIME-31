@@ -19,6 +19,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @CompoundIndex(name = "idx_chat_conversa_timestamp", def = "{'remetente': 1, 'destinatario': 1, 'timestamp': 1}")
 public class ChatMessage implements Comparable<ChatMessage>, Cloneable {
 
+    public static final int TAMANHO_MAXIMO_CONTEUDO = 1000;
+
     @Id
     private String id;
     private String remetente;
@@ -33,12 +35,41 @@ public class ChatMessage implements Comparable<ChatMessage>, Cloneable {
     }
 
     // Construtor com os campos principais da mensagem
-    public ChatMessage(String remetente, String destinatario, String conteudo, String horario) {
-        this.remetente = remetente;
-        this.destinatario = destinatario;
+    public ChatMessage(String remetente, String destinatario, String conteudo, String horario) throws Exception {
+        if (!ChatMessage.isTextoValido(remetente)) {
+            throw new Exception("Remetente ausente!");
+        }
+        if (!ChatMessage.isDestinatarioValido(remetente, destinatario)) {
+            throw new Exception("Destinatario invalido ou igual ao remetente!");
+        }
+        if (!ChatMessage.isConteudoValido(conteudo)) {
+            throw new Exception("Conteudo invalido!");
+        }
+
+        this.remetente = remetente.trim();
+        this.destinatario = destinatario.trim();
         this.conteudo = conteudo;
-        this.horario = horario;
+        this.horario = horario != null ? horario.trim() : null;
         this.timestamp = LocalDateTime.now();
+    }
+
+    public static boolean isTextoValido(String texto) {
+        return texto != null && !texto.isBlank();
+    }
+
+    public static boolean isConteudoValido(String conteudo) {
+        return ChatMessage.isTextoValido(conteudo) && conteudo.length() <= TAMANHO_MAXIMO_CONTEUDO;
+    }
+
+    public static boolean isDestinatarioValido(String remetente, String destinatario) {
+        if (!ChatMessage.isTextoValido(destinatario)) {
+            return false;
+        }
+        if (ChatMessage.isTextoValido(remetente)
+                && remetente.trim().equalsIgnoreCase(destinatario.trim())) {
+            return false;
+        }
+        return true;
     }
 
     public String getId() {

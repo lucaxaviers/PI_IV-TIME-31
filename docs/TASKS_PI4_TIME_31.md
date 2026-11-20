@@ -28,9 +28,9 @@ Quadro oficial: [GitHub Projects](https://github.com/users/lucaxaviers/projects/
 | 25, 26 | Chat - HTML e CSS | Leonardo | Concluída |
 | 40, 41, 52 | Chat em tempo real, JS e persistência | Leonardo | Concluída |
 | 15, 27 | Contrato digital - HTML e CSS | Kauan | Concluída |
-| 44 | Contrato digital em PDF - Backend | Kauan | Pendente |
-| 42 | Vistoria técnica (checklist) - Interface | Kauan | Pendente |
-| 43 | Vistoria técnica (checklist) - Backend | Kauan | Pendente |
+| 44 | Contrato digital em PDF - Backend | Kauan | Concluída |
+| 42 | Vistoria técnica (checklist) - Interface | Kauan | Concluída |
+| 43 | Vistoria técnica (checklist) - Backend | Kauan | Concluída |
 | 19 | CSS global | Todos | Concluída |
 | 20 | Modelagem do banco de dados | Todos | Em andamento |
 | 21 | Ambiente Java e servidor básico | Todos | Em andamento |
