@@ -29,6 +29,7 @@ import org.springframework.data.mongodb.core.query.NearQuery;
 
 import com.alugamaquina.backend.dto.MaquinaBuscaResponse;
 import com.alugamaquina.backend.model.Maquina;
+import com.alugamaquina.backend.repository.MaquinaRepository;
 
 class MaquinaBuscaServiceBuscaTest {
 
@@ -38,7 +39,7 @@ class MaquinaBuscaServiceBuscaTest {
     @BeforeEach
     void setUp() {
         mongoTemplate = mock(MongoTemplate.class);
-        service = new MaquinaBuscaService(mongoTemplate);
+        service = new MaquinaBuscaService(mongoTemplate, mock(MaquinaRepository.class));
     }
 
     private Maquina criarMaquina(String id, String titulo, String tipo, String municipio, String valor) {
