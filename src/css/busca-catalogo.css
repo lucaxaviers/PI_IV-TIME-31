@@ -132,7 +132,12 @@
 .empty-state {
   text-align: center;
   color: var(--color-text-muted);
-  padding: 2rem 0 3rem 0;
+  padding: 2rem 0 1rem 0;
+}
+
+.empty-state + .btn {
+  display: block;
+  margin: 0 auto 3rem auto;
 }
 
 @media (max-width: 900px) {

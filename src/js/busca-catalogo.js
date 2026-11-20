@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
     colheitadeiras: "../../assets/maquinas/colheitadeira-vermelha.svg",
     pulverizadores: "../../assets/maquinas/pulverizador.svg",
     implementos: "../../assets/maquinas/implemento-grade.svg",
+    plantadeiras: "../../assets/maquinas/trator-azul.svg",
   };
 
   // Normaliza o tipoEquipamento vindo da API para as mesmas chaves do filtro #categoria
@@ -39,16 +40,27 @@ document.addEventListener("DOMContentLoaded", function () {
     implementos: "implementos",
     pulverizador: "pulverizadores",
     pulverizadores: "pulverizadores",
+    plantadeira: "plantadeiras",
+    plantadeiras: "plantadeiras",
   };
 
   let cards = [];
   let temporizadorDebounce = null;
 
-  // Mensagem exibida quando nao ha cards (sem resultado ou erro de servidor)
+  // Mensagem exibida quando nao ha cards (carregando, vazio ou servidor offline)
   const mensagemStatus = document.createElement("p");
   mensagemStatus.className = "empty-state";
   grade.insertAdjacentElement("afterend", mensagemStatus);
   mensagemStatus.hidden = true;
+
+  // Botao de nova tentativa, usado so no estado de servidor offline
+  const botaoTentarDeNovo = document.createElement("button");
+  botaoTentarDeNovo.type = "button";
+  botaoTentarDeNovo.className = "btn btn-secondary";
+  botaoTentarDeNovo.textContent = "Tentar de novo";
+  mensagemStatus.insertAdjacentElement("afterend", botaoTentarDeNovo);
+  botaoTentarDeNovo.hidden = true;
+  botaoTentarDeNovo.addEventListener("click", buscarMaquinas);
 
   function normalizarCategoria(tipoEquipamento) {
     if (!tipoEquipamento) return "";
@@ -86,6 +98,8 @@ document.addEventListener("DOMContentLoaded", function () {
     card.dataset.distancia = Math.round(Number(maquina.distanciaKm) || 0);
     card.dataset.preco = Math.round(Number(maquina.valorDiaria) || 0);
 
+    const link = "detalhe-maquina.html?id=" + encodeURIComponent(maquina.id);
+
     card.innerHTML =
       '<div class="machine-photo"><img src="' + imagem + '" alt="Imagem ilustrativa do equipamento" /></div>' +
       '<div class="machine-body">' +
@@ -94,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
       '<p class="machine-meta"></p>' +
       '<p class="machine-distance"></p>' +
       '<p class="machine-price"></p>' +
-      '<a href="detalhe-maquina.html" class="btn btn-primary btn-card">Ver detalhes</a>' +
+      '<a href="' + link + '" class="btn btn-primary btn-card">Ver detalhes</a>' +
       "</div>";
 
     card.querySelector(".machine-title").textContent = maquina.tituloAnuncio || "Equipamento sem titulo";
@@ -110,13 +124,15 @@ document.addEventListener("DOMContentLoaded", function () {
     return card;
   }
 
-  function mostrarStatus(texto) {
+  function mostrarStatus(texto, comBotaoTentarDeNovo) {
     mensagemStatus.textContent = texto;
     mensagemStatus.hidden = false;
+    botaoTentarDeNovo.hidden = !comBotaoTentarDeNovo;
   }
 
   function esconderStatus() {
     mensagemStatus.hidden = true;
+    botaoTentarDeNovo.hidden = true;
   }
 
   function aplicarFiltros() {
@@ -149,8 +165,14 @@ document.addEventListener("DOMContentLoaded", function () {
       contagem.textContent = visiveis + (visiveis === 1 ? " máquina encontrada" : " máquinas encontradas");
     }
 
-    mensagemStatus.textContent = "Nenhuma máquina encontrada para os filtros selecionados.";
-    mensagemStatus.hidden = visiveis !== 0;
+    if (visiveis === 0) {
+      const mensagem = cards.length === 0
+        ? "Nenhuma máquina encontrada."
+        : "Nenhuma máquina encontrada para os filtros selecionados.";
+      mostrarStatus(mensagem, false);
+    } else {
+      esconderStatus();
+    }
   }
 
   function renderizarMaquinas(maquinas) {
@@ -170,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
     grade.innerHTML = "";
     cards = [];
     if (contagem) contagem.textContent = "Carregando máquinas...";
-    mostrarStatus("Carregando máquinas...");
+    mostrarStatus("Carregando máquinas...", false);
 
     return fetch(montarUrlBusca(raioEnviado))
       .then(function (resposta) {
@@ -178,15 +200,14 @@ document.addEventListener("DOMContentLoaded", function () {
         return resposta.json();
       })
       .then(function (maquinas) {
-        esconderStatus();
         renderizarMaquinas(Array.isArray(maquinas) ? maquinas : []);
       })
       .catch(function () {
-        // Fallback seguro: servidor Java offline ou MongoDB indisponivel
+        // Servidor Java offline ou MongoDB indisponivel: nao sobra nenhum card fixo
         grade.innerHTML = "";
         cards = [];
         if (contagem) contagem.textContent = "0 máquinas encontradas";
-        mostrarStatus("Não foi possível carregar o catálogo agora. Verifique se o servidor está online e tente novamente.");
+        mostrarStatus("Não foi possível carregar o catálogo agora. Verifique se o servidor está online.", true);
       });
   }
 

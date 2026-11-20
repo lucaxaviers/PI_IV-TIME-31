@@ -32,9 +32,9 @@ Quadro oficial: [GitHub Projects](https://github.com/users/lucaxaviers/projects/
 | 42 | Vistoria técnica (checklist) - Interface | Kauan | Concluída |
 | 43 | Vistoria técnica (checklist) - Backend | Kauan | Concluída |
 | 19 | CSS global | Todos | Concluída |
-| 20 | Modelagem do banco de dados | Todos | Em andamento |
-| 21 | Ambiente Java e servidor básico | Todos | Em andamento |
-| 46 | Testes unitários com JUnit 5 | Todos | Em andamento |
+| 20 | Modelagem do banco de dados | Todos | Concluída |
+| 21 | Ambiente Java e servidor básico | Todos | Concluída |
+| 46 | Testes unitários com JUnit 5 | Todos | Concluída |
 | 55 | Prototipação no Figma | Todos | Em andamento |
 
 ## Tecnologias

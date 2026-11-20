@@ -58,25 +58,10 @@
   }
 
   // ---- Ligacao com a tela ----
-  var card = document.getElementById('cardLocacao');
-  var form = document.getElementById('formFrete');
-  if (!card || !form) return;
-
-  var origem = card.dataset.origem;
-  var diaria = parseFloat(card.dataset.diaria);
-  var inicioMin = card.dataset.inicioMin;
-  var fimMax = card.dataset.fimMax;
-
-  var campoInicio = document.getElementById('dataInicio');
-  var campoFim = document.getElementById('dataFim');
-  var campoCidade = document.getElementById('municipioEntrega');
-  var campoLogistica = document.getElementById('tipoLogistica');
-  var erro = document.getElementById('mensagemErro');
-  var resumo = document.getElementById('resumoCalculo');
-
-  // Limita o calendario ao periodo de disponibilidade da maquina
-  campoInicio.min = campoFim.min = inicioMin;
-  campoInicio.max = campoFim.max = fimMax;
+  // Nao roda sozinho: so depois que o detalhe-maquina.js preenche data-diaria/data-origem
+  // com a resposta da API (GET /api/maquinas/{id}) e chama window.AlugaMaquinaFrete.iniciar()
+  var card, form, origem, diaria, inicioMin, fimMax;
+  var campoInicio, campoFim, campoCidade, campoLogistica, erro, resumo;
 
   function mostrarErro(msg) {
     erro.textContent = msg;
@@ -132,18 +117,44 @@
     resumo.hidden = false;
   }
 
-  // Cidade de entrega so e obrigatoria quando ha frete
-  campoLogistica.addEventListener('change', function () {
-    var retirada = campoLogistica.value === 'retirada';
-    campoCidade.disabled = retirada;
-    campoCidade.required = !retirada;
-    if (retirada) campoCidade.value = '';
-  });
+  // Le data-diaria/data-origem do card e liga os eventos do formulario.
+  // Chamada pelo detalhe-maquina.js assim que a API devolve a maquina.
+  function iniciar() {
+    card = document.getElementById('cardLocacao');
+    form = document.getElementById('formFrete');
+    if (!card || !form) return;
 
-  // Garante que o termino nunca fique antes do inicio
-  campoInicio.addEventListener('change', function () {
-    if (campoInicio.value) campoFim.min = campoInicio.value;
-  });
+    origem = card.dataset.origem;
+    diaria = parseFloat(card.dataset.diaria);
+    inicioMin = card.dataset.inicioMin;
+    fimMax = card.dataset.fimMax;
 
-  form.addEventListener('submit', calcular);
+    campoInicio = document.getElementById('dataInicio');
+    campoFim = document.getElementById('dataFim');
+    campoCidade = document.getElementById('municipioEntrega');
+    campoLogistica = document.getElementById('tipoLogistica');
+    erro = document.getElementById('mensagemErro');
+    resumo = document.getElementById('resumoCalculo');
+
+    // Limita o calendario ao periodo de disponibilidade da maquina
+    campoInicio.min = campoFim.min = inicioMin;
+    campoInicio.max = campoFim.max = fimMax;
+
+    // Cidade de entrega so e obrigatoria quando ha frete
+    campoLogistica.addEventListener('change', function () {
+      var retirada = campoLogistica.value === 'retirada';
+      campoCidade.disabled = retirada;
+      campoCidade.required = !retirada;
+      if (retirada) campoCidade.value = '';
+    });
+
+    // Garante que o termino nunca fique antes do inicio
+    campoInicio.addEventListener('change', function () {
+      if (campoInicio.value) campoFim.min = campoInicio.value;
+    });
+
+    form.addEventListener('submit', calcular);
+  }
+
+  window.AlugaMaquinaFrete = { iniciar: iniciar };
 })();

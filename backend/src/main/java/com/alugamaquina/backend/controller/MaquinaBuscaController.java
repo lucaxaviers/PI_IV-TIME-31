@@ -7,11 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alugamaquina.backend.dto.MaquinaBuscaResponse;
+import com.alugamaquina.backend.dto.MaquinaDetalheResponse;
+import com.alugamaquina.backend.exception.MaquinaNaoEncontradaException;
 import com.alugamaquina.backend.exception.ParametroBuscaInvalidoException;
 import com.alugamaquina.backend.service.MaquinaBuscaService;
 
@@ -33,8 +36,18 @@ public class MaquinaBuscaController {
         return maquinaBuscaService.buscarPorRaio(lat, lng, raioKm);
     }
 
+    @GetMapping("/{id}")
+    public MaquinaDetalheResponse buscarPorId(@PathVariable String id) {
+        return maquinaBuscaService.buscarPorId(id);
+    }
+
     @ExceptionHandler(ParametroBuscaInvalidoException.class)
     public ResponseEntity<Map<String, String>> tratarParametroInvalido(ParametroBuscaInvalidoException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("erro", ex.getMessage()));
+    }
+
+    @ExceptionHandler(MaquinaNaoEncontradaException.class)
+    public ResponseEntity<Map<String, String>> tratarNaoEncontrada(MaquinaNaoEncontradaException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("erro", ex.getMessage()));
     }
 }

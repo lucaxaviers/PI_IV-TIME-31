@@ -12,8 +12,11 @@ import org.springframework.data.mongodb.core.query.NearQuery;
 import org.springframework.stereotype.Service;
 
 import com.alugamaquina.backend.dto.MaquinaBuscaResponse;
+import com.alugamaquina.backend.dto.MaquinaDetalheResponse;
+import com.alugamaquina.backend.exception.MaquinaNaoEncontradaException;
 import com.alugamaquina.backend.exception.ParametroBuscaInvalidoException;
 import com.alugamaquina.backend.model.Maquina;
+import com.alugamaquina.backend.repository.MaquinaRepository;
 
 @Service
 public class MaquinaBuscaService {
@@ -21,9 +24,11 @@ public class MaquinaBuscaService {
     private static final double RAIO_MAXIMO_KM = 500;
 
     private final MongoTemplate mongoTemplate;
+    private final MaquinaRepository maquinaRepository;
 
-    public MaquinaBuscaService(MongoTemplate mongoTemplate) {
+    public MaquinaBuscaService(MongoTemplate mongoTemplate, MaquinaRepository maquinaRepository) {
         this.mongoTemplate = mongoTemplate;
+        this.maquinaRepository = maquinaRepository;
     }
 
     public List<MaquinaBuscaResponse> buscarPorRaio(double lat, double lng, double raioKm) {
@@ -45,6 +50,25 @@ public class MaquinaBuscaService {
                         resultado.getContent().getValorDiaria(),
                         resultado.getDistance().getValue()))
                 .collect(Collectors.toList());
+    }
+
+    // Busca uma maquina pelo id para a tela de detalhe. 404 se nao existir ou o id for vazio.
+    public MaquinaDetalheResponse buscarPorId(String id) {
+        if (id == null || id.trim().isEmpty()) {
+            throw new MaquinaNaoEncontradaException("Id da maquina e obrigatorio.");
+        }
+
+        Maquina maquina = maquinaRepository.findById(id)
+                .orElseThrow(() -> new MaquinaNaoEncontradaException("Maquina nao encontrada: " + id));
+
+        return new MaquinaDetalheResponse(
+                maquina.getId(),
+                maquina.getTituloAnuncio(),
+                maquina.getTipoEquipamento(),
+                maquina.getMunicipio(),
+                maquina.getValorDiaria(),
+                maquina.getLocalizacao().getY(),
+                maquina.getLocalizacao().getX());
     }
 
     private void validarParametros(double lat, double lng, double raioKm) {

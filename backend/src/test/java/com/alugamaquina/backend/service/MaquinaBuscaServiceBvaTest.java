@@ -29,6 +29,7 @@ import org.springframework.data.mongodb.core.query.NearQuery;
 
 import com.alugamaquina.backend.exception.ParametroBuscaInvalidoException;
 import com.alugamaquina.backend.model.Maquina;
+import com.alugamaquina.backend.repository.MaquinaRepository;
 
 class MaquinaBuscaServiceBvaTest {
 
@@ -38,7 +39,7 @@ class MaquinaBuscaServiceBvaTest {
     @BeforeEach
     void setUp() {
         mongoTemplate = mock(MongoTemplate.class);
-        service = new MaquinaBuscaService(mongoTemplate);
+        service = new MaquinaBuscaService(mongoTemplate, mock(MaquinaRepository.class));
         when(mongoTemplate.geoNear(any(NearQuery.class), eq(Maquina.class)))
                 .thenReturn(new GeoResults<Maquina>(List.of()));
     }

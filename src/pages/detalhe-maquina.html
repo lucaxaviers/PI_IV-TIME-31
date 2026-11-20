@@ -13,14 +13,14 @@
   <link rel="stylesheet" href="../css/detalhe-maquina.css" />
 </head>
 <body>
- 
+
   <!-- Cabeçalho -->
   <header class="header">
     <div class="container header-inner">
       <a href="busca-catalogo.html" class="brand">
         <img src="../../assets/logo-header.png" alt="AlugaMáquina" class="brand-logo" />
       </a>
- 
+
       <nav>
         <ul class="nav-menu">
           <li><a href="busca-catalogo.html" class="nav-link active">Catálogo</a></li>
@@ -31,128 +31,116 @@
       </nav>
     </div>
   </header>
- 
+
   <!-- Conteúdo Principal -->
   <main class="container">
- 
+
     <nav class="breadcrumb" aria-label="Você está em">
       <a href="busca-catalogo.html">Catálogo</a>
       <span class="breadcrumb-sep">/</span>
-      <a href="busca-catalogo.html">Tratores</a>
+      <a href="busca-catalogo.html" id="breadcrumbCategoria">Categoria</a>
       <span class="breadcrumb-sep">/</span>
-      <span>Trator John Deere 6115J Cabinado</span>
+      <span id="breadcrumbTitulo">Carregando...</span>
     </nav>
- 
-    <section class="page-intro">
-      <h1 class="page-title">Trator John Deere 6115J Cabinado</h1>
-      <p class="page-description">Paulínia / SP &middot; Fazenda Santa Maria</p>
+
+    <p id="statusMaquina" class="empty-state">Carregando dados da máquina...</p>
+    <button type="button" id="btnTentarDeNovoMaquina" class="btn btn-secondary" hidden>Tentar de novo</button>
+
+    <section class="page-intro" id="introMaquina" hidden>
+      <h1 class="page-title" id="tituloMaquina"></h1>
+      <p class="page-description" id="localizacaoMaquina"></p>
     </section>
- 
-    <div class="detail-layout">
- 
+
+    <div class="detail-layout" id="layoutMaquina" hidden>
+
       <!-- Coluna principal -->
       <div class="detail-main">
- 
-        <!-- Galeria -->
+
+        <!-- Galeria: a API ainda nao fornece fotos do anuncio -->
         <div class="detail-card">
-          <div class="gallery-main">Foto principal da máquina</div>
-          <div class="gallery-thumbs">
-            <div class="gallery-thumb active">Vista geral</div>
-            <div class="gallery-thumb">Cabine</div>
-            <div class="gallery-thumb">Pneus</div>
-            <div class="gallery-thumb">Implemento</div>
-          </div>
+          <div class="gallery-main">Não informado</div>
         </div>
- 
+
         <!-- Especificações -->
         <div class="detail-card">
           <h2 class="section-title">Especificações Técnicas</h2>
           <p class="section-subtitle">Dados informados pelo proprietário do equipamento.</p>
- 
+
           <dl class="spec-list">
             <div class="spec-item">
               <dt>Tipo</dt>
-              <dd>Trator Agrícola</dd>
+              <dd id="specTipo">Não informado</dd>
             </div>
             <div class="spec-item">
               <dt>Marca</dt>
-              <dd>John Deere</dd>
+              <dd>Não informado</dd>
             </div>
             <div class="spec-item">
               <dt>Modelo</dt>
-              <dd>6115J</dd>
+              <dd>Não informado</dd>
             </div>
             <div class="spec-item">
               <dt>Ano de fabricação</dt>
-              <dd>2021</dd>
+              <dd>Não informado</dd>
             </div>
             <div class="spec-item">
               <dt>Potência</dt>
-              <dd>115 cv</dd>
+              <dd>Não informado</dd>
             </div>
             <div class="spec-item">
               <dt>Horímetro</dt>
-              <dd>1.200 h</dd>
+              <dd>Não informado</dd>
             </div>
             <div class="spec-item">
               <dt>Operador</dt>
-              <dd>Não incluso</dd>
+              <dd>Não informado</dd>
             </div>
             <div class="spec-item">
               <dt>Localização</dt>
-              <dd>Paulínia / SP</dd>
+              <dd id="specLocalizacao">Não informado</dd>
             </div>
           </dl>
         </div>
- 
-        <!-- Observações -->
-        <div class="detail-card">
-          <h2 class="section-title">Observações do Proprietário</h2>
-          <p class="detail-text">
-            Revisão completa realizada em 2026. Acompanha implemento de gradagem.
-            Indicado para preparo de solo e tratos culturais em propriedades de médio porte.
-          </p>
-        </div>
- 
+
         <!-- Disponibilidade -->
         <div class="detail-card">
           <h2 class="section-title">Disponibilidade</h2>
           <p class="section-subtitle">Período em que a máquina está livre para locação.</p>
- 
+
           <div class="availability">
             <span class="availability-badge">Disponível</span>
             <span class="availability-period">01/11/2026 a 15/12/2026</span>
           </div>
         </div>
- 
+
       </div>
- 
+
       <!-- Coluna lateral: locação e frete -->
       <aside class="detail-side">
         <div class="detail-card rental-card"
              id="cardLocacao"
-             data-origem="paulinia"
-             data-diaria="850"
+             data-origem=""
+             data-diaria="0"
              data-inicio-min="2026-11-01"
              data-fim-max="2026-12-15">
- 
+
           <div class="price-box">
-            <span class="price-value">R$ 850,00</span>
+            <span class="price-value" id="precoMaquina">R$ 0,00</span>
             <span class="price-unit">/ dia</span>
           </div>
- 
+
           <form id="formFrete" action="#" method="post" novalidate>
- 
+
             <div class="form-group">
               <label for="dataInicio" class="form-label">Início da locação <span class="required">*</span></label>
               <input type="date" id="dataInicio" name="dataInicio" class="form-input" required />
             </div>
- 
+
             <div class="form-group">
               <label for="dataFim" class="form-label">Término da locação <span class="required">*</span></label>
               <input type="date" id="dataFim" name="dataFim" class="form-input" required />
             </div>
- 
+
             <div class="form-group">
               <label for="municipioEntrega" class="form-label">Cidade de entrega <span class="required">*</span></label>
               <select id="municipioEntrega" name="municipioEntrega" class="form-select" required>
@@ -167,7 +155,7 @@
               </select>
               <span class="form-help">Usada para estimar a distância e o valor do frete.</span>
             </div>
- 
+
             <div class="form-group">
               <label for="tipoLogistica" class="form-label">Logística</label>
               <select id="tipoLogistica" name="tipoLogistica" class="form-select">
@@ -175,16 +163,16 @@
                 <option value="retirada">Retirada na propriedade pelo locatário</option>
               </select>
             </div>
- 
+
             <div id="mensagemErro" class="form-error" role="alert" hidden></div>
- 
+
             <button type="submit" class="btn btn-primary btn-block">Calcular valor estimado</button>
           </form>
- 
+
           <!-- Resumo do cálculo -->
           <div id="resumoCalculo" class="summary" hidden>
             <h3 class="summary-title">Resumo estimado</h3>
- 
+
             <div class="summary-row">
               <span>Diárias (<span id="resDias">0</span>)</span>
               <span id="resSubtotal">R$ 0,00</span>
@@ -201,29 +189,30 @@
               <span>Total estimado</span>
               <span id="resTotal">R$ 0,00</span>
             </div>
- 
+
             <p class="summary-note">
               Valores estimados. O frete real pode variar conforme a rota e será
               confirmado entre as partes antes da assinatura do contrato.
             </p>
           </div>
- 
+
           <a href="contrato-digital.html" class="btn btn-primary btn-block" style="margin-bottom: 0.5rem;">Solicitar Reserva & Contrato</a>
           <a href="chat.html" class="btn btn-secondary btn-block">Conversar com o proprietário</a>
         </div>
       </aside>
- 
+
     </div>
   </main>
- 
+
   <!-- Rodapé -->
   <footer class="footer">
     <div class="container footer-inner">
       <span>AlugaMáquina - Plataforma de Locação de Máquinas e Equipamentos</span>
     </div>
   </footer>
- 
+
   <script src="../js/auth-guard.js"></script>
   <script src="../js/frete.js"></script>
+  <script src="../js/detalhe-maquina.js"></script>
 </body>
 </html>
