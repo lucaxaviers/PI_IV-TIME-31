@@ -80,6 +80,8 @@ Indice geoespacial: `localizacao` tem `@GeoSpatialIndexed(type = GeoSpatialIndex
 
 A classe `Maquina` segue o mesmo padrao das demais entidades (abaixo), com `compareTo` ordenando primeiro por `valorDiaria` e depois por `tituloAnuncio`.
 
+Endpoints: `POST /api/maquinas` (cadastro de equipamento), `GET /api/maquinas/busca` (busca geoespacial por `lat`, `lng` e `raioKm`) e `GET /api/maquinas/{id}` (detalhe da maquina para a tela `detalhe-maquina.html`, retornando 404 se nao encontrada).
+
 ## Collection `chat_mensagens` (Issues #20 / #52)
 
 | Campo | Tipo | Descricao |
