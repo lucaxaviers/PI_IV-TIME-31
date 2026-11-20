@@ -41,6 +41,10 @@ O arquivo é estruturado em três camadas principais:
 ## 📁 Estrutura do Repositório
 
 ```text
+├── .env.example
+├── .gitignore
+├── docker-compose.yml
+├── README.md
 ├── assets/
 │   ├── ico-AlugaMaquina.jpg
 │   ├── logo-AlugaMaquina.jpg
@@ -52,58 +56,67 @@ O arquivo é estruturado em três camadas principais:
 │       ├── main/
 │       │   ├── java/com/alugamaquina/backend/
 │       │   │   ├── BackendApplication.java
-│       │   │   ├── config/ (CorsConfig, WebSocketConfig)
-│       │   │   ├── controller/ (AuthController, AvaliacaoController, ChatController, LocacaoController, MaquinaBuscaController, StatusController, ContratoController, VistoriaChecklistController)
-│       │   │   ├── dto/ (AuthResponse, AvaliacaoRequest, AvaliacaoResponse, CadastroRequest, LocacaoResponse, LoginRequest, MaquinaBuscaResponse, RecusaLocacaoRequest, SolicitacaoLocacaoRequest, GerarContratoRequest, AssinarContratoRequest, ContratoResponse, CriarVistoriaRequest, ConcluirVistoriaRequest, ItemChecklistDto, VistoriaResponse)
-│       │   │   ├── exception/ (AutenticacaoException, ConflitoAgendaException, LocacaoNaoEncontradaException, ParametroBuscaInvalidoException, TransicaoStatusInvalidaException, UsuarioJaCadastradoException, ContratoNaoEncontradoException, ContratoConflitoException, AssinaturaNaoPermitidaException, VistoriaNaoEncontradaException, VistoriaConflitoException)
-│       │   │   ├── model/ (Avaliacao, ChatMessage, Contrato, ItemChecklist, Locacao, Maquina, StatusLocacao, StatusVistoria, TipoVistoria, Usuario, VistoriaChecklist)
-│       │   │   ├── repository/ (AvaliacaoRepository, ContratoRepository, LocacaoRepository, MaquinaRepository, UsuarioRepository, VistoriaChecklistRepository)
-│       │   │   └── service/ (AuthService, AvaliacaoService, ContratoService, GeradorPdfContrato, LocacaoService, MaquinaBuscaService, VistoriaChecklistService)
+│       │   │   ├── config/ (WebConfig, WebSocketConfig)
+│       │   │   ├── controller/ (AuthController, AvaliacaoController, ChatController, ContratoController, LocacaoController, MaquinaBuscaController, MaquinaCadastroController, StatusController, VistoriaChecklistController)
+│       │   │   ├── dto/ (AssinarContratoRequest, AuthResponse, AvaliacaoRequest, AvaliacaoResponse, CadastroRequest, ConcluirVistoriaRequest, ContratoResponse, CriarVistoriaRequest, GerarContratoRequest, ItemChecklistDto, LocacaoResponse, LoginRequest, MaquinaBuscaResponse, MaquinaCadastroRequest, MaquinaCadastroResponse, MaquinaDetalheResponse, RecusaLocacaoRequest, SolicitacaoLocacaoRequest, VistoriaResponse)
+│       │   │   ├── exception/ (AssinaturaNaoPermitidaException, AutenticacaoException, ConflitoAgendaException, ContratoConflitoException, ContratoNaoEncontradoException, LocacaoNaoEncontradaException, MaquinaNaoEncontradaException, ParametroBuscaInvalidoException, TransicaoStatusInvalidaException, UsuarioJaCadastradoException, VistoriaConflitoException, VistoriaNaoEncontradaException)
+│       │   │   ├── model/ (Avaliacao, ChatMessage, Contrato, ItemChecklist, Locacao, Maquina, MunicipioAtendido, StatusLocacao, StatusVistoria, TipoEquipamento, TipoVistoria, Usuario, VistoriaChecklist)
+│       │   │   ├── repository/ (AvaliacaoRepository, ChatMessageRepository, ContratoRepository, LocacaoRepository, MaquinaRepository, UsuarioRepository, VistoriaChecklistRepository)
+│       │   │   └── service/ (AuthService, AvaliacaoService, ChatMessageService, ContratoService, GeradorPdfContrato, LocacaoService, MaquinaBuscaService, MaquinaCadastroService, VistoriaChecklistService)
 │       │   └── resources/
 │       │       └── application.properties
 │       └── test/
 │           └── java/com/alugamaquina/backend/
-│               ├── controller/ (StatusControllerTest)
-│               ├── model/ (AvaliacaoTest, ContratoBvaTest, ContratoIntraclasseTest, ItemChecklistTest, LocacaoTest, UsuarioTest, VistoriaChecklistBvaTest, VistoriaChecklistIntraclasseTest)
-│               ├── repository/ (LocacaoRepositoryQueryTest)
-│               └── service/ (AuthServiceBvaTest, AuthServiceTest, AvaliacaoServiceBvaTest, AvaliacaoServiceTest, LocacaoServiceTest, MaquinaBuscaServiceBvaTest, MaquinaBuscaServiceTest, ContratoServiceTest, ContratoInterclasseTest, GeradorPdfContratoTest, VistoriaChecklistServiceTest, VistoriaInterclasseTest)
+│               ├── controller/ (LocacaoControllerConsultaTest, StatusControllerTest)
+│               ├── dto/ (MaquinaCadastroRequestTest)
+│               ├── model/ (AvaliacaoIntraclasseTest, AvaliacaoTest, CadastroEnumsTest, ChatMessageIntraclasseTest, ChatMessageModelTest, ContratoBvaTest, ContratoIntraclasseTest, ItemChecklistTest, LocacaoIntraclasseTest, LocacaoTest, MaquinaTest, UsuarioIntraclasseTest, UsuarioTest, VistoriaChecklistBvaTest, VistoriaChecklistIntraclasseTest)
+│               ├── repository/ (LocacaoRepositoryListagemQueryTest, LocacaoRepositoryQueryTest)
+│               └── service/ (AuthServiceBvaTest, AuthServiceTest, AvaliacaoInterclasseTest, AvaliacaoServiceBvaTest, AvaliacaoServiceTest, ChatInterclasseTest, ChatMessageServiceTest, ContratoInterclasseTest, ContratoServiceTest, GeradorPdfContratoTest, LocacaoConsultaServiceTest, LocacaoServiceTest, MaquinaBuscaServiceBuscaTest, MaquinaBuscaServiceBvaTest, MaquinaBuscaServiceTest, MaquinaCadastroInterclasseTest, MaquinaCadastroServiceTest, VistoriaChecklistServiceTest, VistoriaInterclasseTest)
 ├── docs/
 │   ├── AlugaMaquina_Apresentacao.pptx
+│   ├── DICIONARIO_DE_DADOS.md (Dicionário de dados completo e desdobramento NoSQL)
 │   ├── MODELAGEM_MONGODB.md (Documentação detalhada das collections e índices)
 │   ├── Relatorio_Ideacao_AlugaMaquina.docx
 │   ├── Relatorio_Ideacao_AlugaMaquina.pdf
 │   └── TASKS_PI4_TIME_31.md (Quadro simples de tarefas e responsáveis)
-├── src/
-│   ├── css/
-│   │   ├── global.css
-│   │   ├── avaliacao-pos-locacao.css
-│   │   ├── busca-catalogo.css
-│   │   ├── cadastro-maquina.css
-│   │   ├── chat.css
-│   │   ├── contrato-digital.css
-│   │   ├── detalhe-maquina.css
-│   │   ├── login-usuario.css
-│   │   └── vistoria-checklist.css
-│   ├── js/
-│   │   ├── avaliacao-pos-locacao.js
-│   │   ├── busca-catalogo.js
-│   │   ├── cadastro-maquina.js
-│   │   ├── chat.js
-│   │   ├── contrato-digital.js
-│   │   ├── frete.js
-│   │   ├── login-usuario.js
-│   │   └── vistoria-checklist.js
-│   └── pages/
-│       ├── avaliacao-pos-locacao.html
-│       ├── busca-catalogo.html
-│       ├── cadastro-maquina.html
-│       ├── chat.html
-│       ├── contrato-digital.html
-│       ├── detalhe-maquina.html
-│       ├── login-usuario.html
-│       └── vistoria-checklist.html
-├── .gitignore
-└── README.md
+├── mongodb/
+│   └── init-mongo.js (Script de criação de schemas, índices e seed inicial)
+├── scripts/
+│   └── start-dev.ps1 (Inicialização local do ambiente Docker/MongoDB + Backend)
+└── src/
+    ├── css/
+    │   ├── global.css
+    │   ├── avaliacao-pos-locacao.css
+    │   ├── busca-catalogo.css
+    │   ├── cadastro-maquina.css
+    │   ├── chat.css
+    │   ├── contrato-digital.css
+    │   ├── detalhe-maquina.css
+    │   ├── login-usuario.css
+    │   ├── meus-contratos.css
+    │   └── vistoria-checklist.css
+    ├── js/
+    │   ├── auth-guard.js
+    │   ├── avaliacao-pos-locacao.js
+    │   ├── busca-catalogo.js
+    │   ├── cadastro-maquina.js
+    │   ├── chat.js
+    │   ├── contrato-digital.js
+    │   ├── detalhe-maquina.js
+    │   ├── frete.js
+    │   ├── login-usuario.js
+    │   ├── meus-contratos.js
+    │   └── vistoria-checklist.js
+    └── pages/
+        ├── avaliacao-pos-locacao.html
+        ├── busca-catalogo.html
+        ├── cadastro-maquina.html
+        ├── chat.html
+        ├── contrato-digital.html
+        ├── detalhe-maquina.html
+        ├── login-usuario.html
+        ├── meus-contratos.html
+        └── vistoria-checklist.html
 ```
 
 ---
@@ -112,7 +125,9 @@ O arquivo é estruturado em três camadas principais:
 
 Todos os artefatos oficiais de ideação e escopo encontram-se organizados na pasta [`docs/`](./docs/):
 - **Tarefas do PI4 (`TASKS_PI4_TIME_31.md`):** Quadro simples com as tarefas e os responsáveis de cada integrante.
+- **Dicionário de Dados (`DICIONARIO_DE_DADOS.md`):** Dicionário completo das 7 entidades do sistema, regras de domínio, exemplos aceitos/não aceitos e mapeamento físico para o MongoDB.
 - **Modelagem do Banco de Dados MongoDB (`MODELAGEM_MONGODB.md`):** Documentação técnica das collections, índices NoSQL, validação de schemas e regras de integridade.
+- **Ambiente Local e Seed (`docker-compose.yml`, `mongodb/init-mongo.js`, `scripts/start-dev.ps1`):** Provisionamento containerizado do MongoDB, criação de índices/schemas e carga inicial das 7 coleções.
 - **Apresentação da Solução (`AlugaMaquina_Apresentacao.pptx`):** Slides executivos com problema, proposta de valor, modelo de negócio, persona e roadmap do MVP.
 - **Relatório Consolidado de Ideação (`Relatorio_Ideacao_AlugaMaquina.pdf` / `.docx`):** Documento oficial completo reunindo contexto, personas, fundamentação quantitativa (IBGE/Embrapa/Cepea), Mapa de Empatia, Matriz SWOT e SWOT Cruzada, Business Model Canvas (BMC), Mapa Mental, 5W2H e wireframes do MVP.
 - **Identidade Visual (`assets/`):**
@@ -158,9 +173,10 @@ O acompanhamento das tarefas, sprints e entregas da equipe está centralizado no
 - [x] Módulo de Solicitação e Aceite de Locação com Cálculo de Frete (`#39`)
 - [x] Módulo de Avaliação Pós-Locação e recálculo de reputação no backend (`#45`)
 - [x] Suíte de testes unitários automatizados com JUnit 5 e Mockito
-- [x] Documentação formal da modelagem NoSQL MongoDB (`docs/MODELAGEM_MONGODB.md`)
-- [x] Integração das páginas de Login, Cadastro e Avaliação Pós-Locação com a API REST
-- [ ] Integração completa dos demais endpoints REST com o front-end e conexão final com MongoDB Atlas
+- [x] Documentação formal da modelagem NoSQL MongoDB (`docs/MODELAGEM_MONGODB.md`), Dicionário de Dados (`docs/DICIONARIO_DE_DADOS.md`) e script de seed (`mongodb/init-mongo.js`)
+- [x] Módulo de Chat em Tempo Real via WebSocket com persistência e histórico REST (`#40`, `#41`, `#52`)
+- [x] Integração das páginas de Login, Cadastro de Usuário, Cadastro de Máquinas, Catálogo, Detalhe da Máquina, Avaliação Pós-Locação, Meus Contratos e Consulta de Locações com a API REST
 <!-- Kauan Aurélio Lasmar Dias | 25001590 - itens abaixo: contrato digital em PDF e vistoria técnica (checklist) -->
 - [x] Módulo de Contrato Digital em PDF (`#44`) no backend e integração da tela de contrato com a API
 - [x] Módulo de Vistoria Técnica com checklist (`#43` backend e `#42` tela)
+- [ ] Conexão final com o cluster MongoDB Atlas e integração do envio de locação em `detalhe-maquina.html` (`POST /api/locacoes/solicitar`)

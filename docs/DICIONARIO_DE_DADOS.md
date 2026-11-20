@@ -12,6 +12,7 @@ O domínio do AlugaMáquina contempla o cadastro de produtores rurais (locadores
 | Data | Autor | Versão | Comentários |
 | :---: | :--- | :---: | :--- |
 | 19/11/2026 | Leonardo Gambaroni Alves (RA 25003494) | 1.0.0 | Versão inicial do dicionário de dados do AlugaMáquina cobrindo as 7 entidades do sistema e desdobramento no MongoDB. |
+| 20/11/2026 | Leonardo Gambaroni Alves (RA 25003494) | 1.1.0 | Sincronização das consultas REST adicionadas na main (GET /api/maquinas/{id}, GET /api/locacoes/{id} e GET /api/locacoes/usuario/{usuarioId}). |
 
 ---
 
@@ -379,8 +380,10 @@ O sistema utiliza o **MongoDB** (banco `alugamaquina`), mapeado via **Spring Dat
 | Autenticação por CPF/CNPJ / verificação de duplicidade | `usuarios` | `documento` | `documento` (único) | Garante unicidade de CPF/CNPJ sem máscara. |
 | Busca regional de máquinas por raio em km (`geoNear`) | `maquinas` | `localizacao` | `localizacao` (`2dsphere`) | Obrigatório para consulta geoespacial esférica. |
 | Filtro auxiliar por categoria ou município | `maquinas` | `tipoEquipamento`, `municipio` | `idx_maquinas_tipo`, `idx_maquinas_municipio` | Apoia consultas segmentadas no catálogo. |
+| Consulta individual de máquina por ID (`GET /api/maquinas/{id}`) | `maquinas` | `_id` | `_id` (chave primária) | Alimenta a tela `detalhe-maquina.html` com `MaquinaDetalheResponse` (HTTP 404 se inexistente). |
 | Verificação de conflito de agenda em reservas | `locacoes` | `maquinaId`, `status`, `dataInicio`, `dataFim` | `idx_locacoes_conflito_agenda` | Índice composto para detectar sobreposição de datas em reservas `ACEITO`. |
-| Listagem de locações por locador ou locatário | `locacoes` | `locadorId`, `locatarioId` | `idx_locacoes_locador`, `idx_locacoes_locatario` | Apoia histórico e acompanhamento de pedidos. |
+| Consulta individual de locação por ID (`GET /api/locacoes/{id}`) | `locacoes` | `_id` | `_id` (chave primária) | Retorna `LocacaoResponse` enriquecido com `locadorId`, `locatarioId`, `tituloMaquina` e `nomeLocador` (HTTP 404 se inexistente). |
+| Listagem de locações por usuário (`GET /api/locacoes/usuario/{usuarioId}`) | `locacoes` | `locadorId`, `locatarioId`, `dataSolicitacao` | `idx_locacoes_locador`, `idx_locacoes_locatario` | Busca locações como locador ou locatário ordenadas por `dataSolicitacao` decrescente (`findByLocadorIdOrLocatarioIdOrderByDataSolicitacaoDesc`). |
 | Impedir avaliação duplicada da mesma locação | `avaliacoes` | `locacaoId` | `locacaoId` (único) | Garante no máximo uma avaliação por locação. |
 | Recálculo da reputação média do locador | `avaliacoes` | `locadorId` | `locadorId` | Usado em `findByLocadorId` após cada nova avaliação. |
 | Consulta de avaliações por máquina | `avaliacoes` | `maquinaId` | `maquinaId` | Suporta listagem por equipamento. |
