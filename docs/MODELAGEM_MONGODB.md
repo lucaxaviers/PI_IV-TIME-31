@@ -63,7 +63,7 @@ Regras de negocio (`LocacaoService`):
 - So `PENDENTE` pode virar `ACEITO` ou `RECUSADO`. Qualquer outra transicao e invalida (409). Ao aceitar, a agenda e conferida de novo.
 - Dois periodos se cruzam quando `dataInicio` existente <= `dataFim` novo e `dataFim` existente >= `dataInicio` novo.
 
-Endpoints: `POST /api/locacoes/solicitar`, `PUT /api/locacoes/{id}/aceitar` e `PUT /api/locacoes/{id}/recusar` (corpo opcional com `motivo`).
+Endpoints: `POST /api/locacoes/solicitar`, `GET /api/locacoes/{id}`, `GET /api/locacoes/usuario/{usuarioId}` (locações como locador ou locatário, da mais nova para a mais antiga), `PUT /api/locacoes/{id}/aceitar` e `PUT /api/locacoes/{id}/recusar` (corpo opcional com `motivo`). A resposta traz também `locadorId`, `locatarioId`, `tituloMaquina` e `nomeLocador` (nulos se a máquina ou o usuário não forem encontrados).
 
 ## Collection `maquinas` (Issue #20)
 

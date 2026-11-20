@@ -3,7 +3,8 @@
  * Módulo: Solicitação e Aceite de Locações e Frete
  * Autor: Tiago Medeiros | RA: 25000845
  * Descrição: Regras de negócio da locação: validação, diárias, frete, conflito de agenda e
- *            transições de status (PENDENTE para ACEITO ou RECUSADO).
+ *            transições de status (PENDENTE para ACEITO ou RECUSADO), consulta por id e
+ *            listagem das locações de um usuário.
  */
 
 package com.alugamaquina.backend.service;
@@ -12,7 +13,11 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alugamaquina.backend.dto.LocacaoResponse;
@@ -21,8 +26,12 @@ import com.alugamaquina.backend.exception.ConflitoAgendaException;
 import com.alugamaquina.backend.exception.LocacaoNaoEncontradaException;
 import com.alugamaquina.backend.exception.TransicaoStatusInvalidaException;
 import com.alugamaquina.backend.model.Locacao;
+import com.alugamaquina.backend.model.Maquina;
 import com.alugamaquina.backend.model.StatusLocacao;
+import com.alugamaquina.backend.model.Usuario;
 import com.alugamaquina.backend.repository.LocacaoRepository;
+import com.alugamaquina.backend.repository.MaquinaRepository;
+import com.alugamaquina.backend.repository.UsuarioRepository;
 
 @Service
 public class LocacaoService {
@@ -32,9 +41,22 @@ public class LocacaoService {
     public static final BigDecimal TAXA_MOBILIZACAO = new BigDecimal("150.00");
 
     private final LocacaoRepository locacaoRepository;
+    private final MaquinaRepository maquinaRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public LocacaoService(LocacaoRepository locacaoRepository) {
+    // Usado pelo Spring: com os repositorios de maquina e usuario, a resposta traz titulo e nome
+    @Autowired
+    public LocacaoService(LocacaoRepository locacaoRepository,
+                          MaquinaRepository maquinaRepository,
+                          UsuarioRepository usuarioRepository) {
         this.locacaoRepository = locacaoRepository;
+        this.maquinaRepository = maquinaRepository;
+        this.usuarioRepository = usuarioRepository;
+    }
+
+    // Construtor original: sem maquina e usuario, os campos titulo e nome ficam nulos
+    public LocacaoService(LocacaoRepository locacaoRepository) {
+        this(locacaoRepository, null, null);
     }
 
     /**
@@ -101,6 +123,35 @@ public class LocacaoService {
         Locacao salva = locacaoRepository.save(locacao);
 
         return montarResposta("Locacao recusada.", salva);
+    }
+
+    /**
+     * Devolve uma locacao pelo id. Id inexistente vira LocacaoNaoEncontradaException (404).
+     */
+    public LocacaoResponse buscarPorId(String id) {
+        return montarResposta("Locacao encontrada.", buscar(id));
+    }
+
+    /**
+     * Lista as locacoes em que o usuario e locador ou locatario, da mais nova para a mais antiga.
+     * Usuario sem locacoes devolve lista vazia.
+     */
+    public List<LocacaoResponse> listarPorUsuario(String usuarioId) {
+        if (usuarioId == null || usuarioId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Identificador do usuario e obrigatorio.");
+        }
+        String idUsuario = usuarioId.trim();
+
+        // Guarda titulo e nome ja buscados para nao consultar o mesmo id varias vezes
+        Map<String, String> titulos = new HashMap<>();
+        Map<String, String> nomes = new HashMap<>();
+
+        return locacaoRepository.findByLocadorIdOrLocatarioIdOrderByDataSolicitacaoDesc(idUsuario, idUsuario)
+                .stream()
+                .map(locacao -> montarResposta("Locacao encontrada.", locacao,
+                        titulos.computeIfAbsent(String.valueOf(locacao.getMaquinaId()), k -> tituloDaMaquina(locacao.getMaquinaId())),
+                        nomes.computeIfAbsent(String.valueOf(locacao.getLocadorId()), k -> nomeDoUsuario(locacao.getLocadorId()))))
+                .toList();
     }
 
     /**
@@ -182,7 +233,29 @@ public class LocacaoService {
         }
     }
 
+    // Titulo do anuncio da maquina; nulo se nao achar (ou se nao houver repositorio de maquina)
+    private String tituloDaMaquina(String maquinaId) {
+        if (maquinaRepository == null || maquinaId == null) {
+            return null;
+        }
+        return maquinaRepository.findById(maquinaId).map(Maquina::getTituloAnuncio).orElse(null);
+    }
+
+    // Nome do usuario; nulo se nao achar (ou se nao houver repositorio de usuario)
+    private String nomeDoUsuario(String usuarioId) {
+        if (usuarioRepository == null || usuarioId == null) {
+            return null;
+        }
+        return usuarioRepository.findById(usuarioId).map(Usuario::getNome).orElse(null);
+    }
+
     private LocacaoResponse montarResposta(String mensagem, Locacao locacao) {
+        return montarResposta(mensagem, locacao,
+                tituloDaMaquina(locacao.getMaquinaId()), nomeDoUsuario(locacao.getLocadorId()));
+    }
+
+    private LocacaoResponse montarResposta(String mensagem, Locacao locacao,
+                                           String tituloMaquina, String nomeLocador) {
         return new LocacaoResponse(
                 true,
                 mensagem,
@@ -195,7 +268,11 @@ public class LocacaoService {
                 locacao.getValorDiaria(),
                 locacao.getValorFrete(),
                 locacao.getValorTotal(),
-                locacao.getMotivoRecusa()
+                locacao.getMotivoRecusa(),
+                locacao.getLocadorId(),
+                locacao.getLocatarioId(),
+                tituloMaquina,
+                nomeLocador
         );
     }
 }

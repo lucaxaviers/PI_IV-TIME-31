@@ -2,7 +2,8 @@
  * AlugaMáquina - Projeto Integrador IV (Time 31, PUC-Campinas)
  * Módulo: Solicitação e Aceite de Locações e Frete
  * Autor: Tiago Medeiros | RA: 25000845
- * Descrição: DTO de resposta com a locação, o número de diárias, o frete e o valor total.
+ * Descrição: DTO de resposta com a locação, o número de diárias, o frete e o valor total, além do
+ *            locador, do locatário, do título da máquina e do nome do locador.
  */
 
 package com.alugamaquina.backend.dto;
@@ -26,11 +27,27 @@ public class LocacaoResponse {
     private final BigDecimal valorFrete;
     private final BigDecimal valorTotal;
     private final String motivoRecusa;
+    private final String locadorId;
+    private final String locatarioId;
+    private final String tituloMaquina;
+    private final String nomeLocador;
 
+    // Construtor original: os campos novos ficam nulos
     public LocacaoResponse(boolean sucesso, String mensagem, String id, String maquinaId,
                            StatusLocacao status, LocalDate dataInicio, LocalDate dataFim,
                            long diarias, BigDecimal valorDiaria, BigDecimal valorFrete,
                            BigDecimal valorTotal, String motivoRecusa) {
+        this(sucesso, mensagem, id, maquinaId, status, dataInicio, dataFim, diarias,
+                valorDiaria, valorFrete, valorTotal, motivoRecusa, null, null, null, null);
+    }
+
+    // Construtor completo: inclui quem alugou, de quem e o titulo da maquina e o nome do locador
+    public LocacaoResponse(boolean sucesso, String mensagem, String id, String maquinaId,
+                           StatusLocacao status, LocalDate dataInicio, LocalDate dataFim,
+                           long diarias, BigDecimal valorDiaria, BigDecimal valorFrete,
+                           BigDecimal valorTotal, String motivoRecusa,
+                           String locadorId, String locatarioId,
+                           String tituloMaquina, String nomeLocador) {
         this.sucesso = sucesso;
         this.mensagem = mensagem;
         this.id = id;
@@ -43,6 +60,10 @@ public class LocacaoResponse {
         this.valorFrete = valorFrete;
         this.valorTotal = valorTotal;
         this.motivoRecusa = motivoRecusa;
+        this.locadorId = locadorId;
+        this.locatarioId = locatarioId;
+        this.tituloMaquina = tituloMaquina;
+        this.nomeLocador = nomeLocador;
     }
 
     public boolean isSucesso() {
@@ -91,5 +112,21 @@ public class LocacaoResponse {
 
     public String getMotivoRecusa() {
         return motivoRecusa;
+    }
+
+    public String getLocadorId() {
+        return locadorId;
+    }
+
+    public String getLocatarioId() {
+        return locatarioId;
+    }
+
+    public String getTituloMaquina() {
+        return tituloMaquina;
+    }
+
+    public String getNomeLocador() {
+        return nomeLocador;
     }
 }
