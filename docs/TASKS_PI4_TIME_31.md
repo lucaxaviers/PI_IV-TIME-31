@@ -35,7 +35,7 @@ Quadro oficial: [GitHub Projects](https://github.com/users/lucaxaviers/projects/
 | 20 | Modelagem do banco de dados | Todos | Concluída |
 | 21 | Ambiente Java e servidor básico | Todos | Concluída |
 | 46 | Testes unitários com JUnit 5 | Todos | Concluída |
-| 55 | Prototipação no Figma | Todos | Em andamento |
+| 55 | Prototipação no Figma | Todos | Concluída |
 
 ## Tecnologias
 
