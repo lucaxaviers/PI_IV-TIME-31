@@ -315,8 +315,8 @@ const usuariosSeed = [
     municipio: "paulinia",
     perfil: "locador",
     senhaHash: SENHA_DEMO_HASH,
-    reputacaoMedia: 5.0,
-    totalAvaliacoes: 0,
+    reputacaoMedia: 4.8,
+    totalAvaliacoes: Int32(2),
     _class: "com.alugamaquina.backend.model.Usuario"
   },
   {
@@ -341,8 +341,8 @@ const usuariosSeed = [
     municipio: "cosmopolis",
     perfil: "ambos",
     senhaHash: SENHA_DEMO_HASH,
-    reputacaoMedia: 5.0,
-    totalAvaliacoes: 0,
+    reputacaoMedia: 4.6,
+    totalAvaliacoes: Int32(1),
     _class: "com.alugamaquina.backend.model.Usuario"
   }
 ];
@@ -414,6 +414,51 @@ maquinasSeed.forEach((doc) => {
 
 const locacoesSeed = [
   {
+    _id: "LOC-2026-0710",
+    locadorId: "usr-locador-01",
+    locatarioId: "usr-locatario-01",
+    maquinaId: "maq-002",
+    dataInicio: ISODate("2026-09-10T03:00:00Z"),
+    dataFim: ISODate("2026-09-12T03:00:00Z"),
+    valorDiaria: NumberDecimal("2400.00"),
+    valorFrete: NumberDecimal("384.00"),
+    valorTotal: NumberDecimal("7584.00"),
+    status: "FINALIZADO",
+    motivoRecusa: null,
+    dataSolicitacao: ISODate("2026-09-05T10:00:00Z"),
+    _class: "com.alugamaquina.backend.model.Locacao"
+  },
+  {
+    _id: "LOC-2026-0755",
+    locadorId: "usr-ambos-01",
+    locatarioId: "usr-locatario-01",
+    maquinaId: "maq-004",
+    dataInicio: ISODate("2026-09-20T03:00:00Z"),
+    dataFim: ISODate("2026-09-23T03:00:00Z"),
+    valorDiaria: NumberDecimal("600.00"),
+    valorFrete: NumberDecimal("215.00"),
+    valorTotal: NumberDecimal("2615.00"),
+    status: "FINALIZADO",
+    motivoRecusa: null,
+    dataSolicitacao: ISODate("2026-09-15T14:20:00Z"),
+    _class: "com.alugamaquina.backend.model.Locacao"
+  },
+  {
+    _id: "LOC-2026-0790",
+    locadorId: "usr-locador-01",
+    locatarioId: "usr-ambos-01",
+    maquinaId: "maq-003",
+    dataInicio: ISODate("2026-09-29T03:00:00Z"),
+    dataFim: ISODate("2026-10-01T03:00:00Z"),
+    valorDiaria: NumberDecimal("1300.00"),
+    valorFrete: NumberDecimal("358.00"),
+    valorTotal: NumberDecimal("4258.00"),
+    status: "FINALIZADO",
+    motivoRecusa: null,
+    dataSolicitacao: ISODate("2026-09-25T09:45:00Z"),
+    _class: "com.alugamaquina.backend.model.Locacao"
+  },
+  {
     _id: "LOC-2026-0842",
     locadorId: "usr-locador-01",
     locatarioId: "usr-locatario-01",
@@ -462,6 +507,64 @@ const locacoesSeed = [
 
 locacoesSeed.forEach((doc) => {
   database.locacoes.updateOne({ _id: doc._id }, { $setOnInsert: doc }, { upsert: true });
+});
+
+const avaliacoesSeed = [
+  {
+    _id: "aval-001",
+    locacaoId: "LOC-2026-0710",
+    locadorId: "usr-locador-01",
+    locatarioId: "usr-locatario-01",
+    maquinaId: "maq-002",
+    notaDesempenho: Int32(5),
+    notaConservacao: Int32(5),
+    notaFidelidade: Int32(5),
+    notaPontualidade: Int32(4),
+    notaSuporte: Int32(5),
+    mediaFinal: 4.8,
+    comentario: "Colheitadeira muito bem revisada, entregou excelente rendimento na colheita.",
+    recomenda: true,
+    dataAvaliacao: ISODate("2026-09-14T16:20:00Z"),
+    _class: "com.alugamaquina.backend.model.Avaliacao"
+  },
+  {
+    _id: "aval-002",
+    locacaoId: "LOC-2026-0755",
+    locadorId: "usr-ambos-01",
+    locatarioId: "usr-locatario-01",
+    maquinaId: "maq-004",
+    notaDesempenho: Int32(4),
+    notaConservacao: Int32(5),
+    notaFidelidade: Int32(5),
+    notaPontualidade: Int32(5),
+    notaSuporte: Int32(4),
+    mediaFinal: 4.6,
+    comentario: "Trator entregue limpo e no horario combinado. Atendimento rapido pelo chat.",
+    recomenda: true,
+    dataAvaliacao: ISODate("2026-09-25T11:10:00Z"),
+    _class: "com.alugamaquina.backend.model.Avaliacao"
+  },
+  {
+    _id: "aval-003",
+    locacaoId: "LOC-2026-0790",
+    locadorId: "usr-locador-01",
+    locatarioId: "usr-ambos-01",
+    maquinaId: "maq-003",
+    notaDesempenho: Int32(5),
+    notaConservacao: Int32(4),
+    notaFidelidade: Int32(5),
+    notaPontualidade: Int32(5),
+    notaSuporte: Int32(5),
+    mediaFinal: 4.8,
+    comentario: "Pulverizador calibrado e pronto para o trabalho, recomendo o locador.",
+    recomenda: true,
+    dataAvaliacao: ISODate("2026-10-03T18:05:00Z"),
+    _class: "com.alugamaquina.backend.model.Avaliacao"
+  }
+];
+
+avaliacoesSeed.forEach((doc) => {
+  database.avaliacoes.updateOne({ _id: doc._id }, { $setOnInsert: doc }, { upsert: true });
 });
 
 const mensagensSeed = [
