@@ -179,4 +179,28 @@ O acompanhamento das tarefas, sprints e entregas da equipe está centralizado no
 <!-- Kauan Aurélio Lasmar Dias | 25001590 - itens abaixo: contrato digital em PDF e vistoria técnica (checklist) -->
 - [x] Módulo de Contrato Digital em PDF (`#44`) no backend e integração da tela de contrato com a API
 - [x] Módulo de Vistoria Técnica com checklist (`#43` backend e `#42` tela)
-- [ ] Conexão final com o cluster MongoDB Atlas e integração do envio de locação em `detalhe-maquina.html` (`POST /api/locacoes/solicitar`)
+- [x] Conexão final com o cluster MongoDB Atlas e população das 7 coleções via `mongodb/init-mongo.js`
+- [ ] Integração do envio de locação em `detalhe-maquina.html` (`POST /api/locacoes/solicitar`)
+
+---
+
+## ☁️ Configuração do MongoDB Atlas
+
+Por padrão local, o `backend/src/main/resources/application.properties` usa `MONGODB_URI` apontando para `mongodb://localhost:27017/alugamaquina`. Para executar o projeto conectado ao **MongoDB Atlas**:
+
+1. **Cluster, usuário e Network Access no Atlas:**
+   - Confirme o cluster ativo, o banco da aplicação e um usuário em **Database Access** com permissão de leitura e escrita (`readWriteAnyDatabase` ou `readWrite` + `dbAdmin` no banco).
+   - Em **Network Access**, libere o IP de quem executará o backend (`0.0.0.0/0` é aceitável para testes em ambiente acadêmico).
+2. **Definir a `MONGODB_URI` apenas na sessão local (sem versionar segredos):**
+   - No PowerShell, defina a variável somente para a sessão atual usando sua string SRV real no lugar dos placeholders (observando que o nome do banco no MongoDB diferencia maiúsculas e minúsculas, como `AlugaMaquina` ou `alugamaquina`):
+     ```powershell
+     $env:MONGODB_URI = "mongodb+srv://<usuario>:<senha>@<cluster>.mongodb.net/<banco>?retryWrites=true&w=majority"
+     ```
+   - Como alternativa local, copie `.env.example` para `.env` (já incluído no `.gitignore`) e preencha `MONGODB_URI`. **Nunca commite `.env`, senhas ou URIs reais.**
+3. **Popular as coleções e criar os índices (incluindo `2dsphere`):**
+   ```powershell
+   mongosh "$env:MONGODB_URI" mongodb/init-mongo.js
+   ```
+4. **Iniciar o backend e validar:**
+   - Execute `.\scripts\start-dev.ps1` (quando `MONGODB_URI` aponta para um host remoto/Atlas, o script pula automaticamente o Docker local) ou `mvn spring-boot:run` na pasta `backend/`.
+   - Valide `GET http://localhost:8080/api/maquinas/busca?lat=-22.7611&lng=-47.1544&raioKm=50` e `POST http://localhost:8080/api/auth/login` com um usuário do seed.

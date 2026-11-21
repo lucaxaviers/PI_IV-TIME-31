@@ -12,7 +12,8 @@
  * e carga inicial de dados consistentes com as telas do MVP.
  */
 
-const database = db.getSiblingDB("alugamaquina");
+const targetDbName = db.getName() && db.getName() !== "test" ? db.getName() : "alugamaquina";
+const database = db.getSiblingDB(targetDbName);
 
 function ensureCollection(name, validator) {
   const exists = database.getCollectionNames().includes(name);
@@ -24,13 +25,30 @@ function ensureCollection(name, validator) {
     });
     print(`[init-mongo] Collection criada: ${name}`);
   } else {
-    database.runCommand({
-      collMod: name,
-      validator,
-      validationLevel: "moderate",
-      validationAction: "error"
-    });
-    print(`[init-mongo] Validator atualizado: ${name}`);
+    try {
+      database.runCommand({
+        collMod: name,
+        validator,
+        validationLevel: "moderate",
+        validationAction: "error"
+      });
+      print(`[init-mongo] Validator atualizado: ${name}`);
+    } catch (err) {
+      print(`[init-mongo] Aviso: sem permissao ou nao foi possivel aplicar collMod em ${name} (${err.codeName || err.message}); mantendo colecao existente.`);
+    }
+  }
+}
+
+function ensureIndex(collection, keys, options) {
+  try {
+    collection.createIndex(keys, options || {});
+  } catch (err) {
+    const code = err && err.codeName ? err.codeName : "";
+    if (code === "IndexOptionsConflict" || code === "IndexKeySpecsConflict" || code === "IndexAlreadyExists") {
+      print(`[init-mongo] Aviso: indice equivalente ja existe em ${collection.getName()} (${err.message})`);
+    } else {
+      throw err;
+    }
   }
 }
 
@@ -55,8 +73,8 @@ ensureCollection("usuarios", {
   }
 });
 
-database.usuarios.createIndex({ email: 1 }, { name: "email", unique: true });
-database.usuarios.createIndex({ documento: 1 }, { name: "documento", unique: true });
+ensureIndex(database.usuarios, { email: 1 }, { name: "email", unique: true });
+ensureIndex(database.usuarios, { documento: 1 }, { name: "documento", unique: true });
 
 // -----------------------------------------------------------------------------
 // 2. Collection: maquinas (Maquina.java + MaquinaBuscaService.java)
@@ -87,9 +105,9 @@ ensureCollection("maquinas", {
   }
 });
 
-database.maquinas.createIndex({ localizacao: "2dsphere" }, { name: "localizacao" });
-database.maquinas.createIndex({ tipoEquipamento: 1 }, { name: "idx_maquinas_tipo" });
-database.maquinas.createIndex({ municipio: 1 }, { name: "idx_maquinas_municipio" });
+ensureIndex(database.maquinas, { localizacao: "2dsphere" }, { name: "localizacao" });
+ensureIndex(database.maquinas, { tipoEquipamento: 1 }, { name: "idx_maquinas_tipo" });
+ensureIndex(database.maquinas, { municipio: 1 }, { name: "idx_maquinas_municipio" });
 
 // -----------------------------------------------------------------------------
 // 3. Collection: locacoes (Locacao.java + LocacaoRepository.java)
@@ -124,12 +142,13 @@ ensureCollection("locacoes", {
   }
 });
 
-database.locacoes.createIndex(
+ensureIndex(
+  database.locacoes,
   { maquinaId: 1, status: 1, dataInicio: 1, dataFim: 1 },
   { name: "idx_locacoes_conflito_agenda" }
 );
-database.locacoes.createIndex({ locadorId: 1 }, { name: "idx_locacoes_locador" });
-database.locacoes.createIndex({ locatarioId: 1 }, { name: "idx_locacoes_locatario" });
+ensureIndex(database.locacoes, { locadorId: 1 }, { name: "idx_locacoes_locador" });
+ensureIndex(database.locacoes, { locatarioId: 1 }, { name: "idx_locacoes_locatario" });
 
 // -----------------------------------------------------------------------------
 // 4. Collection: avaliacoes (Avaliacao.java + AvaliacaoRepository.java)
@@ -165,9 +184,9 @@ ensureCollection("avaliacoes", {
   }
 });
 
-database.avaliacoes.createIndex({ locacaoId: 1 }, { name: "locacaoId", unique: true });
-database.avaliacoes.createIndex({ locadorId: 1 }, { name: "locadorId" });
-database.avaliacoes.createIndex({ maquinaId: 1 }, { name: "maquinaId" });
+ensureIndex(database.avaliacoes, { locacaoId: 1 }, { name: "locacaoId", unique: true });
+ensureIndex(database.avaliacoes, { locadorId: 1 }, { name: "locadorId" });
+ensureIndex(database.avaliacoes, { maquinaId: 1 }, { name: "maquinaId" });
 
 // -----------------------------------------------------------------------------
 // 5. Collection: chat_mensagens (ChatMessage.java + ChatMessageRepository.java)
@@ -186,11 +205,12 @@ ensureCollection("chat_mensagens", {
   }
 });
 
-database.chat_mensagens.createIndex(
+ensureIndex(
+  database.chat_mensagens,
   { remetente: 1, destinatario: 1, timestamp: 1 },
   { name: "idx_chat_conversa_timestamp" }
 );
-database.chat_mensagens.createIndex({ timestamp: 1 }, { name: "timestamp" });
+ensureIndex(database.chat_mensagens, { timestamp: 1 }, { name: "timestamp" });
 
 // -----------------------------------------------------------------------------
 // 6. Collection: contratos (Contrato.java + ContratoRepository.java)
@@ -234,10 +254,10 @@ ensureCollection("contratos", {
   }
 });
 
-database.contratos.createIndex({ locacaoId: 1 }, { name: "locacaoId", unique: true });
-database.contratos.createIndex({ numero: 1 }, { name: "numero", unique: true });
-database.contratos.createIndex({ locadorId: 1 }, { name: "idx_contratos_locador" });
-database.contratos.createIndex({ locatarioId: 1 }, { name: "idx_contratos_locatario" });
+ensureIndex(database.contratos, { locacaoId: 1 }, { name: "locacaoId", unique: true });
+ensureIndex(database.contratos, { numero: 1 }, { name: "numero", unique: true });
+ensureIndex(database.contratos, { locadorId: 1 }, { name: "idx_contratos_locador" });
+ensureIndex(database.contratos, { locatarioId: 1 }, { name: "idx_contratos_locatario" });
 
 // -----------------------------------------------------------------------------
 // 7. Collection: vistorias_checklist (VistoriaChecklist.java + Repository)
@@ -271,11 +291,12 @@ ensureCollection("vistorias_checklist", {
   }
 });
 
-database.vistorias_checklist.createIndex(
+ensureIndex(
+  database.vistorias_checklist,
   { locacaoId: 1, tipo: 1 },
   { name: "locacao_tipo_unico", unique: true }
 );
-database.vistorias_checklist.createIndex({ locacaoId: 1 }, { name: "idx_vistorias_locacao" });
+ensureIndex(database.vistorias_checklist, { locacaoId: 1 }, { name: "idx_vistorias_locacao" });
 
 // -----------------------------------------------------------------------------
 // Dados iniciais (Seed idempotente alinhado com o MVP do AlugaMaquina)
@@ -294,8 +315,8 @@ const usuariosSeed = [
     municipio: "paulinia",
     perfil: "locador",
     senhaHash: SENHA_DEMO_HASH,
-    reputacaoMedia: 5.0,
-    totalAvaliacoes: 0,
+    reputacaoMedia: 4.8,
+    totalAvaliacoes: Int32(2),
     _class: "com.alugamaquina.backend.model.Usuario"
   },
   {
@@ -320,8 +341,8 @@ const usuariosSeed = [
     municipio: "cosmopolis",
     perfil: "ambos",
     senhaHash: SENHA_DEMO_HASH,
-    reputacaoMedia: 5.0,
-    totalAvaliacoes: 0,
+    reputacaoMedia: 4.6,
+    totalAvaliacoes: Int32(1),
     _class: "com.alugamaquina.backend.model.Usuario"
   }
 ];
@@ -393,6 +414,51 @@ maquinasSeed.forEach((doc) => {
 
 const locacoesSeed = [
   {
+    _id: "LOC-2026-0710",
+    locadorId: "usr-locador-01",
+    locatarioId: "usr-locatario-01",
+    maquinaId: "maq-002",
+    dataInicio: ISODate("2026-09-10T03:00:00Z"),
+    dataFim: ISODate("2026-09-12T03:00:00Z"),
+    valorDiaria: NumberDecimal("2400.00"),
+    valorFrete: NumberDecimal("384.00"),
+    valorTotal: NumberDecimal("7584.00"),
+    status: "FINALIZADO",
+    motivoRecusa: null,
+    dataSolicitacao: ISODate("2026-09-05T10:00:00Z"),
+    _class: "com.alugamaquina.backend.model.Locacao"
+  },
+  {
+    _id: "LOC-2026-0755",
+    locadorId: "usr-ambos-01",
+    locatarioId: "usr-locatario-01",
+    maquinaId: "maq-004",
+    dataInicio: ISODate("2026-09-20T03:00:00Z"),
+    dataFim: ISODate("2026-09-23T03:00:00Z"),
+    valorDiaria: NumberDecimal("600.00"),
+    valorFrete: NumberDecimal("215.00"),
+    valorTotal: NumberDecimal("2615.00"),
+    status: "FINALIZADO",
+    motivoRecusa: null,
+    dataSolicitacao: ISODate("2026-09-15T14:20:00Z"),
+    _class: "com.alugamaquina.backend.model.Locacao"
+  },
+  {
+    _id: "LOC-2026-0790",
+    locadorId: "usr-locador-01",
+    locatarioId: "usr-ambos-01",
+    maquinaId: "maq-003",
+    dataInicio: ISODate("2026-09-29T03:00:00Z"),
+    dataFim: ISODate("2026-10-01T03:00:00Z"),
+    valorDiaria: NumberDecimal("1300.00"),
+    valorFrete: NumberDecimal("358.00"),
+    valorTotal: NumberDecimal("4258.00"),
+    status: "FINALIZADO",
+    motivoRecusa: null,
+    dataSolicitacao: ISODate("2026-09-25T09:45:00Z"),
+    _class: "com.alugamaquina.backend.model.Locacao"
+  },
+  {
     _id: "LOC-2026-0842",
     locadorId: "usr-locador-01",
     locatarioId: "usr-locatario-01",
@@ -441,6 +507,64 @@ const locacoesSeed = [
 
 locacoesSeed.forEach((doc) => {
   database.locacoes.updateOne({ _id: doc._id }, { $setOnInsert: doc }, { upsert: true });
+});
+
+const avaliacoesSeed = [
+  {
+    _id: "aval-001",
+    locacaoId: "LOC-2026-0710",
+    locadorId: "usr-locador-01",
+    locatarioId: "usr-locatario-01",
+    maquinaId: "maq-002",
+    notaDesempenho: Int32(5),
+    notaConservacao: Int32(5),
+    notaFidelidade: Int32(5),
+    notaPontualidade: Int32(4),
+    notaSuporte: Int32(5),
+    mediaFinal: 4.8,
+    comentario: "Colheitadeira muito bem revisada, entregou excelente rendimento na colheita.",
+    recomenda: true,
+    dataAvaliacao: ISODate("2026-09-14T16:20:00Z"),
+    _class: "com.alugamaquina.backend.model.Avaliacao"
+  },
+  {
+    _id: "aval-002",
+    locacaoId: "LOC-2026-0755",
+    locadorId: "usr-ambos-01",
+    locatarioId: "usr-locatario-01",
+    maquinaId: "maq-004",
+    notaDesempenho: Int32(4),
+    notaConservacao: Int32(5),
+    notaFidelidade: Int32(5),
+    notaPontualidade: Int32(5),
+    notaSuporte: Int32(4),
+    mediaFinal: 4.6,
+    comentario: "Trator entregue limpo e no horario combinado. Atendimento rapido pelo chat.",
+    recomenda: true,
+    dataAvaliacao: ISODate("2026-09-25T11:10:00Z"),
+    _class: "com.alugamaquina.backend.model.Avaliacao"
+  },
+  {
+    _id: "aval-003",
+    locacaoId: "LOC-2026-0790",
+    locadorId: "usr-locador-01",
+    locatarioId: "usr-ambos-01",
+    maquinaId: "maq-003",
+    notaDesempenho: Int32(5),
+    notaConservacao: Int32(4),
+    notaFidelidade: Int32(5),
+    notaPontualidade: Int32(5),
+    notaSuporte: Int32(5),
+    mediaFinal: 4.8,
+    comentario: "Pulverizador calibrado e pronto para o trabalho, recomendo o locador.",
+    recomenda: true,
+    dataAvaliacao: ISODate("2026-10-03T18:05:00Z"),
+    _class: "com.alugamaquina.backend.model.Avaliacao"
+  }
+];
+
+avaliacoesSeed.forEach((doc) => {
+  database.avaliacoes.updateOne({ _id: doc._id }, { $setOnInsert: doc }, { upsert: true });
 });
 
 const mensagensSeed = [
@@ -586,4 +710,4 @@ vistoriasSeed.forEach((doc) => {
   database.vistorias_checklist.updateOne({ _id: doc._id }, { $setOnInsert: doc }, { upsert: true });
 });
 
-print("[init-mongo] Banco 'alugamaquina' inicializado com sucesso!");
+print(`[init-mongo] Banco '${targetDbName}' inicializado com sucesso!`);
