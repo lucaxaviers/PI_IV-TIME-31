@@ -17,11 +17,25 @@ document.addEventListener("DOMContentLoaded", function () {
   const specTipo = document.getElementById("specTipo");
   const specLocalizacao = document.getElementById("specLocalizacao");
   const precoMaquina = document.getElementById("precoMaquina");
+  const fotoMaquina = document.getElementById("fotoMaquina");
   const cardLocacao = document.getElementById("cardLocacao");
 
   if (!statusMaquina || !cardLocacao) return;
 
   const API_MAQUINAS = "http://localhost:8080/api/maquinas/";
+
+  const IMAGEM_POR_CATEGORIA = {
+    trator: "../../assets/maquinas/trator-agricola.jpg",
+    tratores: "../../assets/maquinas/trator-agricola.jpg",
+    colheitadeira: "../../assets/maquinas/colheitadeira-graos.jpg",
+    colheitadeiras: "../../assets/maquinas/colheitadeira-graos.jpg",
+    implemento: "../../assets/maquinas/grade-aradora.jpg",
+    implementos: "../../assets/maquinas/grade-aradora.jpg",
+    pulverizador: "../../assets/maquinas/pulverizador-autopropelido.jpg",
+    pulverizadores: "../../assets/maquinas/pulverizador-autopropelido.jpg",
+    plantadeira: "../../assets/maquinas/plantadeira-agricola.jpg",
+    plantadeiras: "../../assets/maquinas/plantadeira-agricola.jpg",
+  };
 
   // Rotulo de exibicao por categoria, para o breadcrumb
   const LABEL_POR_CATEGORIA = {
@@ -83,6 +97,12 @@ document.addEventListener("DOMContentLoaded", function () {
     specTipo.textContent = maquina.tipoEquipamento || "Não informado";
     specLocalizacao.textContent = maquina.municipio || "Não informado";
     precoMaquina.textContent = "R$ " + formatarValor(maquina.valorDiaria);
+
+    if (fotoMaquina) {
+      fotoMaquina.src = IMAGEM_POR_CATEGORIA[categoriaChave] || "../../assets/maquinas/trator-agricola.jpg";
+      fotoMaquina.alt = "Foto de " + (maquina.tituloAnuncio || "equipamento agrícola");
+      fotoMaquina.hidden = false;
+    }
 
     cardLocacao.dataset.diaria = Number(maquina.valorDiaria) || 0;
     cardLocacao.dataset.origem = codigoMunicipio;

@@ -21,13 +21,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const LNG_REFERENCIA = -47.1544;
   const RAIO_MAXIMO_API = 500; // limite aceito pelo backend (MaquinaBuscaService)
 
-  // Imagem ilustrativa por categoria, ja que a API ainda nao retorna fotos do anuncio
+  // Foto representativa por categoria dos equipamentos
   const IMAGEM_POR_CATEGORIA = {
-    tratores: "../../assets/maquinas/trator-verde.svg",
-    colheitadeiras: "../../assets/maquinas/colheitadeira-vermelha.svg",
-    pulverizadores: "../../assets/maquinas/pulverizador.svg",
-    implementos: "../../assets/maquinas/implemento-grade.svg",
-    plantadeiras: "../../assets/maquinas/trator-azul.svg",
+    tratores: "../../assets/maquinas/trator-agricola.jpg",
+    colheitadeiras: "../../assets/maquinas/colheitadeira-graos.jpg",
+    pulverizadores: "../../assets/maquinas/pulverizador-autopropelido.jpg",
+    implementos: "../../assets/maquinas/grade-aradora.jpg",
+    plantadeiras: "../../assets/maquinas/plantadeira-agricola.jpg",
   };
 
   // Normaliza o tipoEquipamento vindo da API para as mesmas chaves do filtro #categoria
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Cria um card no mesmo formato visual usado no prototipo estatico
   function criarCard(maquina) {
     const categoriaNormalizada = normalizarCategoria(maquina.tipoEquipamento);
-    const imagem = IMAGEM_POR_CATEGORIA[categoriaNormalizada] || "../../assets/maquinas/trator-verde.svg";
+    const imagem = IMAGEM_POR_CATEGORIA[categoriaNormalizada] || "../../assets/maquinas/trator-agricola.jpg";
 
     const card = document.createElement("article");
     card.className = "machine-card";
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const link = "detalhe-maquina.html?id=" + encodeURIComponent(maquina.id);
 
     card.innerHTML =
-      '<div class="machine-photo"><img src="' + imagem + '" alt="Imagem ilustrativa do equipamento" /></div>' +
+      '<div class="machine-photo"><img src="' + imagem + '" alt="Foto do equipamento agrícola" /></div>' +
       '<div class="machine-body">' +
       '<span class="verified-badge">Verificada</span>' +
       '<h2 class="machine-title"></h2>' +
@@ -111,6 +111,10 @@ document.addEventListener("DOMContentLoaded", function () {
       '<a href="' + link + '" class="btn btn-primary btn-card">Ver detalhes</a>' +
       "</div>";
 
+    const imgEl = card.querySelector(".machine-photo img");
+    if (imgEl) {
+      imgEl.alt = "Foto de " + (maquina.tituloAnuncio || "equipamento agrícola");
+    }
     card.querySelector(".machine-title").textContent = maquina.tituloAnuncio || "Equipamento sem titulo";
     card.querySelector(".machine-meta").textContent = maquina.tipoEquipamento + " · " + maquina.municipio;
     card.querySelector(".machine-distance").textContent = "a " + formatarDistancia(maquina.distanciaKm) + " km de você";
