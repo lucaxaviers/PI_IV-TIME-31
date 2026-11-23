@@ -49,7 +49,7 @@ O arquivo é estruturado em três camadas principais:
 │   ├── ico-AlugaMaquina.jpg
 │   ├── logo-AlugaMaquina.jpg
 │   ├── logo-header.png
-│   └── maquinas/ (ilustrações SVG dos equipamentos)
+│   └── maquinas/ (fotos reais e ilustrações dos equipamentos)
 ├── backend/
 │   ├── pom.xml
 │   └── src/
@@ -190,7 +190,7 @@ O acompanhamento das tarefas, sprints e entregas da equipe está centralizado no
 - [x] Módulo de Vistoria Técnica com checklist (`#43` backend e `#42` tela)
 - [x] Conexão final com o cluster MongoDB Atlas e população das 7 coleções via `mongodb/init-mongo.js`
 - [x] Servidor TCP dedicado em Java puro no padrão POO/Fazedor de Continhas (`servidor-poo/`) e inicialização unificada via `scripts/start-dev.ps1`
-- [ ] Integração do envio de locação em `detalhe-maquina.html` (`POST /api/locacoes/solicitar`)
+- [x] Integração do envio de locação em `detalhe-maquina.html` (`POST /api/locacoes/solicitar`)
 
 ---
 

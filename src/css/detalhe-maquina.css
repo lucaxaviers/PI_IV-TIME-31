@@ -236,7 +236,27 @@
   font-size: 0.825rem;
 }
  
+.form-feedback {
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.form-feedback.sucesso {
+  border: 1px solid #86EFAC;
+  background-color: #F0FDF4;
+  color: #166534;
+}
+
+.form-feedback.erro {
+  border: 1px solid #FCA5A5;
+  background-color: #FEF2F2;
+  color: #B91C1C;
+}
+
 .form-error[hidden],
+.form-feedback[hidden],
 .summary[hidden] {
   display: none;
 }

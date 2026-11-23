@@ -60,13 +60,17 @@
   // ---- Ligacao com a tela ----
   // Nao roda sozinho: so depois que o detalhe-maquina.js preenche data-diaria/data-origem
   // com a resposta da API (GET /api/maquinas/{id}) e chama window.AlugaMaquinaFrete.iniciar()
+  var API_LOCACOES = 'http://localhost:8080/api/locacoes';
   var card, form, origem, diaria, inicioMin, fimMax;
   var campoInicio, campoFim, campoCidade, campoLogistica, erro, resumo;
+  var btnSolicitar, feedbackLocacao;
+  var eventosLigados = false;
 
   function mostrarErro(msg) {
     erro.textContent = msg;
     erro.hidden = false;
     resumo.hidden = true;
+    return null;
   }
 
   function limparErro() {
@@ -74,9 +78,41 @@
     erro.textContent = '';
   }
 
+  function mostrarFeedbackLocacao(msg, sucesso) {
+    if (!feedbackLocacao) return;
+    feedbackLocacao.textContent = msg;
+    feedbackLocacao.className = 'form-feedback ' + (sucesso ? 'sucesso' : 'erro');
+    feedbackLocacao.hidden = false;
+  }
+
+  function limparFeedbackLocacao() {
+    if (!feedbackLocacao) return;
+    feedbackLocacao.hidden = true;
+    feedbackLocacao.textContent = '';
+    feedbackLocacao.className = 'form-feedback';
+  }
+
+  function lerUsuarioLogado() {
+    try {
+      return JSON.parse(localStorage.getItem('alugamaquina_usuario') || '{}');
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function resolverLocadorId(maquinaId, locatarioId) {
+    var locadorApi = card && card.dataset ? (card.dataset.locadorId || '').trim() : '';
+    var locador = locadorApi || ((maquinaId === 'maq-002' || maquinaId === 'maq-004') ? 'usr-ambos-01' : 'usr-locador-01');
+    if (locador === locatarioId) {
+      locador = locador === 'usr-locador-01' ? 'usr-ambos-01' : 'usr-locador-01';
+    }
+    return locador;
+  }
+
   function calcular(evento) {
     if (evento) evento.preventDefault();
     limparErro();
+    limparFeedbackLocacao();
 
     var inicio = campoInicio.value;
     var fim = campoFim.value;
@@ -115,6 +151,81 @@
     document.getElementById('resFrete').textContent = retirada ? 'Sem frete' : formatarMoeda(frete);
     document.getElementById('resTotal').textContent = formatarMoeda(subtotal + frete);
     resumo.hidden = false;
+
+    return {
+      inicio: inicio,
+      fim: fim,
+      dias: dias,
+      distancia: distancia,
+      frete: frete,
+      subtotal: subtotal,
+      total: subtotal + frete
+    };
+  }
+
+  async function solicitarReserva() {
+    limparFeedbackLocacao();
+
+    var usuario = lerUsuarioLogado();
+    if (!usuario || !usuario.usuarioId) {
+      mostrarFeedbackLocacao('Faça login para solicitar a reserva e gerar o contrato digital.', false);
+      return;
+    }
+
+    var maquinaId = card && card.dataset ? (card.dataset.maquinaId || '').trim() : '';
+    if (!maquinaId) {
+      mostrarFeedbackLocacao('Não foi possível identificar a máquina selecionada.', false);
+      return;
+    }
+
+    var dados = calcular();
+    if (!dados) {
+      return;
+    }
+
+    var textoOriginal = btnSolicitar ? btnSolicitar.textContent : 'Solicitar Reserva & Contrato';
+    if (btnSolicitar) {
+      btnSolicitar.disabled = true;
+      btnSolicitar.textContent = 'Solicitando reserva...';
+    }
+
+    try {
+      var respSolicitar = await fetch(API_LOCACOES + '/solicitar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          locadorId: resolverLocadorId(maquinaId, usuario.usuarioId),
+          locatarioId: usuario.usuarioId,
+          maquinaId: maquinaId,
+          dataInicio: dados.inicio,
+          dataFim: dados.fim,
+          valorDiaria: diaria,
+          distanciaKm: dados.distancia
+        })
+      });
+      var locacao = await respSolicitar.json().catch(function () { return {}; });
+      if (!respSolicitar.ok) {
+        throw new Error(locacao.erro || 'Não foi possível enviar a solicitação de reserva.');
+      }
+
+      // Confirma a reserva como ACEITO para liberar a emissao do contrato e a vistoria
+      var respAceitar = await fetch(API_LOCACOES + '/' + encodeURIComponent(locacao.id) + '/aceitar', {
+        method: 'PUT'
+      });
+      var aceita = await respAceitar.json().catch(function () { return {}; });
+      if (!respAceitar.ok) {
+        throw new Error(aceita.erro || 'Não foi possível confirmar a reserva para gerar o contrato.');
+      }
+
+      mostrarFeedbackLocacao('Reserva confirmada! Abrindo contrato digital...', true);
+      window.location.href = 'contrato-digital.html?locacaoId=' + encodeURIComponent(locacao.id);
+    } catch (e) {
+      mostrarFeedbackLocacao(e.message || 'Servidor offline no momento.', false);
+      if (btnSolicitar) {
+        btnSolicitar.disabled = false;
+        btnSolicitar.textContent = textoOriginal;
+      }
+    }
   }
 
   // Le data-diaria/data-origem do card e liga os eventos do formulario.
@@ -135,25 +246,33 @@
     campoLogistica = document.getElementById('tipoLogistica');
     erro = document.getElementById('mensagemErro');
     resumo = document.getElementById('resumoCalculo');
+    btnSolicitar = document.getElementById('btnSolicitarLocacao');
+    feedbackLocacao = document.getElementById('feedbackLocacao');
 
     // Limita o calendario ao periodo de disponibilidade da maquina
     campoInicio.min = campoFim.min = inicioMin;
     campoInicio.max = campoFim.max = fimMax;
 
-    // Cidade de entrega so e obrigatoria quando ha frete
-    campoLogistica.addEventListener('change', function () {
-      var retirada = campoLogistica.value === 'retirada';
-      campoCidade.disabled = retirada;
-      campoCidade.required = !retirada;
-      if (retirada) campoCidade.value = '';
-    });
+    if (!eventosLigados) {
+      // Cidade de entrega so e obrigatoria quando ha frete
+      campoLogistica.addEventListener('change', function () {
+        var retirada = campoLogistica.value === 'retirada';
+        campoCidade.disabled = retirada;
+        campoCidade.required = !retirada;
+        if (retirada) campoCidade.value = '';
+      });
 
-    // Garante que o termino nunca fique antes do inicio
-    campoInicio.addEventListener('change', function () {
-      if (campoInicio.value) campoFim.min = campoInicio.value;
-    });
+      // Garante que o termino nunca fique antes do inicio
+      campoInicio.addEventListener('change', function () {
+        if (campoInicio.value) campoFim.min = campoInicio.value;
+      });
 
-    form.addEventListener('submit', calcular);
+      form.addEventListener('submit', calcular);
+      if (btnSolicitar) {
+        btnSolicitar.addEventListener('click', solicitarReserva);
+      }
+      eventosLigados = true;
+    }
   }
 
   window.AlugaMaquinaFrete = { iniciar: iniciar };

@@ -121,6 +121,8 @@
       <aside class="detail-side">
         <div class="detail-card rental-card"
              id="cardLocacao"
+             data-maquina-id=""
+             data-locador-id=""
              data-origem=""
              data-diaria="0"
              data-inicio-min="2026-11-01"
@@ -198,7 +200,8 @@
             </p>
           </div>
 
-          <a href="contrato-digital.html" class="btn btn-primary btn-block" style="margin-bottom: 0.5rem;">Solicitar Reserva & Contrato</a>
+          <div id="feedbackLocacao" class="form-feedback" role="status" hidden></div>
+          <button type="button" id="btnSolicitarLocacao" class="btn btn-primary btn-block" style="margin-bottom: 0.5rem;">Solicitar Reserva &amp; Contrato</button>
           <a href="chat.html" class="btn btn-secondary btn-block">Conversar com o proprietário</a>
         </div>
       </aside>

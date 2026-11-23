@@ -104,6 +104,8 @@ document.addEventListener("DOMContentLoaded", function () {
       fotoMaquina.hidden = false;
     }
 
+    cardLocacao.dataset.maquinaId = maquina.id || "";
+    cardLocacao.dataset.locadorId = maquina.locadorId || "";
     cardLocacao.dataset.diaria = Number(maquina.valorDiaria) || 0;
     cardLocacao.dataset.origem = codigoMunicipio;
 
