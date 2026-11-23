@@ -5,6 +5,7 @@
 
 package com.alugamaquina.backend.exception;
 
+// Excecao de dominio convertida em HTTP 400 pelo MaquinaBuscaController
 public class ParametroBuscaInvalidoException extends RuntimeException {
 
     public ParametroBuscaInvalidoException(String mensagem) {

@@ -26,6 +26,7 @@ import com.alugamaquina.backend.repository.MaquinaRepository;
 @Service
 public class MaquinaBuscaService {
 
+    // Limite maximo aceito pelo endpoint para evitar varreduras globais desnecessarias
     private static final double RAIO_MAXIMO_KM = 500;
 
     private final MongoTemplate mongoTemplate;
@@ -36,9 +37,11 @@ public class MaquinaBuscaService {
         this.maquinaRepository = maquinaRepository;
     }
 
+    // Executa consulta geoespacial esferica (geoNear) ordenando da maquina mais proxima para a mais distante
     public List<MaquinaBuscaResponse> buscarPorRaio(double lat, double lng, double raioKm) {
         validarParametros(lat, lng, raioKm);
 
+        // No GeoJSON do MongoDB a coordenada segue sempre a ordem [longitude, latitude]
         GeoJsonPoint ponto = new GeoJsonPoint(lng, lat);
         NearQuery consulta = NearQuery.near(ponto)
                 .maxDistance(new Distance(raioKm, Metrics.KILOMETERS))
@@ -72,10 +75,12 @@ public class MaquinaBuscaService {
                 maquina.getTipoEquipamento(),
                 maquina.getMunicipio(),
                 maquina.getValorDiaria(),
+                // getY() = latitude e getX() = longitude no GeoJsonPoint
                 maquina.getLocalizacao().getY(),
                 maquina.getLocalizacao().getX());
     }
 
+    // Garante coordenadas geograficas validas e raio dentro do limite permitido (0 < raioKm <= 500)
     private void validarParametros(double lat, double lng, double raioKm) {
         if (lat < -90 || lat > 90) {
             throw new ParametroBuscaInvalidoException("Latitude deve estar entre -90 e 90.");

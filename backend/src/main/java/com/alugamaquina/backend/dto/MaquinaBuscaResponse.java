@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 
 public class MaquinaBuscaResponse {
 
+    // Dados exibidos nos cards do catalogo junto com a distancia calculada pelo geoNear
     private final String id;
     private final String tituloAnuncio;
     private final String tipoEquipamento;
@@ -16,6 +17,7 @@ public class MaquinaBuscaResponse {
     private final BigDecimal valorDiaria;
     private final double distanciaKm;
 
+    // Construtor completo usado ao mapear cada resultado da busca geoespacial
     public MaquinaBuscaResponse(String id, String tituloAnuncio, String tipoEquipamento,
                                  String municipio, BigDecimal valorDiaria, double distanciaKm) {
         this.id = id;

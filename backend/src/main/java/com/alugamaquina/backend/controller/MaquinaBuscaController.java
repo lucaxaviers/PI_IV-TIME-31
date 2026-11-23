@@ -33,6 +33,7 @@ public class MaquinaBuscaController {
         this.maquinaBuscaService = maquinaBuscaService;
     }
 
+    // GET /api/maquinas/busca: consulta equipamentos dentro do raio em km (padrao 50 km)
     @GetMapping("/busca")
     public List<MaquinaBuscaResponse> buscar(
             @RequestParam double lat,
@@ -41,16 +42,19 @@ public class MaquinaBuscaController {
         return maquinaBuscaService.buscarPorRaio(lat, lng, raioKm);
     }
 
+    // GET /api/maquinas/{id}: devolve os dados completos de uma maquina para a tela de detalhe
     @GetMapping("/{id}")
     public MaquinaDetalheResponse buscarPorId(@PathVariable String id) {
         return maquinaBuscaService.buscarPorId(id);
     }
 
+    // Parametros fora da faixa (latitude, longitude ou raio) retornam 400 Bad Request
     @ExceptionHandler(ParametroBuscaInvalidoException.class)
     public ResponseEntity<Map<String, String>> tratarParametroInvalido(ParametroBuscaInvalidoException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("erro", ex.getMessage()));
     }
 
+    // Id inexistente ou em branco retorna 404 Not Found
     @ExceptionHandler(MaquinaNaoEncontradaException.class)
     public ResponseEntity<Map<String, String>> tratarNaoEncontrada(MaquinaNaoEncontradaException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("erro", ex.getMessage()));
