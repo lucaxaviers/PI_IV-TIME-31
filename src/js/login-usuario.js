@@ -5,15 +5,18 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   const API_BASE = "http://localhost:8080/api/auth";
+  const TIMEOUT_AUTH_MS = 10000; // 10s para tolerar primeira conexao fria com o MongoDB Atlas
 
   const formLogin = document.querySelector("#abaLogin form");
   const formCadastro = document.querySelector("#abaCadastro form");
 
+  // Exibe retorno visual de sucesso ou erro no topo do formulario
   function exibirFeedback(form, mensagem, sucesso) {
     let caixa = form.querySelector(".auth-feedback");
     if (!caixa) {
       caixa = document.createElement("p");
       caixa.className = "auth-feedback";
+      caixa.setAttribute("role", "status");
       caixa.style.padding = "10px 14px";
       caixa.style.borderRadius = "8px";
       caixa.style.marginBottom = "12px";
@@ -26,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
     caixa.style.border = sucesso ? "1px solid #a5d6a7" : "1px solid #f5c6cb";
   }
 
+  // Persiste os dados basicos do usuario autenticado para as demais telas privadas
   function salvarSessao(dados) {
     localStorage.setItem("alugamaquina_usuario", JSON.stringify({
       // A API de login devolve o id do usuario em "id"; as telas leem usuarioId
@@ -36,8 +40,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }));
   }
 
+  // Fluxo de autenticacao (POST /api/auth/login)
   if (formLogin) {
-    var params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(window.location.search);
     if (params.get("aviso") === "login") {
       exibirFeedback(formLogin, "Faça login ou crie sua conta para acessar esta página.", false);
     }
@@ -50,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       botao.disabled = true;
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3000);
+      const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_AUTH_MS);
       try {
         const resposta = await fetch(`${API_BASE}/login`, {
           method: "POST",
@@ -78,6 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Fluxo de cadastro de novo usuario (POST /api/auth/cadastro)
   if (formCadastro) {
     formCadastro.addEventListener("submit", async function (event) {
       event.preventDefault();
@@ -101,12 +107,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const botao = formCadastro.querySelector('button[type="submit"]');
       botao.disabled = true;
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_AUTH_MS);
       try {
         const resposta = await fetch(`${API_BASE}/cadastro`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(payload),
+          signal: controller.signal
         });
+        clearTimeout(timeoutId);
         const dados = await resposta.json();
 
         if (!resposta.ok) {
@@ -118,6 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
         exibirFeedback(formCadastro, `Cadastro concluído para ${dados.nome}! Redirecionando...`, true);
         setTimeout(() => { window.location.href = "busca-catalogo.html"; }, 900);
       } catch (erro) {
+        clearTimeout(timeoutId);
         exibirFeedback(formCadastro, "Não foi possível conectar ao servidor (localhost:8080).", false);
       } finally {
         botao.disabled = false;

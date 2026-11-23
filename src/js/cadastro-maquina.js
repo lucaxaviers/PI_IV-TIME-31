@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (!form) return;
 
-  // Aviso na propria tela (sucesso em verde, erro em vermelho), sem alert
+  // Aviso na propria tela (sucesso em verde, erro em vermelho), sem popups alert
   function exibirFeedback(mensagem, sucesso) {
     let caixa = form.querySelector(".cadastro-feedback");
     if (!caixa) {
@@ -56,22 +56,24 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  function falharValidacao(event, campo, mensagem) {
+    event.preventDefault();
+    exibirFeedback(mensagem, false);
+    if (campo) campo.focus();
+  }
+
   form.addEventListener("submit", function (event) {
     // 1. Tipo de Equipamento
     const tipo = document.getElementById("tipoEquipamento");
     if (!tipo || !tipo.value.trim()) {
-      alert("Por favor, selecione o tipo de equipamento.");
-      tipo.focus();
-      event.preventDefault();
+      falharValidacao(event, tipo, "Por favor, selecione o tipo de equipamento.");
       return;
     }
 
     // 2. Título do Anúncio
     const titulo = document.getElementById("tituloAnuncio");
     if (!titulo || titulo.value.trim().length < 5) {
-      alert("Por favor, informe um título válido para o anúncio (mínimo de 5 caracteres).");
-      titulo.focus();
-      event.preventDefault();
+      falharValidacao(event, titulo, "Por favor, informe um título válido para o anúncio (mínimo de 5 caracteres).");
       return;
     }
 
@@ -79,15 +81,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const marca = document.getElementById("marca");
     const modelo = document.getElementById("modelo");
     if (!marca || !marca.value.trim()) {
-      alert("Por favor, informe a marca do equipamento.");
-      marca.focus();
-      event.preventDefault();
+      falharValidacao(event, marca, "Por favor, informe a marca do equipamento.");
       return;
     }
     if (!modelo || !modelo.value.trim()) {
-      alert("Por favor, informe o modelo do equipamento.");
-      modelo.focus();
-      event.preventDefault();
+      falharValidacao(event, modelo, "Por favor, informe o modelo do equipamento.");
       return;
     }
 
@@ -97,9 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (ano && ano.value) {
       const valorAno = parseInt(ano.value, 10);
       if (valorAno < 1950 || valorAno > anoAtual + 1) {
-        alert("Ano de fabricação inválido. Informe um ano entre 1950 e " + (anoAtual + 1) + ".");
-        ano.focus();
-        event.preventDefault();
+        falharValidacao(event, ano, "Ano de fabricação inválido. Informe um ano entre 1950 e " + (anoAtual + 1) + ".");
         return;
       }
     }
@@ -109,20 +105,18 @@ document.addEventListener("DOMContentLoaded", function () {
     if (horimetro && horimetro.value) {
       const valorHoras = parseFloat(horimetro.value);
       if (valorHoras < 0) {
-        alert("O horímetro não pode ter valor negativo.");
-        horimetro.focus();
-        event.preventDefault();
+        falharValidacao(event, horimetro, "O horímetro não pode ter valor negativo.");
         return;
       }
     }
 
-    // 6. Fotos do Equipamento
+    // 6. Fotos do Equipamento (aviso opcional)
     const fotos = document.getElementById("fotos");
     if (fotos && fotos.files.length === 0) {
       const confirmarSemFoto = confirm("Nenhuma foto foi selecionada. Recomendamos anexar ao menos uma foto da máquina para aumentar a confiança dos produtores.\n\nDeseja continuar mesmo sem fotos?");
       if (!confirmarSemFoto) {
-        fotos.focus();
         event.preventDefault();
+        fotos.focus();
         return;
       }
     }
@@ -130,9 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 7. Município
     const municipio = document.getElementById("municipio");
     if (!municipio || !municipio.value.trim()) {
-      alert("Por favor, selecione o município da propriedade.");
-      municipio.focus();
-      event.preventDefault();
+      falharValidacao(event, municipio, "Por favor, selecione o município da propriedade.");
       return;
     }
 
@@ -141,16 +133,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const dataFim = document.getElementById("dataFim");
 
     if (!dataInicio || !dataInicio.value) {
-      alert("Por favor, informe a data de início da disponibilidade.");
-      dataInicio.focus();
-      event.preventDefault();
+      falharValidacao(event, dataInicio, "Por favor, informe a data de início da disponibilidade.");
       return;
     }
 
     if (!dataFim || !dataFim.value) {
-      alert("Por favor, informe a data de término da disponibilidade.");
-      dataFim.focus();
-      event.preventDefault();
+      falharValidacao(event, dataFim, "Por favor, informe a data de término da disponibilidade.");
       return;
     }
 
@@ -158,18 +146,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const dFim = new Date(dataFim.value);
 
     if (dFim < dInicio) {
-      alert("A data de término da disponibilidade não pode ser anterior à data de início.");
-      dataFim.focus();
-      event.preventDefault();
+      falharValidacao(event, dataFim, "A data de término da disponibilidade não pode ser anterior à data de início.");
       return;
     }
 
     // 9. Valor da Diária
     const valorDiaria = document.getElementById("valorDiaria");
     if (!valorDiaria || !valorDiaria.value.trim()) {
-      alert("Por favor, informe o valor da diária.");
-      valorDiaria.focus();
-      event.preventDefault();
+      falharValidacao(event, valorDiaria, "Por favor, informe o valor da diária.");
       return;
     }
 
@@ -178,9 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const valorNumerico = parseFloat(valorLimpo);
 
     if (isNaN(valorNumerico) || valorNumerico <= 0) {
-      alert("Por favor, informe um valor de diária válido e positivo (Ex: 850,00).");
-      valorDiaria.focus();
-      event.preventDefault();
+      falharValidacao(event, valorDiaria, "Por favor, informe um valor de diária válido e positivo (Ex: 850,00).");
       return;
     }
 
