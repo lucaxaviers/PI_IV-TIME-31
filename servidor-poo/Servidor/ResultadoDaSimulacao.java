@@ -3,6 +3,9 @@
   Descricao: Comunicado devolvido pelo Servidor com os valores calculados da simulacao de locacao
 */
 
+/**
+ * Resposta estruturada do servidor contendo o detalhamento de custos da simulacao solicitada.
+ */
 public class ResultadoDaSimulacao extends Comunicado
 {
     private static final long serialVersionUID = 1L;
@@ -83,6 +86,7 @@ public class ResultadoDaSimulacao extends Comunicado
         return this.valorTotal;
     }
 
+    // Formata o resumo completo da simulacao para exibicao direta no console do Cliente
     @Override
     public String toString ()
     {

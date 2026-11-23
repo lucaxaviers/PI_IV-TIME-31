@@ -3,6 +3,9 @@
   Descricao: Comunicado enviado pelo Cliente para buscar ou listar maquinas agricolas
 */
 
+/**
+ * Transporta os filtros opcionais (municipio e tipo) para consulta no catalogo do servidor.
+ */
 public class PedidoDeBuscaDeMaquinas extends Comunicado
 {
     private static final long serialVersionUID = 1L;
@@ -10,6 +13,7 @@ public class PedidoDeBuscaDeMaquinas extends Comunicado
     private String municipio;
     private String tipoEquipamento;
 
+    // Strings vazias indicam ausencia de filtro (retorna todas as maquinas)
     public PedidoDeBuscaDeMaquinas (String municipio, String tipoEquipamento)
     {
         this.municipio       = (municipio == null ? "" : municipio.trim());

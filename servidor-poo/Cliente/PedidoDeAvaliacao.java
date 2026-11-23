@@ -3,6 +3,9 @@
   Descricao: Comunicado enviado pelo Cliente para registrar avaliacao pos-locacao de um locador
 */
 
+/**
+ * Transporta as 5 notas (1 a 5), comentario e recomendacao para avaliacao pos-locacao.
+ */
 public class PedidoDeAvaliacao extends Comunicado
 {
     private static final long serialVersionUID = 1L;
@@ -16,6 +19,7 @@ public class PedidoDeAvaliacao extends Comunicado
     private String  comentario;
     private boolean recomenda;
 
+    // Garante que o locador foi informado e todas as 5 notas estao na faixa de 1 a 5
     public PedidoDeAvaliacao (String nomeLocador,
                               int notaDesempenho,
                               int notaConservacao,
@@ -44,6 +48,7 @@ public class PedidoDeAvaliacao extends Comunicado
         this.recomenda        = recomenda;
     }
 
+    // Impede notas fora da escala de 1 a 5 estrelas
     private static void validarNota (String criterio, int nota) throws Exception
     {
         if (nota < 1 || nota > 5)

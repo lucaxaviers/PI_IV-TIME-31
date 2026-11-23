@@ -7,6 +7,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * Cliente TCP em modo texto dedicado ao AlugaMaquina.
+ * Conecta no Servidor via Socket, abre fluxos de objetos e executa o ciclo receba -> espie -> envie.
+ */
 public class Cliente
 {
     public static final String HOST_PADRAO  = "localhost";
@@ -14,12 +18,14 @@ public class Cliente
 
     public static void main (String[] args)
     {
+        // Aceita host e porta opcionais na linha de comando: java Cliente [HOST [PORTA]]
         if (args.length > 2)
         {
             System.err.println("Uso esperado: java Cliente [HOST [PORTA]]\n");
             return;
         }
 
+        // 1. Estabelece a conexao TCP com o Servidor
         Socket conexao = null;
         try
         {
@@ -40,6 +46,7 @@ public class Cliente
             return;
         }
 
+        // 2. Abre ObjectOutputStream antes do ObjectInputStream e faz flush para evitar deadlock
         ObjectOutputStream transmissor = null;
         try
         {
@@ -63,6 +70,7 @@ public class Cliente
             return;
         }
 
+        // 3. Encapsula a conexao no objeto Parceiro e inicia a thread de desligamento
         Parceiro servidor = null;
         try
         {
@@ -84,6 +92,7 @@ public class Cliente
 
         tratadora.start();
 
+        // 4. Laco do menu interativo de operacoes do AlugaMaquina
         char opcao = ' ';
         do
         {
@@ -116,6 +125,7 @@ public class Cliente
             {
                 if (opcao == '1')
                 {
+                    // Busca por municipio e/ou tipo (campos vazios listam todo o catalogo)
                     System.out.print("Municipio (deixe vazio para todos): ");
                     String municipio = lerTextoOpcional();
 
@@ -128,6 +138,7 @@ public class Cliente
                 }
                 else if (opcao == '2')
                 {
+                    // Cadastro de novo anuncio de equipamento agricola
                     System.out.print("Titulo do anuncio: ");
                     String titulo = lerTextoObrigatorio();
                     System.out.print("Tipo (trator/colheitadeira/pulverizador/plantadeira/implemento): ");
@@ -145,6 +156,7 @@ public class Cliente
                 }
                 else if (opcao == '3')
                 {
+                    // Simulacao financeira de diarias, frete (ida e volta + mobilizacao) e caucao
                     System.out.print("Codigo da maquina (#): ");
                     int codigo = Teclado.getUmInt();
                     System.out.print("Quantidade de dias: ");
@@ -158,6 +170,7 @@ public class Cliente
                 }
                 else if (opcao == '4')
                 {
+                    // Registro de avaliacao pos-locacao com 5 criterios de 1 a 5 estrelas
                     System.out.print("Nome do locador avaliado: ");
                     String locador = lerTextoObrigatorio();
                     System.out.print("Nota Desempenho (1 a 5): ");
@@ -181,6 +194,7 @@ public class Cliente
                 }
                 else if (opcao == '5')
                 {
+                    // Consulta da reputacao media atualizada de um locador
                     System.out.print("Nome do locador: ");
                     String locador = lerTextoObrigatorio();
 
@@ -196,6 +210,7 @@ public class Cliente
         }
         while (opcao != 'T');
 
+        // 5. Envia o pedido de encerramento para que a SupervisoraDeConexao remova o cliente
         try
         {
             servidor.receba(new PedidoParaSair());
@@ -208,6 +223,7 @@ public class Cliente
         System.exit(0);
     }
 
+    // Padrao do Fazedor de Continhas: espia ate chegar ResultadoDaOperacao e entao consome
     private static ResultadoDaOperacao aguardarOperacao (Parceiro servidor) throws Exception
     {
         Comunicado comunicado;
@@ -220,6 +236,7 @@ public class Cliente
         return (ResultadoDaOperacao) servidor.envie();
     }
 
+    // Padrao do Fazedor de Continhas: espia ate chegar ResultadoDaSimulacao e entao consome
     private static ResultadoDaSimulacao aguardarSimulacao (Parceiro servidor) throws Exception
     {
         Comunicado comunicado;

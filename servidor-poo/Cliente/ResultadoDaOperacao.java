@@ -3,6 +3,9 @@
   Descricao: Comunicado devolvido pelo Servidor com resultado textual de busca, cadastro ou avaliacao
 */
 
+/**
+ * Resposta generica retornada pelo Servidor para operacoes de busca, cadastro, avaliacao e consulta.
+ */
 public class ResultadoDaOperacao extends Comunicado
 {
     private static final long serialVersionUID = 1L;

@@ -1,3 +1,8 @@
+/*
+  Autor: Mateus Oliveira Rafael | 25001369
+  Descricao: Endpoints REST de busca geoespacial por raio e detalhe de maquinas (Issue #36)
+*/
+
 package com.alugamaquina.backend.controller;
 
 import java.util.List;

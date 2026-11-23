@@ -3,6 +3,9 @@
   Descricao: Comunicado enviado pelo Cliente para simular diarias, frete, caucao e total da locacao
 */
 
+/**
+ * Solicita ao servidor o calculo financeiro de uma locacao (diarias + frete ida/volta + caucao).
+ */
 public class PedidoDeSimulacaoDeLocacao extends Comunicado
 {
     private static final long serialVersionUID = 1L;
@@ -11,6 +14,7 @@ public class PedidoDeSimulacaoDeLocacao extends Comunicado
     private int    quantidadeDias;
     private double distanciaKm;
 
+    // Valida codigo, quantidade de dias positiva e distancia nao negativa
     public PedidoDeSimulacaoDeLocacao (int codigoMaquina,
                                        int quantidadeDias,
                                        double distanciaKm) throws Exception

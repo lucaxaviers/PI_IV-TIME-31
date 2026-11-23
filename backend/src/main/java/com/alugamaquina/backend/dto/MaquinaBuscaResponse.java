@@ -1,3 +1,8 @@
+/*
+  Autor: Mateus Oliveira Rafael | 25001369
+  Descricao: DTO de resposta para cada maquina retornada na busca geoespacial (Issue #36)
+*/
+
 package com.alugamaquina.backend.dto;
 
 import java.math.BigDecimal;

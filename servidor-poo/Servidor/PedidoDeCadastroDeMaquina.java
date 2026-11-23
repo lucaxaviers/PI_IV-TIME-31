@@ -3,6 +3,9 @@
   Descricao: Comunicado enviado pelo Cliente para cadastrar uma nova maquina no catalogo
 */
 
+/**
+ * Solicita o registro de uma nova maquina agricola no catalogo do servidor.
+ */
 public class PedidoDeCadastroDeMaquina extends Comunicado
 {
     private static final long serialVersionUID = 1L;
@@ -13,6 +16,7 @@ public class PedidoDeCadastroDeMaquina extends Comunicado
     private double valorDiaria;
     private String nomeLocador;
 
+    // Valida os campos obrigatorios ainda no cliente antes da serializacao pelo socket
     public PedidoDeCadastroDeMaquina (String tituloAnuncio,
                                       String tipoEquipamento,
                                       String municipio,

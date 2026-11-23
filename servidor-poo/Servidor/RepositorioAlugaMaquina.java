@@ -10,8 +10,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Armazena em memoria o catalogo de maquinas e o historico de reputacao dos locadores.
+ * Todos os metodos publicos sao synchronized para suportar acesso simultaneo de varias threads clientes.
+ */
 public class RepositorioAlugaMaquina
 {
+    // Mesmos parametros comerciais do projeto: km x 2 (ida e volta) x R$ 6,50 + taxa de mobilizacao
     public static final double VALOR_POR_KM        = 6.50;
     public static final double TAXA_MOBILIZACAO    = 150.00;
     public static final double VALOR_CAUCAO_PADRAO = 1000.00;
@@ -25,6 +30,7 @@ public class RepositorioAlugaMaquina
         inicializarCatalogoPiloto();
     }
 
+    // Popula o servidor com 5 equipamentos iniciais da regiao piloto de Paulinia/SP
     private void inicializarCatalogoPiloto ()
     {
         try
@@ -49,6 +55,7 @@ public class RepositorioAlugaMaquina
         garantirLocador(locador);
     }
 
+    // Todo locador novo inicia com nota base 5.0 no historico de reputacao
     private void garantirLocador (String nomeLocador)
     {
         String chave = nomeLocador.trim().toLowerCase();
@@ -60,6 +67,7 @@ public class RepositorioAlugaMaquina
         }
     }
 
+    // Filtra o catalogo por municipio e/ou tipo de equipamento (vazio retorna todos)
     public synchronized ResultadoDaOperacao buscarMaquinas (PedidoDeBuscaDeMaquinas pedido)
     {
         String filtroMunicipio = (pedido == null ? "" : pedido.getMunicipio().toLowerCase());
@@ -99,6 +107,7 @@ public class RepositorioAlugaMaquina
         );
     }
 
+    // Cria uma nova MaquinaAgricola com codigo sequencial e registra o locador no catalogo
     public synchronized ResultadoDaOperacao cadastrarMaquina (PedidoDeCadastroDeMaquina pedido)
     {
         try
@@ -126,6 +135,7 @@ public class RepositorioAlugaMaquina
         }
     }
 
+    // Calcula subtotal das diarias, frete de ida e volta + mobilizacao, caucao padrao e total
     public synchronized ResultadoDaSimulacao simularLocacao (PedidoDeSimulacaoDeLocacao pedido)
     {
         MaquinaAgricola encontrada = null;
@@ -164,6 +174,7 @@ public class RepositorioAlugaMaquina
         );
     }
 
+    // Calcula a media das 5 notas da avaliacao e atualiza a reputacao acumulada do locador
     public synchronized ResultadoDaOperacao registrarAvaliacao (PedidoDeAvaliacao pedido)
     {
         String chave = pedido.getNomeLocador().trim().toLowerCase();
@@ -196,6 +207,7 @@ public class RepositorioAlugaMaquina
         return new ResultadoDaOperacao(true, "Avaliacao registrada com sucesso!", detalhes);
     }
 
+    // Consulta a media atual e a quantidade de avaliacoes registradas para um locador
     public synchronized ResultadoDaOperacao consultarReputacao (PedidoDeConsultaDeReputacao pedido)
     {
         String chave = pedido.getNomeLocador().trim().toLowerCase();
@@ -228,6 +240,7 @@ public class RepositorioAlugaMaquina
         return arredondar(soma / notas.size());
     }
 
+    // Arredondamento financeiro padrao em 2 casas decimais (HALF_UP)
     private static double arredondar (double valor)
     {
         return BigDecimal.valueOf(valor)

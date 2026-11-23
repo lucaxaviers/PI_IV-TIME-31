@@ -1,3 +1,8 @@
+/*
+  Autor: Mateus Oliveira Rafael | 25001369
+  Descricao: Servico de busca geoespacial 2dsphere por raio e consulta de maquina por id (Issue #36)
+*/
+
 package com.alugamaquina.backend.service;
 
 import java.util.List;

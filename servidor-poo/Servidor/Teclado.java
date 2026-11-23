@@ -7,11 +7,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Centraliza a leitura tipada da entrada padrao (System.in) lancando excecao em formatos invalidos.
+ */
 public class Teclado
 {
     private static BufferedReader teclado =
         new BufferedReader(new InputStreamReader(System.in));
 
+    // Le uma linha completa da entrada padrao (retorna null se o stream fechar)
     public static String getUmString ()
     {
         String ret = null;
@@ -62,6 +66,7 @@ public class Teclado
         return ret;
     }
 
+    // Converte a linha lida para inteiro ou lanca excecao amigavel
     public static int getUmInt () throws Exception
     {
         int ret = 0;
@@ -116,6 +121,7 @@ public class Teclado
         return ret;
     }
 
+    // Converte a linha lida para numero real (double) ou lanca excecao amigavel
     public static double getUmDouble () throws Exception
     {
         double ret = 0.0;
@@ -134,6 +140,7 @@ public class Teclado
         return ret;
     }
 
+    // Exige exatamente 1 caractere digitado
     public static char getUmChar () throws Exception
     {
         char ret = ' ';

@@ -76,13 +76,19 @@ O arquivo é estruturado em três camadas principais:
 │   ├── AlugaMaquina_Apresentacao.pptx
 │   ├── DICIONARIO_DE_DADOS.md (Dicionário de dados completo e desdobramento NoSQL)
 │   ├── MODELAGEM_MONGODB.md (Documentação detalhada das collections e índices)
+│   ├── RELATORIO_TESTES_SERVIDOR.md (Resumo do relatório de testes do servidor Java)
 │   ├── Relatorio_Ideacao_AlugaMaquina.docx
 │   ├── Relatorio_Ideacao_AlugaMaquina.pdf
+│   ├── Relatorio_Testes_Servidor_Ivan.docx (Relatório completo FTTVS com diagramas UML e JUnit 5)
 │   └── TASKS_PI4_TIME_31.md (Quadro simples de tarefas e responsáveis)
 ├── mongodb/
 │   └── init-mongo.js (Script de criação de schemas, índices e seed inicial)
 ├── scripts/
-│   └── start-dev.ps1 (Inicialização local do ambiente Docker/MongoDB + Backend)
+│   └── start-dev.ps1 (Inicialização unificada: Docker/MongoDB Atlas + Backend Spring Boot + Servidor TCP POO + Cliente TCP + Frontend)
+├── servidor-poo/
+│   ├── README.md (Documentação e comandos do servidor TCP puro)
+│   ├── Cliente/ (Cliente.java, TratadoraDeComunicadoDeDesligamento.java e Comunicados)
+│   └── Servidor/ (Servidor.java, AceitadoraDeConexao.java, SupervisoraDeConexao.java, Parceiro.java, MaquinaAgricola.java, RepositorioAlugaMaquina.java)
 └── src/
     ├── css/
     │   ├── global.css
@@ -127,7 +133,9 @@ Todos os artefatos oficiais de ideação e escopo encontram-se organizados na pa
 - **Tarefas do PI4 (`TASKS_PI4_TIME_31.md`):** Quadro simples com as tarefas e os responsáveis de cada integrante.
 - **Dicionário de Dados (`DICIONARIO_DE_DADOS.md`):** Dicionário completo das 7 entidades do sistema, regras de domínio, exemplos aceitos/não aceitos e mapeamento físico para o MongoDB.
 - **Modelagem do Banco de Dados MongoDB (`MODELAGEM_MONGODB.md`):** Documentação técnica das collections, índices NoSQL, validação de schemas e regras de integridade.
-- **Ambiente Local e Seed (`docker-compose.yml`, `mongodb/init-mongo.js`, `scripts/start-dev.ps1`):** Provisionamento containerizado do MongoDB, criação de índices/schemas e carga inicial das 7 coleções.
+- **Ambiente Local e Seed (`docker-compose.yml`, `mongodb/init-mongo.js`, `scripts/start-dev.ps1`):** Provisionamento containerizado do MongoDB, criação de índices/schemas, carga inicial das 7 coleções e inicialização unificada dos servidores e frontend.
+- **Relatório de Testes do Servidor (`docs/Relatorio_Testes_Servidor_Ivan.docx` / `docs/RELATORIO_TESTES_SERVIDOR.md`):** Arquitetura em camadas, diagramas UML completos (classes, DTE e sequência), testes Intraclasse/Interclasse e suíte de 662 testes JUnit 5 aprovados.
+- **Servidor Java TCP Puro (`servidor-poo/`):** Implementação dedicada sem HTTP (`ServerSocket`, `Thread`, `ObjectInputStream`/`ObjectOutputStream`, `Parceiro`, `Comunicado`), documentada em [`servidor-poo/README.md`](./servidor-poo/README.md).
 - **Apresentação da Solução (`AlugaMaquina_Apresentacao.pptx`):** Slides executivos com problema, proposta de valor, modelo de negócio, persona e roadmap do MVP.
 - **Relatório Consolidado de Ideação (`Relatorio_Ideacao_AlugaMaquina.pdf` / `.docx`):** Documento oficial completo reunindo contexto, personas, fundamentação quantitativa (IBGE/Embrapa/Cepea), Mapa de Empatia, Matriz SWOT e SWOT Cruzada, Business Model Canvas (BMC), Mapa Mental, 5W2H e wireframes do MVP.
 - **Identidade Visual (`assets/`):**
@@ -144,7 +152,8 @@ Conforme formalizado no **Relatório de Ideação** e na **Ficha Oficial de Esco
 | :--- | :--- | :--- |
 | **Prototipação & UX** | **Figma** | Prototipação em Baixa Fidelidade, Alta Fidelidade e Mobile com fluxo de navegação documentado. |
 | **Frontend** | **HTML5, CSS3 & JavaScript (ES6+)** | Construção da estrutura semântica responsiva adaptada ao homem do campo, com design system unificado (`global.css`) e scripts client-side modulares. |
-| **Backend** | **Java (Spring Boot 3.3)** | API REST estruturada com injeção de dependências, arquitetura em camadas (Controller, Service, Repository, DTO) e regras de negócio. |
+| **Backend (API Web)** | **Java (Spring Boot 3.3)** | API REST estruturada com injeção de dependências, arquitetura em camadas (Controller, Service, Repository, DTO) e regras de negócio. |
+| **Servidor TCP (POO/Java)** | **Java Sockets Puro (Zero HTTP)** | Servidor e Cliente dedicados em `servidor-poo/` usando `ServerSocket`, `Thread`, `ObjectInputStream`/`ObjectOutputStream` e `Semaphore`. |
 | **Banco de Dados** | **MongoDB Atlas** | Banco de dados NoSQL gerenciado em nuvem com suporte geoespacial nativo (`2dsphere` / `geoNear`) para busca por raio de distância (km). |
 | **Testes de Software** | **JUnit 5 & Mockito** | Cobertura abrangente de testes unitários automatizados cobrindo métodos canônicos e regras críticas de negócio (AAA + BVA + Particionamento de Equivalência). |
 | **Gerenciador de Dependências** | **Apache Maven** | Automação de compilação, gestão de ciclo de vida e dependências do backend Java (`pom.xml`). |
@@ -180,6 +189,7 @@ O acompanhamento das tarefas, sprints e entregas da equipe está centralizado no
 - [x] Módulo de Contrato Digital em PDF (`#44`) no backend e integração da tela de contrato com a API
 - [x] Módulo de Vistoria Técnica com checklist (`#43` backend e `#42` tela)
 - [x] Conexão final com o cluster MongoDB Atlas e população das 7 coleções via `mongodb/init-mongo.js`
+- [x] Servidor TCP dedicado em Java puro no padrão POO/Fazedor de Continhas (`servidor-poo/`) e inicialização unificada via `scripts/start-dev.ps1`
 - [ ] Integração do envio de locação em `detalhe-maquina.html` (`POST /api/locacoes/solicitar`)
 
 ---

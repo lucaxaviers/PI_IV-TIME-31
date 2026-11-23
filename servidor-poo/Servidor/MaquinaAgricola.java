@@ -6,6 +6,10 @@
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Entidade de dominio que representa uma maquina ou implemento agricola disponivel para locacao.
+ * Implementa Serializable, Comparable e Cloneable com todos os metodos canonicos da disciplina.
+ */
 public class MaquinaAgricola implements Serializable, Comparable<MaquinaAgricola>, Cloneable
 {
     private static final long serialVersionUID = 1L;
@@ -17,6 +21,7 @@ public class MaquinaAgricola implements Serializable, Comparable<MaquinaAgricola
     private double valorDiaria;
     private String nomeLocador;
 
+    // Construtor principal: valida todas as invariantes obrigatorias antes de criar o objeto
     public MaquinaAgricola (int codigo,
                             String tituloAnuncio,
                             String tipoEquipamento,
@@ -80,6 +85,7 @@ public class MaquinaAgricola implements Serializable, Comparable<MaquinaAgricola
         return this.nomeLocador;
     }
 
+    // Setter com validacao defensiva para impedir diaria zerada ou negativa
     public void setValorDiaria (double valorDiaria) throws Exception
     {
         if (valorDiaria <= 0)
@@ -90,6 +96,7 @@ public class MaquinaAgricola implements Serializable, Comparable<MaquinaAgricola
 
     // ---- Metodos canonicos (padrao da disciplina POO/Java) ----
 
+    // Construtor de copia: cria uma instancia independente a partir de outro modelo valido
     public MaquinaAgricola (MaquinaAgricola modelo) throws Exception
     {
         if (modelo == null)
@@ -103,6 +110,7 @@ public class MaquinaAgricola implements Serializable, Comparable<MaquinaAgricola
         this.nomeLocador     = modelo.nomeLocador;
     }
 
+    // Delega a clonagem para o construtor de copia, garantindo copia segura
     @Override
     public Object clone ()
     {
@@ -118,6 +126,7 @@ public class MaquinaAgricola implements Serializable, Comparable<MaquinaAgricola
         return retorno;
     }
 
+    // Representacao textual amigavel usada na listagem do catalogo no Cliente
     @Override
     public String toString ()
     {
@@ -128,6 +137,7 @@ public class MaquinaAgricola implements Serializable, Comparable<MaquinaAgricola
         );
     }
 
+    // Igualdade em 4 passos: identidade, nulidade, classe exata e comparacao atributo a atributo
     @Override
     public boolean equals (Object obj)
     {
@@ -147,6 +157,7 @@ public class MaquinaAgricola implements Serializable, Comparable<MaquinaAgricola
         return true;
     }
 
+    // Hash calculado por multiplicacao acumulada e mantido nao negativo conforme padrao da aula
     @Override
     public int hashCode ()
     {
@@ -163,6 +174,7 @@ public class MaquinaAgricola implements Serializable, Comparable<MaquinaAgricola
         return retorno;
     }
 
+    // Ordenacao natural pelo codigo identificador da maquina (-666, 666 ou 0)
     @Override
     public int compareTo (MaquinaAgricola outra)
     {

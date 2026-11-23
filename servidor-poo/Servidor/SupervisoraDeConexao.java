@@ -8,6 +8,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * Atende um cliente conectado do inicio ao fim da sessao TCP,
+ * roteando cada subclasse de Comunicado recebida para o RepositorioAlugaMaquina.
+ */
 public class SupervisoraDeConexao extends Thread
 {
     private Parceiro                usuario;
@@ -36,6 +40,8 @@ public class SupervisoraDeConexao extends Thread
     @Override
     public void run ()
     {
+        // Cria o transmissor primeiro e envia o cabecalho de serializacao (flush)
+        // para evitar deadlock ao abrir o ObjectInputStream do lado do Cliente
         ObjectOutputStream transmissor;
         try
         {
@@ -73,11 +79,13 @@ public class SupervisoraDeConexao extends Thread
 
         try
         {
+            // Registra este cliente na lista global (protegida contra acesso concorrente)
             synchronized (this.usuarios)
             {
                 this.usuarios.add(this.usuario);
             }
 
+            // Laco principal de atendimento dos pedidos enviados por este cliente
             for (;;)
             {
                 Comunicado comunicado = this.usuario.envie();
@@ -111,6 +119,7 @@ public class SupervisoraDeConexao extends Thread
                 }
                 else if (comunicado instanceof PedidoParaSair)
                 {
+                    // Remove o cliente da lista ativa e encerra o socket de forma limpa
                     synchronized (this.usuarios)
                     {
                         this.usuarios.remove(this.usuario);
@@ -122,6 +131,7 @@ public class SupervisoraDeConexao extends Thread
         }
         catch (Exception erro)
         {
+            // Em caso de queda abrupta de conexao, limpa o cliente da lista e libera os streams
             synchronized (this.usuarios)
             {
                 this.usuarios.remove(this.usuario);

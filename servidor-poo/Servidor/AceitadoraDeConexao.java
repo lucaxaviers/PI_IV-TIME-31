@@ -7,12 +7,17 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * Fica continuamente ouvindo a porta TCP configurada.
+ * A cada novo cliente que conecta, delega o atendimento para uma SupervisoraDeConexao dedicada.
+ */
 public class AceitadoraDeConexao extends Thread
 {
     private ServerSocket            pedido;
     private ArrayList<Parceiro>     usuarios;
     private RepositorioAlugaMaquina repositorio;
 
+    // Abre o ServerSocket na porta informada e valida as dependencias compartilhadas
     public AceitadoraDeConexao (String porta,
                                 ArrayList<Parceiro> usuarios,
                                 RepositorioAlugaMaquina repositorio) throws Exception
@@ -39,6 +44,7 @@ public class AceitadoraDeConexao extends Thread
         this.repositorio = repositorio;
     }
 
+    // Laco infinito de aceitacao: cada conexao gera uma thread independente de supervisao
     @Override
     public void run ()
     {
@@ -47,6 +53,7 @@ public class AceitadoraDeConexao extends Thread
             Socket conexao = null;
             try
             {
+                // Aguarda bloqueado ate o proximo cliente conectar via TCP
                 conexao = this.pedido.accept();
             }
             catch (Exception erro)
