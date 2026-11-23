@@ -162,6 +162,13 @@
   line-height: 1.4;
 }
 
+.message-sender {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 3px;
+}
+
 .message-time {
   font-size: 0.7rem;
   color: var(--color-text-muted);

@@ -21,12 +21,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const sessao = JSON.parse(localStorage.getItem("alugamaquina_usuario") || "{}");
   const remetenteAtual = (sessao.nome || "").trim() || "Produtor";
+  const paramsUrl = new URLSearchParams(window.location.search);
+  const destinatarioParam = (paramsUrl.get("destinatario") || "").trim();
 
   let todasMensagens = [];
   let destinatarioAtual =
-    remetenteAtual.toLowerCase() === "jose carlos - agricola sao jose"
-      ? "Antonio Carlos Pereira"
-      : "Jose Carlos - Agricola Sao Jose";
+    destinatarioParam && destinatarioParam.toLowerCase() !== remetenteAtual.toLowerCase()
+      ? destinatarioParam
+      : remetenteAtual.toLowerCase() === "jose carlos - agricola sao jose"
+        ? "Antonio Carlos Pereira"
+        : "Jose Carlos - Agricola Sao Jose";
 
   let stompClient = null;
   let conectado = false;
@@ -44,25 +48,40 @@ document.addEventListener("DOMContentLoaded", function () {
     return div.innerHTML;
   }
 
+  function normalizarNome(texto) {
+    return (texto || "").trim().toLowerCase();
+  }
+
   function horarioAtual() {
     const agora = new Date();
     return String(agora.getHours()).padStart(2, "0") + ":" + String(agora.getMinutes()).padStart(2, "0");
   }
 
+  function usuarioParticipaDaMensagem(msg) {
+    const eu = normalizarNome(remetenteAtual);
+    const rem = normalizarNome(msg.remetente);
+    const dest = normalizarNome(msg.destinatario);
+    return rem === eu || dest === eu;
+  }
+
   function obterOutroParticipante(msg) {
+    if (!usuarioParticipaDaMensagem(msg)) {
+      return null;
+    }
+    const eu = normalizarNome(remetenteAtual);
     const rem = (msg.remetente || "").trim();
     const dest = (msg.destinatario || "").trim();
-    if (rem.toLowerCase() === remetenteAtual.toLowerCase()) {
-      return dest || destinatarioAtual;
+    if (normalizarNome(rem) === eu) {
+      return dest || null;
     }
-    return rem || dest || destinatarioAtual;
+    return rem || null;
   }
 
   function mostrarEstadoVazio(texto) {
     chatMessages.innerHTML = `<p style="text-align: center; color: #666; margin: auto;">${escaparHTML(texto)}</p>`;
   }
 
-  function adicionarBolha(texto, horario, enviada) {
+  function adicionarBolha(texto, horario, enviada, nomeRemetente) {
     const vazio = chatMessages.querySelector("p");
     if (vazio && !chatMessages.querySelector(".message")) {
       chatMessages.innerHTML = "";
@@ -70,7 +89,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const div = document.createElement("div");
     div.classList.add("message", enviada ? "sent" : "received");
-    div.innerHTML = `<div class="message-bubble">${escaparHTML(texto)}</div><span class="message-time">${escaparHTML(horario)}</span>`;
+    const remetenteHtml =
+      !enviada && nomeRemetente
+        ? `<span class="message-sender">${escaparHTML(nomeRemetente)}</span>`
+        : "";
+    div.innerHTML =
+      remetenteHtml +
+      `<div class="message-bubble">${escaparHTML(texto)}</div>` +
+      `<span class="message-time">${escaparHTML(horario)}</span>`;
     chatMessages.appendChild(div);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
@@ -78,27 +104,42 @@ document.addEventListener("DOMContentLoaded", function () {
   function renderizarConversas() {
     if (!conversationsList) return;
 
+    const eu = normalizarNome(remetenteAtual);
     const mapa = new Map();
     todasMensagens.forEach((m) => {
       const contato = obterOutroParticipante(m);
-      if (!contato || contato.toLowerCase() === remetenteAtual.toLowerCase()) return;
-      mapa.set(contato, m);
+      const chaveContato = normalizarNome(contato);
+      if (!chaveContato || chaveContato === eu) return;
+      mapa.set(chaveContato, { nome: contato, ultimaMsg: m });
     });
 
-    if (mapa.size === 0) {
-      mapa.set(destinatarioAtual, null);
-    } else if (!mapa.has(destinatarioAtual)) {
-      destinatarioAtual = Array.from(mapa.keys())[0];
+    if (destinatarioParam && !mapa.has(normalizarNome(destinatarioParam))) {
+      mapa.set(normalizarNome(destinatarioParam), { nome: destinatarioParam, ultimaMsg: null });
+    }
+
+    const chaveAtual = normalizarNome(destinatarioAtual);
+    if (mapa.size > 0 && !mapa.has(chaveAtual)) {
+      destinatarioAtual = Array.from(mapa.values())[0].nome;
     }
 
     if (partnerNameEl) {
       partnerNameEl.textContent = destinatarioAtual;
     }
 
+    if (mapa.size === 0) {
+      conversationsList.innerHTML =
+        `<p class="last-message" style="padding: 16px; white-space: normal;">` +
+        `Nenhuma conversa iniciada ainda. Envie uma mensagem para iniciar com ${escaparHTML(destinatarioAtual)}.</p>`;
+      return;
+    }
+
+    const chaveSelecionada = normalizarNome(destinatarioAtual);
     conversationsList.innerHTML = "";
-    mapa.forEach((ultimaMsg, contato) => {
+    mapa.forEach((entrada, chaveContato) => {
+      const contato = entrada.nome;
+      const ultimaMsg = entrada.ultimaMsg;
       const item = document.createElement("div");
-      item.className = "conversation-item" + (contato === destinatarioAtual ? " active" : "");
+      item.className = "conversation-item" + (chaveContato === chaveSelecionada ? " active" : "");
 
       const resumo = ultimaMsg && ultimaMsg.conteudo ? ultimaMsg.conteudo : "Nenhuma mensagem ainda";
       item.innerHTML =
@@ -119,17 +160,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function renderizarMensagensAtivas() {
+    const eu = normalizarNome(remetenteAtual);
+    const outro = normalizarNome(destinatarioAtual);
     const filtradas = todasMensagens.filter((m) => {
-      const rem = (m.remetente || "").trim().toLowerCase();
-      const dest = (m.destinatario || "").trim().toLowerCase();
-      const eu = remetenteAtual.toLowerCase();
-      const outro = destinatarioAtual.toLowerCase();
-      return (
-        (rem === eu && dest === outro) ||
-        (rem === outro && dest === eu) ||
-        rem === outro ||
-        dest === outro
-      );
+      const rem = normalizarNome(m.remetente);
+      const dest = normalizarNome(m.destinatario);
+      return (rem === eu && dest === outro) || (rem === outro && dest === eu);
     });
 
     if (filtradas.length === 0) {
@@ -139,8 +175,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     chatMessages.innerHTML = "";
     filtradas.forEach((m) => {
-      const enviadaPorMim = (m.remetente || "").trim().toLowerCase() === remetenteAtual.toLowerCase();
-      adicionarBolha(m.conteudo || "", m.horario || "", enviadaPorMim);
+      const remetenteMsg = (m.remetente || "").trim();
+      const enviadaPorMim = normalizarNome(remetenteMsg) === eu;
+      adicionarBolha(m.conteudo || "", m.horario || "", enviadaPorMim, remetenteMsg);
     });
   }
 
@@ -183,13 +220,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         stompClient.subscribe("/topic/mensagens", function (frame) {
           const msg = JSON.parse(frame.body);
+          if (!usuarioParticipaDaMensagem(msg)) return;
+
           todasMensagens.push(msg);
           renderizarConversas();
 
           const contatoDaMsg = obterOutroParticipante(msg);
-          if (contatoDaMsg.toLowerCase() === destinatarioAtual.toLowerCase()) {
-            const enviadaPorMim = (msg.remetente || "").trim().toLowerCase() === remetenteAtual.toLowerCase();
-            adicionarBolha(msg.conteudo || "", msg.horario || horarioAtual(), enviadaPorMim);
+          if (contatoDaMsg && normalizarNome(contatoDaMsg) === normalizarNome(destinatarioAtual)) {
+            const remetenteMsg = (msg.remetente || "").trim();
+            const enviadaPorMim = normalizarNome(remetenteMsg) === normalizarNome(remetenteAtual);
+            adicionarBolha(msg.conteudo || "", msg.horario || horarioAtual(), enviadaPorMim, remetenteMsg);
           }
         });
       },
